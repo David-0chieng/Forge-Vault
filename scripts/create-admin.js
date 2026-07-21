@@ -78,7 +78,7 @@ function validatePassword(password) {
   if (!/[A-Z]/.test(password)) problems.push('an uppercase letter');
   if (!/\d/.test(password)) problems.push('a number');
 
-  const common = ['password', 'admin', '12345678', 'qwerty', 'letmein', 'forgevault'];
+  const common = ['password', 'admin', '12345678', 'qwerty', 'letmein', 'motoshop'];
   if (common.some((word) => password.toLowerCase().includes(word))) {
     problems.push('no common words like "password" or "admin"');
   }

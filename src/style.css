@@ -24,21 +24,22 @@
   }
 
   body {
-    @apply bg-forge-bg font-sans text-forge-ink antialiased;
+    @apply bg-moto-bg font-sans text-moto-ink antialiased;
   }
 
-  /* Section + page headings take the condensed industrial face, uppercase and
-     tracked tight — the Forge Vault signature. Product titles are <h3>, so they
-     stay in the readable body face. */
+  /* Section + page headings take the rounded display face. Sentence case, not
+     shouty caps — the MotoShop voice is confident, not industrial. Product
+     titles are <h3>, so they stay in the readable body face. */
   h1,
   h2 {
-    @apply font-display uppercase tracking-tight;
+    @apply font-display font-bold tracking-tight text-moto-ink;
   }
 
-  /* Machined focus ring — sharp, orange, no rounding. */
+  /* Machined focus ring — electric blue, softly rounded. */
   :focus-visible {
-    outline: 2px solid #ff5f00;
+    outline: 2px solid #2e7dfb;
     outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
@@ -47,66 +48,68 @@
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
 
-  /* Eyebrow — mono, tracked out, salmon. The technical label above a heading. */
+  /* Eyebrow — mono, tracked out, soft blue. The technical label above a heading. */
   .eyebrow {
-    @apply font-mono text-[11px] font-medium uppercase tracking-widest2 text-forge-salmon;
+    @apply font-mono text-[11px] font-medium uppercase tracking-widest2 text-moto-accent-soft;
   }
 
-  /* Section heading — condensed display, uppercase. */
+  /* Section heading — rounded display face. */
   .h-display {
-    @apply font-display font-bold uppercase tracking-tight text-forge-ink;
+    @apply font-display font-bold tracking-tight text-moto-ink;
   }
 
-  /* Panels are square, bordered, matte. No rounding anywhere — this is equipment. */
+  /* Panels are soft-cornered, single hairline border. This is a showroom, not
+     a machine shop. */
   .card {
-    @apply border-2 border-forge-line bg-forge-panel;
+    @apply rounded-2xl border border-moto-line bg-moto-panel;
   }
 
   .hairline {
-    @apply border-forge-line;
+    @apply border-moto-line;
   }
 
   /* ---- Buttons ------------------------------------------------------------ */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-display text-sm font-semibold uppercase tracking-wide transition active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-display text-sm font-semibold transition active:scale-[0.98];
   }
 
-  /* Primary = machined orange. */
+  /* Primary = electric blue pill. */
   .btn-primary {
-    @apply btn bg-forge-orange text-black hover:brightness-110;
+    @apply btn bg-moto-accent text-white shadow-glow hover:brightness-110;
   }
 
-  /* Kept for markup that still says btn-white — same orange action. */
+  /* Kept for markup that still says btn-white — same primary action. */
   .btn-white {
-    @apply btn bg-forge-orange text-black hover:brightness-110;
+    @apply btn bg-moto-accent text-white shadow-glow hover:brightness-110;
   }
 
   .btn-outline {
-    @apply btn border-2 border-forge-line-2 bg-transparent text-forge-ink hover:bg-forge-high;
+    @apply btn border border-moto-line-2 bg-transparent text-moto-ink hover:bg-moto-high;
   }
 
   .link-all {
-    @apply inline-flex items-center gap-1 font-mono text-xs font-medium uppercase tracking-widest text-forge-orange hover:text-forge-salmon;
+    @apply inline-flex items-center gap-1 font-mono text-xs font-medium uppercase tracking-widest text-moto-accent hover:text-moto-accent-soft;
   }
 
   .nav-link {
-    @apply font-display text-sm font-semibold uppercase tracking-wide text-forge-muted transition hover:text-forge-orange;
+    @apply font-display text-sm font-semibold text-moto-muted transition hover:text-moto-accent;
   }
 
   /* ---- Image placeholders -------------------------------------------------
-     Dark machined wells with a centred icon. Any missing photo shows this. */
+     Dark rounded wells with a centred icon. Any missing photo shows this. */
   .ph {
-    @apply relative overflow-hidden bg-forge-lowest;
-    background-image: linear-gradient(135deg, #1b1c1c 0%, #131313 55%, #0e0e0e 100%);
+    @apply relative overflow-hidden rounded-2xl bg-moto-lowest;
+    background-image: linear-gradient(135deg, #161f2b 0%, #0c1118 55%, #070a10 100%);
   }
 
   .ph-dark {
-    background-image: linear-gradient(135deg, #1b1c1c 0%, #131313 50%, #0e0e0e 100%);
+    border-radius: 0;
+    background-image: linear-gradient(135deg, #121a24 0%, #0c1118 50%, #070a10 100%);
   }
 
   .ph-icon {
     @apply pointer-events-none absolute inset-0 grid place-items-center;
-    color: rgba(255, 181, 153, 0.16);
+    color: rgba(143, 193, 255, 0.14);
   }
 
   img.is-missing {
@@ -124,40 +127,40 @@
   }
 
   .slider-arrow {
-    @apply absolute top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center border border-forge-line-2 bg-black/40 text-forge-ink backdrop-blur-sm transition hover:border-forge-orange hover:text-forge-orange;
+    @apply absolute top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-moto-line-2 bg-black/40 text-moto-ink backdrop-blur-sm transition hover:border-moto-accent hover:text-moto-accent;
   }
 
   .slider-dot {
-    @apply h-1.5 w-6 bg-forge-line-2 transition hover:bg-forge-outline;
+    @apply h-1.5 w-6 rounded-full bg-moto-line-2 transition hover:bg-moto-outline;
   }
   .slider-dot[aria-current='true'] {
-    @apply w-10 bg-forge-orange;
+    @apply w-10 bg-moto-accent;
   }
 
   /* ---- Footer ------------------------------------------------------------- */
   .footer-link {
-    @apply font-sans text-sm text-forge-muted transition hover:text-forge-orange;
+    @apply font-sans text-sm text-moto-muted transition hover:text-moto-accent;
   }
 
-  /* ---- Forms — technical, mono, square ------------------------------------ */
+  /* ---- Forms — technical, mono, softly rounded ----------------------------- */
   .field-label {
-    @apply mb-1.5 block font-mono text-[11px] font-medium uppercase tracking-widest text-forge-warm;
+    @apply mb-1.5 block font-mono text-[11px] font-medium uppercase tracking-widest text-moto-warm;
   }
 
   .field-input {
-    @apply block w-full border border-forge-line bg-forge-lowest px-3.5 py-2.5 font-mono text-sm text-forge-ink placeholder:text-forge-outline/60 focus:border-forge-orange focus:outline-none focus:ring-1 focus:ring-forge-orange;
+    @apply block w-full rounded-lg border border-moto-line bg-moto-lowest px-3.5 py-2.5 font-mono text-sm text-moto-ink placeholder:text-moto-outline/60 focus:border-moto-accent focus:outline-none focus:ring-1 focus:ring-moto-accent;
   }
 
   .field-input[aria-invalid='true'] {
-    @apply border-forge-error focus:border-forge-error focus:ring-forge-error;
+    @apply border-moto-error focus:border-moto-error focus:ring-moto-error;
   }
 
   .field-counter {
-    @apply mt-1 text-right font-mono text-[10px] tabular-nums text-forge-outline;
+    @apply mt-1 text-right font-mono text-[10px] tabular-nums text-moto-outline;
   }
 
   .field-error {
-    @apply mt-1 hidden font-mono text-[11px] font-medium text-forge-error;
+    @apply mt-1 hidden font-mono text-[11px] font-medium text-moto-error;
   }
   .field-error[data-visible='true'] {
     @apply block;
@@ -171,16 +174,16 @@
 }
 
 /* Placeholder gradient tones — built at runtime as `ph-${i%4+1}`, so kept
-   outside @layer to survive tree-shaking. All are dark machined variants. */
+   outside @layer to survive tree-shaking. All are dark blue-tinted variants. */
 .ph-1 {
-  background-image: linear-gradient(135deg, #1f2020 0%, #131313 55%, #0e0e0e 100%);
+  background-image: linear-gradient(135deg, #161f2b 0%, #0c1118 55%, #070a10 100%);
 }
 .ph-2 {
-  background-image: linear-gradient(135deg, #232019 0%, #16130f 55%, #0e0e0e 100%);
+  background-image: linear-gradient(135deg, #14202f 0%, #0c1118 55%, #070a10 100%);
 }
 .ph-3 {
-  background-image: linear-gradient(135deg, #1b1c1c 0%, #131313 50%, #0e0e0e 100%);
+  background-image: linear-gradient(135deg, #121a24 0%, #0c1118 50%, #070a10 100%);
 }
 .ph-4 {
-  background-image: linear-gradient(135deg, #201a17 0%, #14100e 55%, #0e0e0e 100%);
+  background-image: linear-gradient(135deg, #17232f 0%, #0c1118 55%, #070a10 100%);
 }

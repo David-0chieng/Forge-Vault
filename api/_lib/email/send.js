@@ -27,8 +27,8 @@ const templates = { ...coreTemplates, ...extraTemplates };
 
 const BREVO_ENDPOINT = 'https://api.brevo.com/v3/smtp/email';
 
-const ADMIN_INBOX = optionalEnv('ADMIN_INBOX', 'support@forgevault.shop');
-const REPLY_TO = optionalEnv('EMAIL_REPLY_TO', 'support@forgevault.shop');
+const ADMIN_INBOX = optionalEnv('ADMIN_INBOX', 'support@motoshop.shop');
+const REPLY_TO = optionalEnv('EMAIL_REPLY_TO', 'support@motoshop.shop');
 
 /**
  * Brevo wants the sender as { name, email }, but EMAIL_FROM is written in the
@@ -39,11 +39,11 @@ function parseSender(raw) {
   const match = /^\s*(.*?)\s*<\s*([^>]+)\s*>\s*$/.exec(raw);
 
   if (match) {
-    return { name: match[1].replace(/^"|"$/g, '') || 'ForgeVault', email: match[2] };
+    return { name: match[1].replace(/^"|"$/g, '') || 'MotoShop', email: match[2] };
   }
 
   // A bare address with no display name.
-  return { name: 'ForgeVault', email: raw.trim() };
+  return { name: 'MotoShop', email: raw.trim() };
 }
 
 async function log(entry) {

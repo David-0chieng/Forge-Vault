@@ -110,12 +110,12 @@ console.log(`\n  Sending a live test to ${target} …`);
 const send = await brevo('/smtp/email', {
   method: 'POST',
   body: JSON.stringify({
-    sender: { email: fromAddress, name: 'ForgeVault' },
+    sender: { email: fromAddress, name: 'MotoShop' },
     ...(replyTo ? { replyTo: { email: replyTo } } : {}),
     to: [{ email: target }],
-    subject: 'ForgeVault — email delivery test',
+    subject: 'MotoShop — email delivery test',
     htmlContent:
-      '<p style="font-family:sans-serif">If you are reading this, ForgeVault can deliver one-time codes, receipts and refund notices to this address.</p>',
+      '<p style="font-family:sans-serif">If you are reading this, MotoShop can deliver one-time codes, receipts and refund notices to this address.</p>',
   }),
 });
 

@@ -5,42 +5,46 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Archivo Narrow — condensed industrial display: wordmark, headings, labels.
-        display: ['"Archivo Narrow"', 'system-ui', 'sans-serif'],
-        // IBM Plex Sans — body copy.
-        sans: ['"IBM Plex Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        // JetBrains Mono — technical readouts: prices, part numbers, step numbers, eyebrows.
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        // Sora — rounded geometric display face: wordmark, headings, hero copy.
+        display: ['"Sora"', 'system-ui', 'sans-serif'],
+        // Inter — body copy, UI labels.
+        sans: ['"Inter"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        // Roboto Mono — technical readouts: prices, part numbers, step numbers, eyebrows.
+        mono: ['"Roboto Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       colors: {
-        // Forge Vault — dark industrial. Near-black surfaces, machined-orange accent.
-        forge: {
-          bg: '#131313', // page background / surface
-          lowest: '#0e0e0e', // inputs, deepest wells
-          low: '#1b1c1c', // low surface
-          panel: '#1f2020', // cards / containers
-          high: '#2a2a2a', // hovers, raised
-          line: '#2a2a2a', // hairline borders
-          'line-2': '#353535', // stronger dividers
-          bright: '#393939',
-          orange: '#ff5f00', // primary action accent
-          'orange-dim': '#a63b00', // pressed / muted orange
-          salmon: '#ffb599', // light accent text on dark
-          ink: '#e4e2e1', // primary text
-          muted: '#c6c6c6', // secondary text
-          warm: '#e4bfb1', // warm muted text
-          outline: '#ab8a7d', // warm outline
-          error: '#ffb4ab',
+        // MotoShop — dark, electric-blue accented storefront.
+        moto: {
+          bg: '#0c1118', // page background / surface
+          lowest: '#070a10', // inputs, deepest wells
+          low: '#121a24', // low surface
+          panel: '#161f2b', // cards / containers
+          high: '#212c3c', // hovers, raised
+          line: '#1f2937', // hairline borders
+          'line-2': '#2c3a4d', // stronger dividers
+          bright: '#3a4a61',
+          accent: '#2e7dfb', // primary action accent — electric blue
+          'accent-dim': '#1a4fa0', // pressed / muted blue
+          'accent-soft': '#8fc1ff', // light accent text on dark
+          ink: '#eef2f8', // primary text
+          muted: '#9fb0c3', // secondary text
+          warm: '#c3d3e8', // soft secondary text
+          outline: '#71829a', // faint borders / icons
+          error: '#ff6b6b',
         },
       },
       letterSpacing: {
         widest2: '0.22em',
       },
+      borderRadius: {
+        xl2: '1.25rem',
+      },
       boxShadow: {
-        panel: '0 1px 0 rgba(255,95,0,0.04), 0 18px 40px -24px rgba(0,0,0,0.8)',
+        panel: '0 1px 0 rgba(46,125,251,0.06), 0 20px 45px -26px rgba(0,0,0,0.85)',
+        glow: '0 0 0 1px rgba(46,125,251,0.35), 0 8px 24px -8px rgba(46,125,251,0.45)',
       },
       backgroundImage: {
-        'forge-fade': 'linear-gradient(90deg, #131313 0%, rgba(19,19,19,0.4) 55%, transparent 100%)',
+        'moto-fade': 'linear-gradient(90deg, #0c1118 0%, rgba(12,17,24,0.4) 55%, transparent 100%)',
       },
       maxWidth: {
         '8xl': '88rem',

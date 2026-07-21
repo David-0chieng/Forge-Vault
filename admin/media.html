@@ -3,32 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Media — ForgeVault Admin</title>
+    <title>Media — MotoShop Admin</title>
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="theme-color" content="#131313" />
+    <meta name="theme-color" content="#0c1118" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   </head>
 
-  <body class="min-h-screen bg-forge-bg">
-    <header data-admin-shell class="bg-forge-lowest"></header>
+  <body class="min-h-screen bg-moto-bg">
+    <header data-admin-shell class="bg-moto-lowest"></header>
 
     <main class="container-page py-10">
-      <h1 class="text-2xl font-extrabold tracking-tight text-forge-ink">Media</h1>
-      <p class="mt-1 max-w-3xl text-sm text-forge-outline">
+      <h1 class="text-2xl font-extrabold tracking-tight text-moto-ink">Media</h1>
+      <p class="mt-1 max-w-3xl text-sm text-moto-outline">
         Images are hosted on ImgBB. Upload here and they appear on the site immediately — no redeploy.
         Anything without an image keeps showing its gradient placeholder, so a half-finished catalogue
         never looks broken.
       </p>
 
-      <div data-imgbb-warning class="mt-6 hidden rounded-none border border-forge-line bg-forge-high p-4 text-sm font-semibold text-forge-salmon"></div>
+      <div data-imgbb-warning class="mt-6 hidden rounded-lg border border-moto-line bg-moto-high p-4 text-sm font-semibold text-moto-accent-soft"></div>
 
       <!-- ============ Hero slides ============ -->
       <section aria-labelledby="hero-heading" class="mt-10">
-        <h2 id="hero-heading" class="text-lg font-extrabold text-forge-ink">Hero slides</h2>
-        <p class="mt-1 text-sm text-forge-outline">
+        <h2 id="hero-heading" class="text-lg font-extrabold text-moto-ink">Hero slides</h2>
+        <p class="mt-1 text-sm text-moto-outline">
           The four full-width slides on the home page. Landscape, roughly 2400&times;1200. Dark images work
           best — white text and a dark overlay sit on top.
         </p>
@@ -37,10 +37,10 @@
 
       <!-- ============ Category tiles ============ -->
       <section aria-labelledby="cat-heading" class="mt-12">
-        <h2 id="cat-heading" class="text-lg font-extrabold text-forge-ink">Category tiles</h2>
-        <p class="mt-1 text-sm text-forge-outline">
+        <h2 id="cat-heading" class="text-lg font-extrabold text-moto-ink">Category tiles</h2>
+        <p class="mt-1 text-sm text-moto-outline">
           The "Shop by Category" grid on the home page.
-          <strong class="text-forge-muted">A category appears on the home page once it has an image</strong> —
+          <strong class="text-moto-muted">A category appears on the home page once it has an image</strong> —
           so uploading artwork for Seats adds a seventh tile.
         </p>
         <div data-category-slots class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
@@ -48,17 +48,17 @@
 
       <!-- ============ Partners ============ -->
       <section aria-labelledby="partner-heading" class="mt-12">
-        <h2 id="partner-heading" class="text-lg font-extrabold text-forge-ink">Partner logos</h2>
-        <p class="mt-1 text-sm text-forge-outline">Shown on the About page. A square PNG works best.</p>
+        <h2 id="partner-heading" class="text-lg font-extrabold text-moto-ink">Partner logos</h2>
+        <p class="mt-1 text-sm text-moto-outline">Shown on the About page. A square PNG works best.</p>
         <div data-partner-slots class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
       </section>
 
-      <p class="mt-12 max-w-3xl rounded-none border border-forge-line bg-forge-panel p-4 text-xs leading-relaxed text-forge-outline">
-        <strong class="text-forge-muted">A note on ImgBB.</strong>
+      <p class="mt-12 max-w-3xl rounded-lg border border-moto-line bg-moto-panel p-4 text-xs leading-relaxed text-moto-outline">
+        <strong class="text-moto-muted">A note on ImgBB.</strong>
         It is a free image host with no uptime guarantee, and images can be removed. If one disappears, the
         page falls back to its placeholder rather than breaking — but the photo is gone. For a shop that is
         taking real money, Supabase Storage (which you already pay for) is the safer home. Swapping is a
-        single file: <code class="rounded bg-forge-bg px-1 py-0.5 font-mono">api/_lib/storage.js</code>.
+        single file: <code class="rounded bg-moto-bg px-1 py-0.5 font-mono">api/_lib/storage.js</code>.
       </p>
     </main>
 

@@ -74,14 +74,14 @@ export async function paintAccountState(loadSession) {
 
   if (mobile) {
     mobile.innerHTML = `
-      <a href="/account.html" class="block rounded-none px-2 py-3 text-sm font-semibold text-forge-muted hover:bg-forge-low">
+      <a href="/account.html" class="block rounded-lg px-2 py-3 text-sm font-semibold text-moto-muted hover:bg-moto-low">
         Profile
       </a>
-      <a href="/orders.html" class="block rounded-none px-2 py-3 text-sm font-semibold text-forge-muted hover:bg-forge-low">
+      <a href="/orders.html" class="block rounded-lg px-2 py-3 text-sm font-semibold text-moto-muted hover:bg-moto-low">
         Your orders
       </a>
       <button type="button" data-signout
-              class="block w-full rounded-none px-2 py-3 text-left text-sm font-semibold text-forge-outline hover:bg-forge-low">
+              class="block w-full rounded-lg px-2 py-3 text-left text-sm font-semibold text-moto-outline hover:bg-moto-low">
         Sign out
       </button>`;
   }
@@ -221,9 +221,9 @@ export function setStatus(el, tone, message) {
   el.textContent = message ?? '';
 
   const classes = {
-    success: 'mt-4 rounded-none border border-forge-line bg-forge-high px-4 py-3 text-sm font-medium text-forge-salmon',
-    error: 'mt-4 rounded-none border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800',
-    info: 'mt-4 rounded-none border border-forge-line bg-forge-high px-4 py-3 text-sm font-medium text-forge-salmon',
+    success: 'mt-4 rounded-lg border border-moto-line bg-moto-high px-4 py-3 text-sm font-medium text-moto-accent-soft',
+    error: 'mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800',
+    info: 'mt-4 rounded-lg border border-moto-line bg-moto-high px-4 py-3 text-sm font-medium text-moto-accent-soft',
     idle: 'sr-only',
   };
 

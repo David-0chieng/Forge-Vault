@@ -1,9 +1,9 @@
 {
-  "name": "forgevault",
+  "name": "motoshop",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "ForgeVault — European auto parts storefront",
+  "description": "MotoShop — European auto parts storefront",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

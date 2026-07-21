@@ -26,3 +26,6 @@ about-*.png
 .DS_Store
 Thumbs.db
 *.log
+
+# Design inspiration reference — not part of the app
+Global car parts marketplace.zip

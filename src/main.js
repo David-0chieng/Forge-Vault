@@ -8,7 +8,7 @@ import { initHeader, initSliders, initSmoothScroll, paintAccountState, updateCar
 import { mountChrome } from './partials.js';
 
 /* =========================================================================
-   ForgeVault — storefront (index / about / contact)
+   MotoShop — storefront (index / about / contact)
    Every block below no-ops when its markup is absent, so one bundle serves
    all three pages.
    ========================================================================= */
@@ -30,11 +30,11 @@ function productCard(product, index) {
   const soldOut = product.stock < 1;
 
   const badge = discounted
-    ? `<span class="absolute left-3 top-3 z-10 rounded-none bg-red-600 px-2 py-1 text-xs font-bold text-white shadow-sm">-${product.discountPercent}%</span>`
+    ? `<span class="absolute left-3 top-3 z-10 rounded-lg bg-red-600 px-2 py-1 text-xs font-bold text-white shadow-sm">-${product.discountPercent}%</span>`
     : '';
 
   const oldPrice = discounted
-    ? `<span class="text-sm font-medium text-forge-outline line-through">${money(product.oldPriceCents)}</span>`
+    ? `<span class="text-sm font-medium text-moto-outline line-through">${money(product.oldPriceCents)}</span>`
     : '';
 
   const title = esc(product.title);
@@ -53,18 +53,18 @@ function productCard(product, index) {
       </a>
 
       <div class="flex flex-1 flex-col p-4">
-        <p class="text-xs ${soldOut ? 'font-semibold text-red-600' : 'text-forge-outline'}">
+        <p class="text-xs ${soldOut ? 'font-semibold text-red-600' : 'text-moto-outline'}">
           ${soldOut ? 'Out of stock' : `${product.stock} in stock`}
         </p>
 
-        <h3 class="mt-1 min-h-[3.75rem] text-sm font-bold leading-snug text-forge-ink">
-          <a href="/product.html?slug=${encodeURIComponent(product.slug)}" class="line-clamp-3 hover:text-forge-orange">${title}</a>
+        <h3 class="mt-1 min-h-[3.75rem] text-sm font-bold leading-snug text-moto-ink">
+          <a href="/product.html?slug=${encodeURIComponent(product.slug)}" class="line-clamp-3 hover:text-moto-accent">${title}</a>
         </h3>
 
-        <p class="mt-1.5 text-xs text-forge-outline">${esc(product.brand)} &bull; ${esc(product.category ?? '')}</p>
+        <p class="mt-1.5 text-xs text-moto-outline">${esc(product.brand)} &bull; ${esc(product.category ?? '')}</p>
 
         <div class="mt-3 flex flex-wrap items-baseline gap-2">
-          <span class="text-lg font-extrabold text-forge-ink">${money(product.priceCents)}</span>
+          <span class="text-lg font-extrabold text-moto-ink">${money(product.priceCents)}</span>
           ${oldPrice}
         </div>
 
@@ -74,8 +74,8 @@ function productCard(product, index) {
           ${soldOut ? 'disabled' : ''}
           class="btn mt-4 w-full ${
             soldOut
-              ? 'cursor-not-allowed bg-forge-bg text-forge-outline'
-              : 'bg-forge-orange text-white hover:brightness-110'
+              ? 'cursor-not-allowed bg-moto-bg text-moto-outline'
+              : 'bg-moto-accent text-white hover:brightness-110'
           }">
           ${soldOut ? 'Out of stock' : 'Add to cart'}
         </button>
@@ -105,11 +105,11 @@ const categoryTile = (category, index) => `
 const skeleton = (count, height) =>
   Array.from(
     { length: count },
-    () => `<div class="card ${height} animate-pulse bg-forge-high/60 ring-0"></div>`,
+    () => `<div class="card ${height} animate-pulse bg-moto-high/60 ring-0"></div>`,
   ).join('');
 
 const errorState = (message) => `
-  <div class="col-span-full rounded-none border border-amber-200 bg-amber-50 p-6 text-center">
+  <div class="col-span-full rounded-lg border border-amber-200 bg-amber-50 p-6 text-center">
     <p class="text-sm font-semibold text-amber-900">${esc(message)}</p>
     <button type="button" data-retry class="link-all mt-2">Try again</button>
   </div>`;
@@ -125,7 +125,7 @@ async function fillGrid(mount, fetcher, template, { skeletonHeight = 'h-80', emp
 
     mount.innerHTML = items.length
       ? items.map(template).join('')
-      : `<p class="col-span-full py-8 text-center text-sm text-forge-outline">${esc(empty)}</p>`;
+      : `<p class="col-span-full py-8 text-center text-sm text-moto-outline">${esc(empty)}</p>`;
   } catch (error) {
     mount.innerHTML = errorState(
       error.status === 0
@@ -176,13 +176,13 @@ function initAddToCart() {
     // Confirm in place. A silent cart is a cart people click three times.
     const original = button.textContent;
     button.textContent = 'Added ✓';
-    button.classList.add('bg-forge-orange', 'hover:brightness-110');
-    button.classList.remove('bg-forge-orange', 'hover:brightness-110');
+    button.classList.add('bg-moto-accent', 'hover:brightness-110');
+    button.classList.remove('bg-moto-accent', 'hover:brightness-110');
 
     setTimeout(() => {
       button.textContent = original;
-      button.classList.remove('bg-forge-orange', 'hover:brightness-110');
-      button.classList.add('bg-forge-orange', 'hover:brightness-110');
+      button.classList.remove('bg-moto-accent', 'hover:brightness-110');
+      button.classList.add('bg-moto-accent', 'hover:brightness-110');
     }, 1400);
   });
 }
@@ -247,9 +247,9 @@ function initContactForm() {
     status.textContent = message;
     status.className =
       tone === 'success'
-        ? 'mt-4 rounded-none border border-forge-line bg-forge-high px-4 py-3 text-sm font-medium text-forge-salmon'
+        ? 'mt-4 rounded-lg border border-moto-line bg-moto-high px-4 py-3 text-sm font-medium text-moto-accent-soft'
         : tone === 'error'
-          ? 'mt-4 rounded-none border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800'
+          ? 'mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800'
           : 'sr-only';
   };
 

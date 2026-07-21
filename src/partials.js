@@ -6,42 +6,31 @@
  * and the footer links cannot drift apart between pages.
  */
 
-const LOGO_GEAR = `
-  <svg viewBox="0 0 100 100" class="h-5 w-5" aria-hidden="true" focusable="false">
-    <g fill="currentColor">
-      <rect x="44" y="2" width="12" height="20" rx="2" />
-      <rect x="44" y="2" width="12" height="20" rx="2" transform="rotate(45 50 50)" />
-      <rect x="44" y="2" width="12" height="20" rx="2" transform="rotate(90 50 50)" />
-      <rect x="44" y="2" width="12" height="20" rx="2" transform="rotate(135 50 50)" />
-      <rect x="44" y="2" width="12" height="20" rx="2" transform="rotate(180 50 50)" />
-      <rect x="44" y="2" width="12" height="20" rx="2" transform="rotate(225 50 50)" />
-      <rect x="44" y="2" width="12" height="20" rx="2" transform="rotate(270 50 50)" />
-      <rect x="44" y="2" width="12" height="20" rx="2" transform="rotate(315 50 50)" />
-      <circle cx="50" cy="50" r="32" />
-    </g>
-    <circle cx="50" cy="50" r="12" fill="#ff5f00" />
+const LOGO_WRENCH = `
+  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2z" />
   </svg>`;
 
 /**
- * The Forge Vault wordmark — condensed Archivo Narrow, uppercase, an orange
- * machined square holding the gear. `mark` = mark colour, `text` = wordmark ink.
+ * The MotoShop wordmark — rounded Sora, an electric-blue badge holding the
+ * wrench mark. `mark` = mark colour, `text` = wordmark ink.
  */
-const wordmark = ({ text = 'text-forge-ink', size = 'text-lg' } = {}) => `
-  <span class="grid h-9 w-9 shrink-0 place-items-center bg-forge-orange text-black">${LOGO_GEAR}</span>
+const wordmark = ({ text = 'text-moto-ink', size = 'text-lg' } = {}) => `
+  <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-moto-accent text-white">${LOGO_WRENCH}</span>
   <span class="font-display ${size} font-bold uppercase leading-none tracking-tight ${text}">
-    <span class="text-forge-orange">FORGE</span> VAULT
+    <span class="text-moto-accent">Moto</span>Shop
   </span>`;
 
 const navLink = (href, label, current) =>
-  `<a href="${href}" class="nav-link${current ? ' text-forge-orange' : ''}"${current ? ' aria-current="page"' : ''}>${label}</a>`;
+  `<a href="${href}" class="nav-link${current ? ' text-moto-accent' : ''}"${current ? ' aria-current="page"' : ''}>${label}</a>`;
 
 const mobileLink = (href, label, current) =>
-  `<a href="${href}" class="rounded-none px-2 py-3 text-sm font-semibold ${current ? 'text-forge-orange' : 'text-forge-muted'} hover:bg-forge-low"${current ? ' aria-current="page"' : ''}>${label}</a>`;
+  `<a href="${href}" class="rounded-lg px-2 py-3 text-sm font-semibold ${current ? 'text-moto-accent' : 'text-moto-muted'} hover:bg-moto-low"${current ? ' aria-current="page"' : ''}>${label}</a>`;
 
 const languageSelect = (id) => `
-  <label for="${id}" class="text-xs font-semibold uppercase tracking-wide text-forge-outline">Language</label>
+  <label for="${id}" class="text-xs font-semibold uppercase tracking-wide text-moto-outline">Language</label>
   <select id="${id}" name="${id}"
-          class="rounded-none border border-forge-line bg-forge-panel py-1.5 pl-2 pr-7 text-sm font-medium text-forge-muted focus:border-forge-orange focus:outline-none focus:ring-2 focus:ring-forge-orange">
+          class="rounded-lg border border-moto-line bg-moto-panel py-1.5 pl-2 pr-7 text-sm font-medium text-moto-muted focus:border-moto-accent focus:outline-none focus:ring-2 focus:ring-moto-accent">
     <option>English</option>
     <option>Swahili</option>
     <option>Nederlands</option>
@@ -52,7 +41,7 @@ export function header(page = '') {
   return `
   <div class="container-page">
     <div class="flex h-16 items-center justify-between gap-4 lg:h-[4.5rem]">
-      <a href="/index.html" class="flex shrink-0 items-center gap-2.5" aria-label="Forge Vault — home">
+      <a href="/index.html" class="flex shrink-0 items-center gap-2.5" aria-label="MotoShop — home">
         ${wordmark()}
       </a>
 
@@ -69,7 +58,7 @@ export function header(page = '') {
              signed-in menu once the session has been resolved. -->
         <div data-account class="hidden sm:block">
           <a href="/account.html" data-account-signin
-             class="flex items-center gap-1.5 rounded-none px-2 py-1.5 text-sm font-semibold text-forge-muted transition hover:text-forge-orange">
+             class="flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-semibold text-moto-muted transition hover:text-moto-accent">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
               <circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>
             </svg>
@@ -78,32 +67,32 @@ export function header(page = '') {
 
           <div data-account-menu class="hidden items-center gap-3">
             <a href="/account.html"
-               class="flex items-center gap-1.5 px-2 py-1.5 font-display text-sm font-semibold uppercase tracking-wide text-forge-muted transition hover:text-forge-orange">
+               class="flex items-center gap-1.5 px-2 py-1.5 font-display text-sm font-semibold uppercase tracking-wide text-moto-muted transition hover:text-moto-accent">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
                 <circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>
               </svg>
               <span data-account-name>Profile</span>
             </a>
-            <button type="button" data-signout class="font-mono text-[11px] uppercase tracking-widest text-forge-outline transition hover:text-forge-error">
+            <button type="button" data-signout class="font-mono text-[11px] uppercase tracking-widest text-moto-outline transition hover:text-moto-error">
               Sign out
             </button>
           </div>
         </div>
 
         <a href="/cart.html"
-           class="relative flex items-center gap-1.5 rounded-none px-2 py-1.5 text-sm font-semibold text-forge-muted transition hover:text-forge-orange">
+           class="relative flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-semibold text-moto-muted transition hover:text-moto-accent">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
             <circle cx="9" cy="20" r="1.5" /><circle cx="18" cy="20" r="1.5" />
             <path d="M2 3h2.5l2.2 11.2a1.5 1.5 0 0 0 1.5 1.2h8.9a1.5 1.5 0 0 0 1.5-1.2L21 7H5.4" />
           </svg>
           <span>Cart</span>
           <span data-cart-count
-                class="hidden absolute -right-1 -top-0.5 grid h-5 min-w-[1.25rem] place-items-center rounded-full bg-forge-orange px-1 text-[11px] font-bold text-white">0</span>
+                class="hidden absolute -right-1 -top-0.5 grid h-5 min-w-[1.25rem] place-items-center rounded-full bg-moto-accent px-1 text-[11px] font-bold text-white">0</span>
         </a>
 
         <button type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-nav"
                 aria-label="Toggle navigation menu"
-                class="grid h-10 w-10 place-items-center rounded-none text-forge-muted transition hover:bg-forge-high md:hidden">
+                class="grid h-10 w-10 place-items-center rounded-lg text-moto-muted transition hover:bg-moto-high md:hidden">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="h-6 w-6" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" />
           </svg>
@@ -112,17 +101,17 @@ export function header(page = '') {
     </div>
   </div>
 
-  <div id="mobile-nav" data-menu-panel class="hidden border-t border-forge-line bg-forge-panel md:hidden">
+  <div id="mobile-nav" data-menu-panel class="hidden border-t border-moto-line bg-moto-panel md:hidden">
     <nav class="container-page flex flex-col py-3" aria-label="Mobile">
       ${mobileLink('/products.html', 'Products', page === 'products')}
       ${mobileLink('/about.html', 'About', page === 'about')}
       ${mobileLink('/contact.html', 'Contact', page === 'contact')}
 
-      <div class="mt-2 border-t border-forge-line pt-2" data-account-mobile>
+      <div class="mt-2 border-t border-moto-line pt-2" data-account-mobile>
         ${mobileLink('/account.html', 'Sign in', false)}
       </div>
 
-      <div class="mt-2 flex items-center gap-2 border-t border-forge-line px-2 pt-4">
+      <div class="mt-2 flex items-center gap-2 border-t border-moto-line px-2 pt-4">
         ${languageSelect('language-mobile')}
       </div>
     </nav>
@@ -143,8 +132,8 @@ export function footer() {
     <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
       <div class="lg:pr-8">
         <span class="inline-flex items-center gap-2.5">${wordmark({ text: 'text-white' })}</span>
-        <p class="mt-5 text-sm leading-relaxed text-forge-outline">
-          Your ultimate destination for premium automotive and motor parts. Fast shipping, authentic products, and
+        <p class="mt-5 text-sm leading-relaxed text-moto-outline">
+          MotoShop is your destination for premium automotive and motor parts. Fast shipping, authentic products, and
           expert support for all your vehicle needs.
         </p>
       </div>
@@ -170,8 +159,8 @@ export function footer() {
       ])}
     </div>
 
-    <div class="mt-12 flex flex-col items-center gap-4 border-t border-forge-line pt-8">
-      <p class="text-sm text-forge-outline">&copy; 2026 ForgeVault. All rights reserved.</p>
+    <div class="mt-12 flex flex-col items-center gap-4 border-t border-moto-line pt-8">
+      <p class="text-sm text-moto-outline">&copy; 2026 MotoShop. All rights reserved.</p>
 
       <ul class="flex items-center gap-6">
         <li>
@@ -188,7 +177,7 @@ export function footer() {
            repeated failures. Hiding the link was never the control.
            rel=nofollow keeps it out of crawlers' link graphs. -->
       <a href="/admin/login.html" rel="nofollow"
-         class="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-forge-muted transition hover:text-forge-muted">
+         class="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-moto-muted transition hover:text-moto-muted">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
              stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5" aria-hidden="true">
           <rect x="4" y="10" width="16" height="10" rx="2" />

@@ -5,7 +5,7 @@ import { setStatus, showFieldErrors } from './lib/ui.js';
 import { uploadImage } from './lib/upload.js';
 
 /* =========================================================================
-   ForgeVault — admin panel
+   MotoShop — admin panel
    Pages: login, dashboard, products, orders, refunds.
    ========================================================================= */
 
@@ -39,8 +39,8 @@ function mountShell(active) {
 
   const link = (href, label, key) => `
     <a href="${href}"
-       class="rounded-none px-3 py-2 text-sm font-semibold transition ${
-         active === key ? 'bg-forge-orange text-white' : 'text-forge-muted hover:bg-forge-high/10 hover:text-white'
+       class="rounded-lg px-3 py-2 text-sm font-semibold transition ${
+         active === key ? 'bg-moto-accent text-white' : 'text-moto-muted hover:bg-moto-high/10 hover:text-white'
        }">${label}</a>`;
 
   shell.innerHTML = `
@@ -48,9 +48,9 @@ function mountShell(active) {
       <div class="flex items-center gap-6">
         <a href="/admin/index.html" class="flex items-center gap-2 text-white">
           <span class="text-base uppercase tracking-[0.14em]">
-            <span class="font-extrabold">Forge</span><span class="font-light">Vault</span>
+            <span class="text-moto-accent">Moto</span><span class="font-light">Shop</span>
           </span>
-          <span class="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-forge-muted">Admin</span>
+          <span class="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-moto-muted">Admin</span>
         </a>
 
         <nav class="hidden items-center gap-1 md:flex" aria-label="Admin">
@@ -63,11 +63,11 @@ function mountShell(active) {
       </div>
 
       <div class="flex items-center gap-4">
-        <span class="hidden text-sm text-forge-outline sm:block">
+        <span class="hidden text-sm text-moto-outline sm:block">
           ${esc(currentAdmin?.name ?? '')}
-          <span class="ml-1 rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold uppercase text-forge-muted">${esc(currentAdmin?.role ?? '')}</span>
+          <span class="ml-1 rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold uppercase text-moto-muted">${esc(currentAdmin?.role ?? '')}</span>
         </span>
-        <button type="button" data-signout class="text-sm font-semibold text-forge-muted hover:text-white">Sign out</button>
+        <button type="button" data-signout class="text-sm font-semibold text-moto-muted hover:text-white">Sign out</button>
       </div>
     </div>
 
@@ -179,9 +179,9 @@ async function initDashboard() {
 
     const tile = (label, value, hint, tone = 'slate') => `
       <div class="card p-5">
-        <p class="text-xs font-bold uppercase tracking-wide text-forge-outline">${esc(label)}</p>
-        <p class="mt-2 text-3xl font-extrabold tabular-nums text-forge-ink">${value}</p>
-        ${hint ? `<p class="mt-1 text-xs ${tone === 'warn' ? 'font-semibold text-forge-salmon' : 'text-forge-outline'}">${esc(hint)}</p>` : ''}
+        <p class="text-xs font-bold uppercase tracking-wide text-moto-outline">${esc(label)}</p>
+        <p class="mt-2 text-3xl font-extrabold tabular-nums text-moto-ink">${value}</p>
+        ${hint ? `<p class="mt-1 text-xs ${tone === 'warn' ? 'font-semibold text-moto-accent-soft' : 'text-moto-outline'}">${esc(hint)}</p>` : ''}
       </div>`;
 
     mount.innerHTML = `
@@ -194,7 +194,7 @@ async function initDashboard() {
 
       ${
         stats.failedEmails
-          ? `<div class="mt-6 rounded-none border border-forge-line bg-forge-high p-4 text-sm font-semibold text-red-800">
+          ? `<div class="mt-6 rounded-lg border border-moto-line bg-moto-high p-4 text-sm font-semibold text-red-800">
                ${stats.failedEmails} email${stats.failedEmails === 1 ? '' : 's'} failed to send in the last 30 days.
                Customers may not have received receipts — check your Brevo configuration.
              </div>`
@@ -203,7 +203,7 @@ async function initDashboard() {
 
       <div class="mt-8 grid gap-6 lg:grid-cols-2">
         <section class="card p-6">
-          <h2 class="text-lg font-extrabold text-forge-ink">Low stock</h2>
+          <h2 class="text-lg font-extrabold text-moto-ink">Low stock</h2>
           ${
             stats.lowStock.length
               ? `<ul class="mt-4 divide-y divide-slate-200">
@@ -211,20 +211,20 @@ async function initDashboard() {
                      .map(
                        (product) => `
                      <li class="flex items-center justify-between gap-4 py-3">
-                       <span class="line-clamp-1 text-sm text-forge-muted">${esc(product.title)}</span>
+                       <span class="line-clamp-1 text-sm text-moto-muted">${esc(product.title)}</span>
                        <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-bold ${
-                         product.stock === 0 ? 'bg-red-100 text-forge-error' : 'bg-forge-high text-forge-salmon'
+                         product.stock === 0 ? 'bg-red-100 text-moto-error' : 'bg-moto-high text-moto-accent-soft'
                        }">${product.stock} left</span>
                      </li>`,
                      )
                      .join('')}
                  </ul>`
-              : '<p class="mt-4 text-sm text-forge-outline">Nothing is running low.</p>'
+              : '<p class="mt-4 text-sm text-moto-outline">Nothing is running low.</p>'
           }
         </section>
 
         <section class="card p-6">
-          <h2 class="text-lg font-extrabold text-forge-ink">Orders by status (30d)</h2>
+          <h2 class="text-lg font-extrabold text-moto-ink">Orders by status (30d)</h2>
           <ul class="mt-4 space-y-2">
             ${
               Object.entries(stats.byStatus).length
@@ -234,17 +234,17 @@ async function initDashboard() {
                       ([status, count]) => `
                   <li class="flex items-center justify-between gap-4">
                     ${statusBadge(status)}
-                    <span class="text-sm font-bold tabular-nums text-forge-ink">${count}</span>
+                    <span class="text-sm font-bold tabular-nums text-moto-ink">${count}</span>
                   </li>`,
                     )
                     .join('')
-                : '<li class="text-sm text-forge-outline">No orders yet.</li>'
+                : '<li class="text-sm text-moto-outline">No orders yet.</li>'
             }
           </ul>
         </section>
       </div>`;
   } catch (error) {
-    mount.innerHTML = `<div class="card p-8 text-center text-sm font-semibold text-forge-error">${esc(error.message)}</div>`;
+    mount.innerHTML = `<div class="card p-8 text-center text-sm font-semibold text-moto-error">${esc(error.message)}</div>`;
   }
 }
 
@@ -263,7 +263,7 @@ async function initOrders() {
   const detail = document.querySelector('[data-order-detail]');
 
   async function load() {
-    mount.innerHTML = '<div class="card h-64 animate-pulse bg-forge-high/60"></div>';
+    mount.innerHTML = '<div class="card h-64 animate-pulse bg-moto-high/60"></div>';
 
     try {
       const query = new URLSearchParams();
@@ -275,7 +275,7 @@ async function initOrders() {
         ? `<div class="card overflow-hidden">
              <div class="overflow-x-auto">
                <table class="w-full text-left text-sm">
-                 <thead class="border-b border-forge-line bg-forge-low text-xs uppercase tracking-wide text-forge-outline">
+                 <thead class="border-b border-moto-line bg-moto-low text-xs uppercase tracking-wide text-moto-outline">
                    <tr>
                      <th scope="col" class="px-4 py-3 font-bold">Order</th>
                      <th scope="col" class="px-4 py-3 font-bold">Customer</th>
@@ -291,22 +291,22 @@ async function initOrders() {
                </table>
              </div>
            </div>`
-        : '<div class="card p-12 text-center text-forge-outline">No orders match this filter.</div>';
+        : '<div class="card p-12 text-center text-moto-outline">No orders match this filter.</div>';
     } catch (error) {
-      mount.innerHTML = `<div class="card p-8 text-center text-sm font-semibold text-forge-error">${esc(error.message)}</div>`;
+      mount.innerHTML = `<div class="card p-8 text-center text-sm font-semibold text-moto-error">${esc(error.message)}</div>`;
     }
   }
 
   const orderRow = (order) => `
-    <tr class="hover:bg-forge-low">
-      <td class="px-4 py-3 font-mono font-semibold text-forge-ink">${esc(order.order_number)}</td>
-      <td class="px-4 py-3 text-forge-muted">${esc(order.email)}</td>
+    <tr class="hover:bg-moto-low">
+      <td class="px-4 py-3 font-mono font-semibold text-moto-ink">${esc(order.order_number)}</td>
+      <td class="px-4 py-3 text-moto-muted">${esc(order.email)}</td>
       <td class="px-4 py-3">${statusBadge(order.status)}</td>
-      <td class="px-4 py-3 text-right font-bold tabular-nums text-forge-ink">
+      <td class="px-4 py-3 text-right font-bold tabular-nums text-moto-ink">
         ${money(order.total_cents, order.currency)}
-        ${order.refunded_cents ? `<span class="block text-xs font-medium text-forge-salmon">−${money(order.refunded_cents, order.currency)}</span>` : ''}
+        ${order.refunded_cents ? `<span class="block text-xs font-medium text-moto-accent-soft">−${money(order.refunded_cents, order.currency)}</span>` : ''}
       </td>
-      <td class="px-4 py-3 text-forge-outline">${formatDate(order.created_at)}</td>
+      <td class="px-4 py-3 text-moto-outline">${formatDate(order.created_at)}</td>
       <td class="px-4 py-3 text-right">
         <button type="button" data-open="${order.id}" class="link-all">Open</button>
       </td>
@@ -322,7 +322,7 @@ async function initOrders() {
   /* ---- Detail drawer ---- */
   async function openOrder(id) {
     detail.classList.remove('hidden');
-    detail.innerHTML = '<div class="card h-64 animate-pulse bg-forge-high/60"></div>';
+    detail.innerHTML = '<div class="card h-64 animate-pulse bg-moto-high/60"></div>';
 
     const { order, items, payments, refunds, emails } = await get(`/api/admin/orders/${id}`);
 
@@ -343,64 +343,64 @@ async function initOrders() {
       <div class="card p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p class="font-mono text-lg font-extrabold text-forge-ink">${esc(order.order_number)}</p>
-            <p class="mt-1 text-sm text-forge-outline">${esc(order.email)} &bull; ${formatDateTime(order.created_at)}</p>
+            <p class="font-mono text-lg font-extrabold text-moto-ink">${esc(order.order_number)}</p>
+            <p class="mt-1 text-sm text-moto-outline">${esc(order.email)} &bull; ${formatDateTime(order.created_at)}</p>
           </div>
           <div class="flex items-center gap-3">
             ${statusBadge(order.status)}
-            <button type="button" data-close class="text-forge-outline hover:text-forge-ink" aria-label="Close">✕</button>
+            <button type="button" data-close class="text-moto-outline hover:text-moto-ink" aria-label="Close">✕</button>
           </div>
         </div>
 
         ${
           order.notes
-            ? `<div class="mt-4 rounded-none border border-forge-line bg-forge-high p-3 text-sm font-semibold text-forge-salmon">${esc(order.notes)}</div>`
+            ? `<div class="mt-4 rounded-lg border border-moto-line bg-moto-high p-3 text-sm font-semibold text-moto-accent-soft">${esc(order.notes)}</div>`
             : ''
         }
 
         <div class="mt-6 grid gap-6 lg:grid-cols-2">
           <div>
-            <h3 class="text-xs font-bold uppercase tracking-wide text-forge-outline">Items</h3>
+            <h3 class="text-xs font-bold uppercase tracking-wide text-moto-outline">Items</h3>
             <ul class="mt-3 divide-y divide-slate-200">
               ${items
                 .map(
                   (item) => `
                 <li class="flex justify-between gap-4 py-2.5 text-sm">
-                  <span class="text-forge-muted">${esc(item.title)} <span class="text-forge-outline">× ${item.quantity}</span></span>
+                  <span class="text-moto-muted">${esc(item.title)} <span class="text-moto-outline">× ${item.quantity}</span></span>
                   <span class="shrink-0 font-semibold">${money(item.line_total_cents, order.currency)}</span>
                 </li>`,
                 )
                 .join('')}
             </ul>
-            <div class="mt-3 flex justify-between border-t-2 border-forge-orange pt-3 font-extrabold">
+            <div class="mt-3 flex justify-between border-t-2 border-moto-accent pt-3 font-extrabold">
               <span>Total</span><span>${money(order.total_cents, order.currency)}</span>
             </div>
-            ${order.refunded_cents ? `<p class="mt-1 text-right text-sm font-semibold text-forge-salmon">Refunded ${money(order.refunded_cents, order.currency)}</p>` : ''}
+            ${order.refunded_cents ? `<p class="mt-1 text-right text-sm font-semibold text-moto-accent-soft">Refunded ${money(order.refunded_cents, order.currency)}</p>` : ''}
           </div>
 
           <div>
-            <h3 class="text-xs font-bold uppercase tracking-wide text-forge-outline">Shipping</h3>
-            <address class="mt-3 text-sm not-italic leading-relaxed text-forge-muted">
+            <h3 class="text-xs font-bold uppercase tracking-wide text-moto-outline">Shipping</h3>
+            <address class="mt-3 text-sm not-italic leading-relaxed text-moto-muted">
               ${[order.ship_name, order.ship_line1, order.ship_line2, `${order.ship_postal_code ?? ''} ${order.ship_city ?? ''}`.trim(), order.ship_country]
                 .filter(Boolean)
                 .map(esc)
                 .join('<br>')}
             </address>
 
-            <h3 class="mt-5 text-xs font-bold uppercase tracking-wide text-forge-outline">Payments</h3>
-            <ul class="mt-2 space-y-1 text-sm text-forge-muted">
-              ${payments.map((p) => `<li>${esc(p.provider)} — ${esc(p.status)} — ${money(p.amount_cents, order.currency)}</li>`).join('') || '<li class="text-forge-outline">None</li>'}
+            <h3 class="mt-5 text-xs font-bold uppercase tracking-wide text-moto-outline">Payments</h3>
+            <ul class="mt-2 space-y-1 text-sm text-moto-muted">
+              ${payments.map((p) => `<li>${esc(p.provider)} — ${esc(p.status)} — ${money(p.amount_cents, order.currency)}</li>`).join('') || '<li class="text-moto-outline">None</li>'}
             </ul>
 
-            <h3 class="mt-5 text-xs font-bold uppercase tracking-wide text-forge-outline">Emails sent</h3>
-            <ul class="mt-2 space-y-1 text-xs text-forge-outline">
+            <h3 class="mt-5 text-xs font-bold uppercase tracking-wide text-moto-outline">Emails sent</h3>
+            <ul class="mt-2 space-y-1 text-xs text-moto-outline">
               ${
                 emails
                   .map(
                     (e) =>
                       `<li class="${e.status === 'failed' ? 'font-semibold text-red-600' : ''}">${esc(e.template)} — ${e.status} — ${formatDate(e.created_at)}</li>`,
                   )
-                  .join('') || '<li class="text-forge-outline">None</li>'
+                  .join('') || '<li class="text-moto-outline">None</li>'
               }
             </ul>
           </div>
@@ -418,7 +418,7 @@ async function initOrders() {
 
         <div class="mt-6 flex flex-wrap gap-3">
           ${actions.map(([action, label, cls]) => `<button type="button" data-action="${action}" class="${cls}">${label}</button>`).join('')}
-          ${canRefund ? `<button type="button" data-refund class="btn border border-red-300 bg-forge-panel text-forge-error hover:bg-forge-high">Refund (up to ${money(refundable, order.currency)})</button>` : ''}
+          ${canRefund ? `<button type="button" data-refund class="btn border border-red-300 bg-moto-panel text-moto-error hover:bg-moto-high">Refund (up to ${money(refundable, order.currency)})</button>` : ''}
         </div>
 
         <p data-action-status role="status" aria-live="polite" class="sr-only"></p>
@@ -507,7 +507,7 @@ async function initProducts() {
   let editingId = null;
 
   async function load() {
-    mount.innerHTML = '<div class="card h-64 animate-pulse bg-forge-high/60"></div>';
+    mount.innerHTML = '<div class="card h-64 animate-pulse bg-moto-high/60"></div>';
 
     try {
       const { products } = await get('/api/admin/products');
@@ -516,7 +516,7 @@ async function initProducts() {
         <div class="card overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
-              <thead class="border-b border-forge-line bg-forge-low text-xs uppercase tracking-wide text-forge-outline">
+              <thead class="border-b border-moto-line bg-moto-low text-xs uppercase tracking-wide text-moto-outline">
                 <tr>
                   <th scope="col" class="px-4 py-3 font-bold">Part</th>
                   <th scope="col" class="px-4 py-3 font-bold">Brand</th>
@@ -533,26 +533,26 @@ async function initProducts() {
           </div>
         </div>`;
     } catch (error) {
-      mount.innerHTML = `<div class="card p-8 text-center text-sm font-semibold text-forge-error">${esc(error.message)}</div>`;
+      mount.innerHTML = `<div class="card p-8 text-center text-sm font-semibold text-moto-error">${esc(error.message)}</div>`;
     }
   }
 
   const flag = (on, label) =>
-    on ? `<span class="rounded bg-forge-high px-1.5 py-0.5 text-[10px] font-bold uppercase text-forge-salmon">${label}</span>` : '';
+    on ? `<span class="rounded bg-moto-high px-1.5 py-0.5 text-[10px] font-bold uppercase text-moto-accent-soft">${label}</span>` : '';
 
   const productRow = (product) => `
-    <tr class="hover:bg-forge-low ${product.is_active ? '' : 'opacity-50'}">
+    <tr class="hover:bg-moto-low ${product.is_active ? '' : 'opacity-50'}">
       <td class="px-4 py-3">
-        <span class="line-clamp-1 font-semibold text-forge-ink">${esc(product.title)}</span>
-        <span class="text-xs text-forge-outline">${esc(product.slug)}</span>
+        <span class="line-clamp-1 font-semibold text-moto-ink">${esc(product.title)}</span>
+        <span class="text-xs text-moto-outline">${esc(product.slug)}</span>
       </td>
-      <td class="px-4 py-3 text-forge-muted">${esc(product.brand)}</td>
+      <td class="px-4 py-3 text-moto-muted">${esc(product.brand)}</td>
       <td class="px-4 py-3 text-right font-bold tabular-nums">
         ${money(product.price_cents)}
         ${product.discount_percent ? `<span class="block text-xs font-semibold text-red-600">−${product.discount_percent}%</span>` : ''}
       </td>
       <td class="px-4 py-3 text-right">
-        <span class="font-bold tabular-nums ${product.stock === 0 ? 'text-red-600' : product.stock <= 2 ? 'text-amber-600' : 'text-forge-ink'}">${product.stock}</span>
+        <span class="font-bold tabular-nums ${product.stock === 0 ? 'text-red-600' : product.stock <= 2 ? 'text-amber-600' : 'text-moto-ink'}">${product.stock}</span>
       </td>
       <td class="px-4 py-3">
         <div class="flex flex-wrap gap-1">
@@ -563,7 +563,7 @@ async function initProducts() {
       </td>
       <td class="px-4 py-3 text-right">
         <button type="button" data-edit='${esc(JSON.stringify(product))}' class="link-all">Edit</button>
-        <button type="button" data-delete="${product.id}" class="ml-3 text-sm font-semibold text-red-600 hover:text-forge-error">Delete</button>
+        <button type="button" data-delete="${product.id}" class="ml-3 text-sm font-semibold text-red-600 hover:text-moto-error">Delete</button>
       </td>
     </tr>`;
 
@@ -620,7 +620,7 @@ async function initProducts() {
     if (!file) return;
 
     uploadStatus.textContent = 'Preparing…';
-    uploadStatus.className = 'mt-1 text-xs text-forge-outline';
+    uploadStatus.className = 'mt-1 text-xs text-moto-outline';
 
     try {
       const { url, originalBytes, uploadedBytes } = await uploadImage(file, (message) => {
@@ -634,7 +634,7 @@ async function initProducts() {
       paintPreview(url);
 
       uploadStatus.textContent = `Uploaded (${(originalBytes / 1048576).toFixed(1)} MB → ${(uploadedBytes / 1024).toFixed(0)} KB). Save to attach it.`;
-      uploadStatus.className = 'mt-1 text-xs font-semibold text-forge-salmon';
+      uploadStatus.className = 'mt-1 text-xs font-semibold text-moto-accent-soft';
     } catch (error) {
       uploadStatus.textContent = error.message;
       uploadStatus.className = 'mt-1 text-xs font-semibold text-red-600';
@@ -741,7 +741,7 @@ async function initRefunds() {
   const filter = document.querySelector('[data-refund-filter]');
 
   async function load() {
-    mount.innerHTML = '<div class="card h-64 animate-pulse bg-forge-high/60"></div>';
+    mount.innerHTML = '<div class="card h-64 animate-pulse bg-moto-high/60"></div>';
 
     try {
       const query = new URLSearchParams();
@@ -751,19 +751,19 @@ async function initRefunds() {
 
       mount.innerHTML = refunds.length
         ? `<div class="space-y-4">${refunds.map(refundCard).join('')}</div>`
-        : '<div class="card p-12 text-center text-forge-outline">No refunds match this filter.</div>';
+        : '<div class="card p-12 text-center text-moto-outline">No refunds match this filter.</div>';
     } catch (error) {
-      mount.innerHTML = `<div class="card p-8 text-center text-sm font-semibold text-forge-error">${esc(error.message)}</div>`;
+      mount.innerHTML = `<div class="card p-8 text-center text-sm font-semibold text-moto-error">${esc(error.message)}</div>`;
     }
   }
 
   const TONE = {
-    requested: 'bg-forge-high text-forge-salmon ring-amber-200',
-    processing: 'bg-forge-high text-forge-salmon ring-blue-200',
-    succeeded: 'bg-forge-high text-forge-salmon ring-green-200',
-    failed: 'bg-forge-high text-forge-error ring-red-200',
-    rejected: 'bg-forge-bg text-forge-muted ring-forge-line',
-    approved: 'bg-forge-high text-forge-salmon ring-blue-200',
+    requested: 'bg-moto-high text-moto-accent-soft ring-amber-200',
+    processing: 'bg-moto-high text-moto-accent-soft ring-blue-200',
+    succeeded: 'bg-moto-high text-moto-accent-soft ring-green-200',
+    failed: 'bg-moto-high text-moto-error ring-red-200',
+    rejected: 'bg-moto-bg text-moto-muted ring-moto-line',
+    approved: 'bg-moto-high text-moto-accent-soft ring-blue-200',
   };
 
   const canApprove = () => ['owner', 'manager'].includes(currentAdmin.role);
@@ -772,17 +772,17 @@ async function initRefunds() {
     <article class="card p-6">
       <div class="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p class="font-mono text-sm font-bold text-forge-ink">${esc(refund.order?.order_number ?? '—')}</p>
-          <p class="mt-1 text-sm text-forge-outline">${esc(refund.order?.email ?? '')} &bull; ${formatDateTime(refund.created_at)}</p>
+          <p class="font-mono text-sm font-bold text-moto-ink">${esc(refund.order?.order_number ?? '—')}</p>
+          <p class="mt-1 text-sm text-moto-outline">${esc(refund.order?.email ?? '')} &bull; ${formatDateTime(refund.created_at)}</p>
         </div>
         <div class="flex items-center gap-3">
-          <span class="text-xl font-extrabold text-forge-ink">${money(refund.amount_cents, refund.order?.currency)}</span>
+          <span class="text-xl font-extrabold text-moto-ink">${money(refund.amount_cents, refund.order?.currency)}</span>
           <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ${TONE[refund.status] ?? TONE.rejected}">${esc(refund.status)}</span>
         </div>
       </div>
 
-      ${refund.reason ? `<p class="mt-4 rounded-none bg-forge-low p-3 text-sm text-forge-muted">${esc(refund.reason)}</p>` : ''}
-      ${refund.failure_reason ? `<p class="mt-3 rounded-none bg-forge-high p-3 text-sm font-semibold text-red-800">${esc(refund.failure_reason)}</p>` : ''}
+      ${refund.reason ? `<p class="mt-4 rounded-lg bg-moto-low p-3 text-sm text-moto-muted">${esc(refund.reason)}</p>` : ''}
+      ${refund.failure_reason ? `<p class="mt-3 rounded-lg bg-moto-high p-3 text-sm font-semibold text-red-800">${esc(refund.failure_reason)}</p>` : ''}
 
       ${
         refund.status === 'requested' && canApprove()
@@ -791,11 +791,11 @@ async function initRefunds() {
                        class="btn bg-red-600 text-white hover:bg-red-700">Approve &amp; refund</button>
                <button type="button" data-reject="${refund.id}" class="btn-outline">Reject</button>
              </div>
-             <p class="mt-3 text-xs text-forge-outline">
+             <p class="mt-3 text-xs text-moto-outline">
                Approving moves real money back to the customer immediately. It cannot be undone.
              </p>`
           : refund.status === 'requested'
-            ? '<p class="mt-4 text-xs font-semibold text-forge-outline">Only an owner or manager can approve a refund.</p>'
+            ? '<p class="mt-4 text-xs font-semibold text-moto-outline">Only an owner or manager can approve a refund.</p>'
             : ''
       }
 
@@ -873,7 +873,7 @@ async function initRefunds() {
 function imageSlot({ id, label, hint, url, aspect = 'aspect-[16/9]' }, onSave) {
   return `
     <div class="card p-4" data-slot="${esc(id)}">
-      <div class="ph ph-2 ${aspect} overflow-hidden rounded-none">
+      <div class="ph ph-2 ${aspect} overflow-hidden rounded-lg">
         ${
           url
             ? `<img src="${esc(url)}" alt="" referrerpolicy="no-referrer" class="absolute inset-0 h-full w-full object-cover">`
@@ -885,18 +885,18 @@ function imageSlot({ id, label, hint, url, aspect = 'aspect-[16/9]' }, onSave) {
         }
       </div>
 
-      <p class="mt-3 text-sm font-bold text-forge-ink">${esc(label)}</p>
-      ${hint ? `<p class="mt-0.5 text-xs text-forge-outline">${esc(hint)}</p>` : ''}
+      <p class="mt-3 text-sm font-bold text-moto-ink">${esc(label)}</p>
+      ${hint ? `<p class="mt-0.5 text-xs text-moto-outline">${esc(hint)}</p>` : ''}
 
       <div class="mt-3 flex items-center gap-2">
         <label class="btn-outline flex-1 cursor-pointer justify-center text-xs">
           <input type="file" accept="image/*" class="sr-only" data-file>
           ${url ? 'Replace' : 'Upload'}
         </label>
-        ${url ? '<button type="button" data-clear class="btn text-xs text-red-600 hover:bg-forge-high">Remove</button>' : ''}
+        ${url ? '<button type="button" data-clear class="btn text-xs text-red-600 hover:bg-moto-high">Remove</button>' : ''}
       </div>
 
-      <p data-slot-status role="status" aria-live="polite" class="mt-2 text-xs text-forge-outline"></p>
+      <p data-slot-status role="status" aria-live="polite" class="mt-2 text-xs text-moto-outline"></p>
     </div>`;
 }
 
@@ -912,7 +912,7 @@ function bindSlot(root, id, onSave, reload) {
     if (!file) return;
 
     status.textContent = 'Preparing…';
-    status.className = 'mt-2 text-xs text-forge-outline';
+    status.className = 'mt-2 text-xs text-moto-outline';
 
     try {
       const { url, originalBytes, uploadedBytes } = await uploadImage(file, (message) => {
@@ -922,7 +922,7 @@ function bindSlot(root, id, onSave, reload) {
       await onSave(url);
 
       status.textContent = `Uploaded (${(originalBytes / 1048576).toFixed(1)} MB → ${(uploadedBytes / 1024).toFixed(0)} KB)`;
-      status.className = 'mt-2 text-xs font-semibold text-forge-salmon';
+      status.className = 'mt-2 text-xs font-semibold text-moto-accent-soft';
 
       await reload();
     } catch (error) {
@@ -1003,7 +1003,7 @@ async function initMedia() {
   try {
     await load();
   } catch (error) {
-    heroMount.innerHTML = `<div class="card p-6 text-sm font-semibold text-forge-error">${esc(error.message)}</div>`;
+    heroMount.innerHTML = `<div class="card p-6 text-sm font-semibold text-moto-error">${esc(error.message)}</div>`;
     return;
   }
 

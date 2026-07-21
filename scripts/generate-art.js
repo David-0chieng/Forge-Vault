@@ -129,7 +129,7 @@ function smoothNoise(x, y, seed, scale) {
 function render(width, height, { seed, hueShift = 0, lines = true, vignette = true }) {
   const buf = Buffer.alloc(width * height * 3);
 
-  // Palette anchors — Forge Vault. Deliberately LIGHTER than the page
+  // Palette anchors — MotoShop. Deliberately LIGHTER than the page
   // background (#131313) so an image tile reads as an image on the dark theme,
   // not an empty panel. Machined steel-charcoal ramping into orange.
   const dark = [0x26, 0x25, 0x24]; // steel charcoal — already above page bg

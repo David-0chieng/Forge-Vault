@@ -9,7 +9,7 @@ import { siteUrl } from '../env.js';
  */
 
 const BRAND = {
-  blue: '#2563eb',
+  blue: '#2e7dfb',
   navy: '#0b1220',
   ink: '#0f172a',
   body: '#475569',
@@ -115,7 +115,7 @@ export function addressBlock(order) {
 }
 
 /**
- * Wraps body HTML in the ForgeVault shell.
+ * Wraps body HTML in the MotoShop shell.
  * `preheader` is the grey snippet mail clients show next to the subject.
  */
 export function layout({ title, preheader = '', body }) {
@@ -141,7 +141,7 @@ export function layout({ title, preheader = '', body }) {
           <tr>
             <td style="padding:24px 32px;background:${BRAND.navy};">
               <a href="${site}" style="text-decoration:none;font-family:Inter,Helvetica,Arial,sans-serif;font-size:19px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;">
-                <strong style="font-weight:800;">Forge</strong><span style="font-weight:300;">Vault</span>
+                <strong style="font-weight:800;">Moto</strong><span style="font-weight:300;">Shop</span>
               </a>
             </td>
           </tr>
@@ -157,11 +157,11 @@ export function layout({ title, preheader = '', body }) {
           <tr>
             <td style="padding:24px 32px;background:#000000;">
               <p style="margin:0 0 10px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:${BRAND.muted};">
-                ForgeVault &bull; Nijverheidsweg 27, Heinenoord, Netherlands<br>
-                Questions? <a href="mailto:support@forgevault.shop" style="color:#ffffff;">support@forgevault.shop</a>
+                MotoShop &bull; Nijverheidsweg 27, Heinenoord, Netherlands<br>
+                Questions? <a href="mailto:support@motoshop.shop" style="color:#ffffff;">support@motoshop.shop</a>
               </p>
               <p style="margin:0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:11px;color:#64748b;">
-                &copy; 2026 ForgeVault. All rights reserved.
+                &copy; 2026 MotoShop. All rights reserved.
               </p>
             </td>
           </tr>
