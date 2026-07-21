@@ -30,7 +30,7 @@ function assetManifest() {
   let publicDir = '';
 
   return {
-    name: 'motoshop-asset-manifest',
+    name: 'forgevault-asset-manifest',
 
     configResolved(config) {
       publicDir = config.publicDir;
@@ -72,7 +72,7 @@ function assetManifest() {
 
 function devApi() {
   return {
-    name: 'motoshop-dev-api',
+    name: 'forgevault-dev-api',
 
     /**
      * Vite only exposes VITE_-prefixed vars, and only via import.meta.env on the

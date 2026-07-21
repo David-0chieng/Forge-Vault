@@ -6,19 +6,15 @@
  * and the footer links cannot drift apart between pages.
  */
 
-const LOGO_WRENCH = `
-  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-    <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2z" />
-  </svg>`;
-
 /**
- * The MotoShop wordmark — rounded Sora, an electric-blue badge holding the
- * wrench mark. `mark` = mark colour, `text` = wordmark ink.
+ * The Forge Vault wordmark — the design concept's exact mark: a 9px-rounded
+ * square badge in a diagonal accent gradient holding a bold "F", next to
+ * "FORGE" (bold) + "VAULT" (muted, medium weight). `text` = wordmark ink.
  */
 const wordmark = ({ text = 'text-moto-ink', size = 'text-lg' } = {}) => `
-  <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-moto-accent text-white">${LOGO_WRENCH}</span>
-  <span class="font-display ${size} font-bold uppercase leading-none tracking-tight ${text}">
-    <span class="text-moto-accent">Moto</span>Shop
+  <span class="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-[9px] bg-gradient-to-br from-moto-accent to-moto-accent-soft font-display text-[17px] font-bold text-moto-on-accent">F</span>
+  <span class="font-display ${size} font-bold uppercase leading-none tracking-[0.04em] ${text}">
+    FORGE <span class="font-medium text-moto-muted">VAULT</span>
   </span>`;
 
 const navLink = (href, label, current) =>
@@ -41,7 +37,7 @@ export function header(page = '') {
   return `
   <div class="container-page">
     <div class="flex h-16 items-center justify-between gap-4 lg:h-[4.5rem]">
-      <a href="/index.html" class="flex shrink-0 items-center gap-2.5" aria-label="MotoShop — home">
+      <a href="/index.html" class="flex shrink-0 items-center gap-2.5" aria-label="Forge Vault — home">
         ${wordmark()}
       </a>
 
@@ -87,7 +83,7 @@ export function header(page = '') {
           </svg>
           <span>Cart</span>
           <span data-cart-count
-                class="hidden absolute -right-1 -top-0.5 grid h-5 min-w-[1.25rem] place-items-center rounded-full bg-moto-accent px-1 text-[11px] font-bold text-white">0</span>
+                class="hidden absolute -right-1 -top-0.5 grid h-5 min-w-[1.25rem] place-items-center rounded-full bg-moto-accent px-1 text-[11px] font-bold text-moto-on-accent">0</span>
         </a>
 
         <button type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-nav"
@@ -133,7 +129,7 @@ export function footer() {
       <div class="lg:pr-8">
         <span class="inline-flex items-center gap-2.5">${wordmark({ text: 'text-white' })}</span>
         <p class="mt-5 text-sm leading-relaxed text-moto-outline">
-          MotoShop is your destination for premium automotive and motor parts. Fast shipping, authentic products, and
+          Forge Vault is your destination for premium automotive and motor parts. Fast shipping, authentic products, and
           expert support for all your vehicle needs.
         </p>
       </div>
@@ -160,7 +156,7 @@ export function footer() {
     </div>
 
     <div class="mt-12 flex flex-col items-center gap-4 border-t border-moto-line pt-8">
-      <p class="text-sm text-moto-outline">&copy; 2026 MotoShop. All rights reserved.</p>
+      <p class="text-sm text-moto-outline">&copy; 2026 Forge Vault. All rights reserved.</p>
 
       <ul class="flex items-center gap-6">
         <li>

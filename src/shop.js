@@ -8,7 +8,7 @@ import { initHeader, paintAccountState, setStatus, showFieldErrors, updateCartBa
 import { mountChrome } from './partials.js';
 
 /* =========================================================================
-   MotoShop — shop pages (products, product, cart, checkout, order)
+   Forge Vault — shop pages (products, product, cart, checkout, order)
    One bundle; each section below activates only if its mount point exists.
    ========================================================================= */
 
@@ -27,20 +27,16 @@ async function initProductsPage() {
   if (!grid) return;
 
   const heading = document.querySelector('[data-products-heading]');
+  const countLabel = document.querySelector('[data-products-count]');
+  const resultsLabel = document.querySelector('[data-results-count]');
+  const sortSelect = document.querySelector('[data-sort]');
   const category = params.get('category');
   const search = params.get('q');
 
-  const query = new URLSearchParams({ limit: '48' });
-  if (category) query.set('category', category);
-  if (search) query.set('q', search);
-
   if (heading) {
-    heading.textContent = search
-      ? `Results for “${search}”`
-      : category
-        ? `${category.charAt(0).toUpperCase()}${category.slice(1)}`
-        : 'All Parts';
+    heading.textContent = search ? `Results for “${search}”` : category ? category.charAt(0).toUpperCase() + category.slice(1) : 'Marketplace';
   }
+  if (countLabel) countLabel.textContent = 'Verified parts ready to ship worldwide.';
 
   const searchInput = document.querySelector('[data-search-input]');
   if (searchInput && search) searchInput.value = search;
@@ -51,19 +47,50 @@ async function initProductsPage() {
     location.href = value ? `/products.html?q=${encodeURIComponent(value)}` : '/products.html';
   });
 
-  grid.innerHTML = Array.from({ length: 6 }, () => '<div class="card h-80 animate-pulse bg-moto-high/60"></div>').join('');
+  /* ---- Category sidebar — real catalogue data, driving ?category= ---- */
+  const categoryMount = document.querySelector('[data-category-filters]');
+  if (categoryMount) {
+    try {
+      const { categories } = await get('/api/categories');
+      const filterLink = (label, slug) => `
+        <a href="${slug ? `/products.html?category=${encodeURIComponent(slug)}` : '/products.html'}"
+           class="rounded-lg px-3 py-2 text-sm ${
+             category === slug ? 'bg-white/[0.06] font-semibold text-moto-ink' : 'text-moto-muted hover:text-moto-ink'
+           }">${esc(label)}</a>`;
 
-  try {
-    const { products } = await get(`/api/products?${query}`);
-
-    grid.innerHTML = products.length
-      ? products.map(productCard).join('')
-      : `<p class="col-span-full rounded-lg bg-moto-panel p-10 text-center text-moto-outline">
-           No parts matched. <a href="/products.html" class="link-all">Browse everything</a>
-         </p>`;
-  } catch (error) {
-    grid.innerHTML = `<p class="col-span-full rounded-lg border border-amber-200 bg-amber-50 p-6 text-center text-sm font-semibold text-amber-900">${esc(error.message)}</p>`;
+      categoryMount.innerHTML =
+        filterLink('All categories', null) + categories.map((c) => filterLink(c.name, c.slug)).join('');
+    } catch {
+      categoryMount.innerHTML = '';
+    }
   }
+
+  const loadProducts = async () => {
+    grid.innerHTML = Array.from({ length: 6 }, () => '<div class="card h-80 animate-pulse bg-moto-high/60"></div>').join('');
+
+    const query = new URLSearchParams({ limit: '48' });
+    if (category) query.set('category', category);
+    if (search) query.set('q', search);
+    query.set('sort', sortSelect?.value ?? 'newest');
+
+    try {
+      const { products } = await get(`/api/products?${query}`);
+
+      if (resultsLabel) resultsLabel.textContent = `${products.length} result${products.length === 1 ? '' : 's'}`;
+
+      grid.innerHTML = products.length
+        ? products.map(productCard).join('')
+        : `<p class="col-span-full rounded-[18px] bg-moto-panel p-10 text-center text-moto-outline">
+             No parts matched. <a href="/products.html" class="link-all">Browse everything</a>
+           </p>`;
+    } catch (error) {
+      if (resultsLabel) resultsLabel.textContent = '';
+      grid.innerHTML = `<p class="col-span-full rounded-[18px] border border-amber-500/40 bg-amber-500/10 p-6 text-center text-sm font-semibold text-amber-300">${esc(error.message)}</p>`;
+    }
+  };
+
+  sortSelect?.addEventListener('change', loadProducts);
+  loadProducts();
 }
 
 function productCard(product, index) {
@@ -71,28 +98,31 @@ function productCard(product, index) {
   const soldOut = product.stock < 1;
 
   return `
-    <article class="group card flex flex-col overflow-hidden transition hover:-translate-y-0.5 hover:shadow-lg">
+    <article class="group card flex flex-col overflow-hidden transition hover:-translate-y-0.5">
       <a href="/product.html?slug=${encodeURIComponent(product.slug)}">
-        <div class="ph ph-${(index % 4) + 1} h-52">
-          ${discounted ? `<span class="absolute left-3 top-3 z-10 rounded-lg bg-red-600 px-2 py-1 text-xs font-bold text-white">-${product.discountPercent}%</span>` : ''}
+        <div class="ph ph-${(index % 4) + 1} h-52 rounded-none">
+          <span class="absolute left-3 top-3 z-10 rounded-full bg-moto-accent/90 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-moto-on-accent">✓ VERIFIED</span>
+          ${discounted ? `<span class="absolute right-3 top-3 z-10 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-${product.discountPercent}%</span>` : ''}
           <span class="ph-icon">${PART_ICON}</span>
           ${imageTag(product.imagePath, { alt: esc(product.title), className: 'absolute inset-0 h-full w-full object-cover' })}
         </div>
       </a>
-      <div class="flex flex-1 flex-col p-4">
-        <p class="text-xs ${soldOut ? 'font-semibold text-red-600' : 'text-moto-outline'}">${soldOut ? 'Out of stock' : `${product.stock} in stock`}</p>
-        <h3 class="mt-1 min-h-[3.75rem] text-sm font-bold leading-snug text-moto-ink">
-          <a href="/product.html?slug=${encodeURIComponent(product.slug)}" class="line-clamp-3 hover:text-moto-accent">${esc(product.title)}</a>
+      <div class="flex flex-1 flex-col p-[18px]">
+        <p class="text-xs text-moto-outline">${esc(product.category ?? 'Parts')}</p>
+        <h3 class="mt-1.5 min-h-[42px] font-display text-base font-semibold leading-snug text-moto-ink">
+          <a href="/product.html?slug=${encodeURIComponent(product.slug)}" class="line-clamp-2 hover:text-moto-accent">${esc(product.title)}</a>
         </h3>
-        <p class="mt-1.5 text-xs text-moto-outline">${esc(product.brand)} &bull; ${esc(product.category ?? '')}</p>
-        <div class="mt-3 flex items-baseline gap-2">
-          <span class="text-lg font-extrabold text-moto-ink">${money(product.priceCents)}</span>
-          ${discounted ? `<span class="text-sm text-moto-outline line-through">${money(product.oldPriceCents)}</span>` : ''}
+        <p class="mt-1 text-xs text-moto-outline">${esc(product.brand)}${soldOut ? ' &bull; Out of stock' : ` &bull; ${product.stock} in stock`}</p>
+        <div class="mt-auto flex items-end justify-between pt-4">
+          <div>
+            <div class="font-display text-xl font-bold text-moto-ink">${money(product.priceCents)}</div>
+            ${discounted ? `<div class="text-xs text-moto-outline line-through">${money(product.oldPriceCents)}</div>` : ''}
+          </div>
+          <button type="button" data-add-to-cart="${product.id}" ${soldOut ? 'disabled' : ''}
+                  class="rounded-full border border-moto-line-2 px-4 py-2 text-[13px] font-semibold transition ${soldOut ? 'cursor-not-allowed text-moto-outline' : 'text-moto-ink hover:bg-white/[0.06]'}">
+            ${soldOut ? 'Out of stock' : 'Add'}
+          </button>
         </div>
-        <button type="button" data-add-to-cart="${product.id}" ${soldOut ? 'disabled' : ''}
-                class="btn mt-4 w-full ${soldOut ? 'cursor-not-allowed bg-moto-bg text-moto-outline' : 'bg-moto-accent text-white hover:brightness-110'}">
-          ${soldOut ? 'Out of stock' : 'Add to cart'}
-        </button>
       </div>
     </article>`;
 }
@@ -123,54 +153,82 @@ async function initProductPage() {
   try {
     const { product } = await get(`/api/products/${encodeURIComponent(slug)}`);
 
-    document.title = `${product.title} — MotoShop`;
+    document.title = `${product.title} — Forge Vault`;
 
     const discounted = Boolean(product.discountPercent && product.oldPriceCents);
     const soldOut = product.stock < 1;
 
-    mount.innerHTML = `
-      <nav class="mb-6 text-sm text-moto-outline" aria-label="Breadcrumb">
-        <a href="/products.html" class="hover:text-moto-accent">Parts</a>
-        ${product.categorySlug ? ` / <a href="/products.html?category=${encodeURIComponent(product.categorySlug)}" class="hover:text-moto-accent">${esc(product.category)}</a>` : ''}
-      </nav>
+    // Real fields only — the design concept shows fabricated fitment/warranty/
+    // rating data that this catalogue does not actually track.
+    const specs = [
+      ['Brand', product.brand],
+      ['Category', product.category ?? '—'],
+      ['Part number', product.partNumber],
+      ['Availability', soldOut ? 'Out of stock' : `${product.stock} in stock`],
+    ].filter(([, value]) => Boolean(value));
 
-      <div class="grid gap-8 lg:grid-cols-2">
-        <div class="ph ph-2 aspect-[4/3] rounded-lg">
-          ${discounted ? `<span class="absolute left-4 top-4 z-10 rounded-lg bg-red-600 px-2.5 py-1 text-sm font-bold text-white">-${product.discountPercent}%</span>` : ''}
-          <span class="ph-icon">${PART_ICON}</span>
-          ${imageTag(product.imagePath, { alt: esc(product.title), className: 'absolute inset-0 h-full w-full rounded-lg object-cover', lazy: false })}
+    mount.innerHTML = `
+      <p class="text-[13px] text-moto-outline">
+        <a href="/index.html" class="hover:text-moto-ink">Home</a> /
+        <a href="/products.html" class="hover:text-moto-ink">Marketplace</a>
+        ${product.categorySlug ? `/ <a href="/products.html?category=${encodeURIComponent(product.categorySlug)}" class="hover:text-moto-ink">${esc(product.category)}</a>` : ''}
+      </p>
+
+      <div class="mt-6 grid gap-12 lg:grid-cols-2 lg:items-start">
+        <div>
+          <div class="ph ph-2 aspect-[4/3] rounded-[20px]">
+            ${discounted ? `<span class="absolute left-4 top-4 z-10 rounded-full bg-red-600 px-2.5 py-1 text-sm font-bold text-white">-${product.discountPercent}%</span>` : ''}
+            <span class="ph-icon">${PART_ICON}</span>
+            ${imageTag(product.imagePath, { alt: esc(product.title), className: 'absolute inset-0 h-full w-full rounded-[20px] object-cover', lazy: false })}
+          </div>
         </div>
 
-        <div>
-          <p class="eyebrow">${esc(product.brand)} &bull; ${esc(product.category ?? 'Parts')}</p>
-          <h1 class="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-moto-ink sm:text-3xl">${esc(product.title)}</h1>
+        <div class="lg:sticky lg:top-24">
+          <span class="eyebrow inline-flex items-center gap-1.5 rounded-full bg-moto-accent/15 px-3 py-1.5">✓ Verified listing</span>
 
-          ${product.partNumber ? `<p class="mt-3 text-sm text-moto-outline">Part number <span class="font-mono font-semibold text-moto-muted">${esc(product.partNumber)}</span></p>` : ''}
+          <p class="mt-4 text-[13px] text-moto-outline">${esc(product.category ?? 'Parts')}</p>
+          <h1 class="mt-1.5 text-[34px] font-bold leading-[1.15] tracking-tight text-moto-ink">${esc(product.title)}</h1>
+          <p class="mt-2.5 text-sm text-moto-muted">${esc(product.brand)}</p>
 
-          <div class="mt-5 flex items-baseline gap-3">
-            <span class="text-3xl font-extrabold text-moto-ink">${money(product.priceCents)}</span>
-            ${discounted ? `<span class="text-lg text-moto-outline line-through">${money(product.oldPriceCents)}</span>` : ''}
-          </div>
+          <div class="mt-6 font-display text-4xl font-bold text-moto-ink">${money(product.priceCents)}</div>
+          ${discounted ? `<div class="mt-1 text-lg text-moto-outline line-through">${money(product.oldPriceCents)}</div>` : ''}
 
-          <p class="mt-2 text-sm ${soldOut ? 'font-semibold text-red-600' : 'text-moto-accent-soft'}">
+          <p class="mt-2 text-sm ${soldOut ? 'font-semibold text-moto-error' : 'text-moto-accent-soft'}">
             ${soldOut ? 'Out of stock' : `${product.stock} in stock — ready to ship`}
           </p>
 
-          ${product.description ? `<p class="mt-5 leading-relaxed text-moto-muted">${esc(product.description)}</p>` : ''}
-
           <div class="mt-7 flex flex-col gap-3 sm:flex-row">
             <button type="button" data-add-to-cart="${product.id}" ${soldOut ? 'disabled' : ''}
-                    class="btn flex-1 ${soldOut ? 'cursor-not-allowed bg-moto-bg text-moto-outline' : 'bg-moto-accent text-white hover:brightness-110'}">
+                    class="btn flex-1 ${soldOut ? 'cursor-not-allowed bg-moto-bg text-moto-outline' : 'bg-moto-accent text-moto-on-accent hover:bg-moto-accent-soft'}">
               ${soldOut ? 'Out of stock' : 'Add to cart'}
             </button>
             <a href="/contact.html" class="btn-outline flex-1">Ask about fitment</a>
           </div>
 
-          <div class="mt-6 rounded-lg border border-moto-line bg-moto-low p-4 text-sm leading-relaxed text-moto-muted">
-            <strong class="text-moto-ink">Not sure it fits?</strong>
-            Send us your VIN before you order and we will confirm compatibility. Wrong-part returns are open for 14 days —
-            but only on parts that have not been fitted.
+          <div class="mt-7 flex items-center gap-2.5 rounded-2xl border border-moto-line bg-moto-panel px-4 py-3.5 text-[13px] leading-relaxed text-moto-muted">
+            <span class="h-4 w-4 shrink-0 rounded-full border-2 border-moto-accent"></span>
+            Payment protected — funds are only released once your order has shipped, and wrong-part returns are open
+            for 14 days on anything that hasn't been fitted.
           </div>
+
+          ${product.description ? `<p class="mt-6 leading-relaxed text-moto-muted">${esc(product.description)}</p>` : ''}
+
+          ${
+            specs.length
+              ? `<div class="mt-7 border-t border-moto-line pt-5">
+                   <p class="font-display text-base font-semibold text-moto-ink">Specifications</p>
+                   ${specs
+                     .map(
+                       ([label, value]) => `
+                     <div class="flex justify-between border-b border-moto-line py-2.5 text-sm">
+                       <span class="text-moto-outline">${esc(label)}</span>
+                       <span class="font-medium text-moto-ink">${esc(value)}</span>
+                     </div>`,
+                     )
+                     .join('')}
+                 </div>`
+              : ''
+          }
         </div>
       </div>`;
   } catch (error) {
@@ -222,9 +280,9 @@ async function renderCart() {
     // give them a one-click way to fix it rather than a dead end.
     if (error.status === 409 && error.problems) {
       mount.innerHTML = `
-        <div class="rounded-lg border border-amber-200 bg-amber-50 p-6">
-          <p class="font-bold text-amber-900">Some parts are no longer available</p>
-          <ul class="mt-3 space-y-2 text-sm text-amber-900">
+        <div class="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-6">
+          <p class="font-bold text-amber-300">Some parts are no longer available</p>
+          <ul class="mt-3 space-y-2 text-sm text-amber-200">
             ${error.problems
               .map(
                 (problem) => `
@@ -255,15 +313,15 @@ async function renderCart() {
       return;
     }
 
-    mount.innerHTML = `<div class="rounded-lg border border-red-200 bg-red-50 p-6 text-sm font-semibold text-red-800">${esc(error.message)}</div>`;
+    mount.innerHTML = `<div class="rounded-2xl border border-red-500/40 bg-red-500/10 p-6 text-sm font-semibold text-red-300">${esc(error.message)}</div>`;
   }
 }
 
 const cartRow = (item, index) => `
   <div class="flex gap-4 p-4">
-    <div class="ph ph-${(index % 4) + 1} h-24 w-24 shrink-0 rounded-lg">
+    <div class="ph ph-${(index % 4) + 1} h-24 w-24 shrink-0 rounded-2xl">
       <span class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-8 w-8" aria-hidden="true"><circle cx="12" cy="12" r="3"/></svg></span>
-      ${imageTag(item.imagePath, { alt: esc(item.title), className: 'absolute inset-0 h-full w-full rounded-lg object-cover' })}
+      ${imageTag(item.imagePath, { alt: esc(item.title), className: 'absolute inset-0 h-full w-full rounded-2xl object-cover' })}
     </div>
 
     <div class="min-w-0 flex-1">
@@ -272,7 +330,7 @@ const cartRow = (item, index) => `
       <p class="mt-1 text-sm text-moto-muted">${money(item.unitPriceCents)} each</p>
 
       <div class="mt-3 flex items-center gap-3">
-        <div class="inline-flex items-center rounded-lg border border-moto-line">
+        <div class="inline-flex items-center rounded-full border border-moto-line">
           <button type="button" data-qty="${item.productId}" data-delta="-1" aria-label="Decrease quantity"
                   class="grid h-8 w-8 place-items-center text-moto-muted hover:bg-moto-low">−</button>
           <span class="w-9 text-center text-sm font-semibold tabular-nums">${item.quantity}</span>
@@ -577,7 +635,7 @@ async function initCheckoutPage() {
 
   if (lines.length === 0) {
     totalsMount.innerHTML = `
-      <p class="text-center text-moto-outline">
+      <p class="text-center text-moto-muted">
         Your cart is empty. <a href="/products.html" class="link-all">Find a part</a>
       </p>`;
     form.querySelector('[data-submit]').disabled = true;
@@ -593,24 +651,24 @@ async function initCheckoutPage() {
           .map(
             (item) => `
           <li class="flex justify-between gap-4 text-sm">
-            <span class="text-moto-muted">${esc(item.title)} <span class="text-moto-outline">× ${item.quantity}</span></span>
+            <span class="text-moto-ink">${esc(item.title)} <span class="text-moto-muted">× ${item.quantity}</span></span>
             <span class="shrink-0 font-semibold text-moto-ink">${money(item.lineTotalCents)}</span>
           </li>`,
           )
           .join('')}
       </ul>
       <dl class="mt-5 space-y-2 border-t border-moto-line pt-4 text-sm">
-        <div class="flex justify-between"><dt class="text-moto-muted">Subtotal</dt><dd class="font-semibold">${money(quote.subtotalCents)}</dd></div>
-        <div class="flex justify-between"><dt class="text-moto-muted">Shipping</dt><dd class="font-semibold">${quote.shippingCents === 0 ? 'Free' : money(quote.shippingCents)}</dd></div>
-        ${quote.taxCents ? `<div class="flex justify-between"><dt class="text-moto-muted">Tax</dt><dd class="font-semibold">${money(quote.taxCents)}</dd></div>` : ''}
+        <div class="flex justify-between"><dt class="text-moto-muted">Subtotal</dt><dd class="font-semibold text-moto-ink">${money(quote.subtotalCents)}</dd></div>
+        <div class="flex justify-between"><dt class="text-moto-muted">Shipping</dt><dd class="font-semibold text-moto-ink">${quote.shippingCents === 0 ? 'Free' : money(quote.shippingCents)}</dd></div>
+        ${quote.taxCents ? `<div class="flex justify-between"><dt class="text-moto-muted">Tax</dt><dd class="font-semibold text-moto-ink">${money(quote.taxCents)}</dd></div>` : ''}
       </dl>
-      <div class="mt-4 flex items-baseline justify-between border-t-2 border-moto-accent pt-4">
-        <span class="font-extrabold text-moto-ink">Total</span>
-        <span class="text-2xl font-extrabold text-moto-ink">${money(quote.totalCents)}</span>
+      <div class="mt-4 flex items-baseline justify-between border-t border-moto-line pt-4">
+        <span class="font-display font-bold text-moto-ink">Total</span>
+        <span class="font-display text-2xl font-bold text-moto-ink">${money(quote.totalCents)}</span>
       </div>
       ${
         quote.charge
-          ? `<p class="mt-3 border border-moto-line bg-moto-lowest px-3 py-2 font-mono text-[11px] leading-relaxed text-moto-warm">
+          ? `<p class="mt-3 rounded-xl border border-moto-line bg-moto-high px-3 py-2 text-[11px] leading-relaxed text-moto-warm">
                Billed in ${esc(quote.charge.currency)}. You will be charged
                <span class="font-semibold text-moto-ink">${money(quote.charge.amountCents, quote.charge.currency)}</span>
                at today's rate on the secure payment page.
@@ -624,20 +682,20 @@ async function initCheckoutPage() {
       ? quote.paymentMethods
           .map(
             (method, index) => `
-        <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-moto-line p-4 transition has-[:checked]:border-moto-accent has-[:checked]:bg-moto-high">
+        <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-moto-line-2 bg-moto-panel p-4 transition has-[:checked]:border-moto-accent has-[:checked]:bg-moto-high">
           <input type="radio" name="paymentMethod" value="${esc(method.id)}" ${index === 0 ? 'checked' : ''}
-                 class="h-4 w-4 text-moto-accent focus:ring-moto-accent">
+                 class="h-4 w-4 accent-moto-accent">
           <span class="text-sm font-semibold text-moto-ink">${esc(method.label)}</span>
         </label>`,
           )
           .join('')
-      : `<p class="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-900">
+      : `<p class="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm font-semibold text-amber-300">
            No payment method is configured on this deployment yet.
          </p>`;
 
     if (!quote.paymentMethods.length) form.querySelector('[data-submit]').disabled = true;
   } catch (error) {
-    totalsMount.innerHTML = `<p class="rounded-lg bg-red-50 p-4 text-sm font-semibold text-red-800">${esc(error.message)}</p>`;
+    totalsMount.innerHTML = `<p class="rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm font-semibold text-red-300">${esc(error.message)}</p>`;
   }
 
   /* ---- Place the order ---- */
@@ -757,8 +815,8 @@ async function initOrderPage() {
   // Failure paths carry the page's <h1> too, so order.html is never headless.
   const fallback = (title, body) => `
     <div class="card p-10 text-center">
-      <h1 class="text-xl font-extrabold text-moto-ink">${esc(title)}</h1>
-      <p class="mt-2 text-sm text-moto-outline">${esc(body)}</p>
+      <h1 class="h-display text-xl">${esc(title)}</h1>
+      <p class="mt-2 text-sm text-moto-muted">${esc(body)}</p>
       <a href="/index.html" class="link-all mt-4 inline-block">Back to the shop</a>
     </div>`;
 
@@ -775,65 +833,80 @@ async function initOrderPage() {
 
     const paid = Boolean(order.paidAt);
 
-    mount.innerHTML = `
-      <div class="card p-6 sm:p-8">
-        <div class="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <p class="eyebrow">Order ${esc(order.orderNumber)}</p>
-            <h1 class="mt-2 text-2xl font-extrabold tracking-tight text-moto-ink sm:text-3xl">
-              ${paid ? 'Thank you — your order is confirmed' : 'Your order is not paid yet'}
-            </h1>
-            <p class="mt-2 text-sm text-moto-outline">Placed ${formatDate(order.createdAt)}</p>
-          </div>
-          ${statusBadge(order.status)}
-        </div>
+    // The design concept's confirmation checkmark badge — shown only once the
+    // order is actually paid. A not-yet-paid order gets a plain heading; there
+    // is nothing to celebrate yet.
+    const confirmBadge = paid
+      ? `<div class="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full bg-moto-accent/15">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="h-7 w-7 text-moto-accent" aria-hidden="true">
+             <path d="M5 13l4 4L19 7" />
+           </svg>
+         </div>`
+      : '';
 
+    mount.innerHTML = `
+      <div class="text-center">
+        ${confirmBadge}
+        <p class="eyebrow">Order ${esc(order.orderNumber)}</p>
+        <h1 class="h-display text-3xl mt-2">
+          ${paid ? 'Order confirmed.' : 'Your order is not paid yet'}
+        </h1>
+        <p class="mt-2 text-sm text-moto-muted">Placed ${formatDate(order.createdAt)}</p>
+        <div class="mt-3 flex justify-center">${statusBadge(order.status)}</div>
+      </div>
+
+      <div class="card mt-8 p-6 sm:p-8 text-left">
         ${
           order.trackingNumber
-            ? `<div class="mt-6 rounded-lg border border-moto-line bg-moto-high p-4">
-                 <p class="text-xs font-bold uppercase tracking-wide text-moto-accent-soft">Tracking</p>
-                 <p class="mt-1 font-mono text-sm font-semibold text-moto-accent-soft">${esc(order.trackingNumber)}</p>
-                 ${order.carrier ? `<p class="mt-1 text-xs text-moto-accent-soft">via ${esc(order.carrier)}</p>` : ''}
+            ? `<div class="mb-6 rounded-2xl border border-moto-line bg-moto-high p-4">
+                 <p class="text-xs font-semibold uppercase tracking-wide text-moto-accent">Tracking</p>
+                 <p class="mt-1 font-mono text-sm font-semibold text-moto-ink">${esc(order.trackingNumber)}</p>
+                 ${order.carrier ? `<p class="mt-1 text-xs text-moto-muted">via ${esc(order.carrier)}</p>` : ''}
                </div>`
             : ''
         }
 
-        <div class="mt-6 divide-y divide-slate-200 border-y border-moto-line">
+        <div class="divide-y divide-moto-line border-y border-moto-line">
           ${order.items
             .map(
               (item) => `
             <div class="flex justify-between gap-4 py-4">
               <div class="min-w-0">
-                <p class="text-sm font-bold text-moto-ink">${esc(item.title)}</p>
-                <p class="mt-0.5 text-xs text-moto-outline">
+                <p class="text-sm font-semibold text-moto-ink">${esc(item.title)}</p>
+                <p class="mt-0.5 text-xs text-moto-muted">
                   ${esc(item.brand ?? '')}${item.partNumber ? ` &bull; ${esc(item.partNumber)}` : ''} &bull; Qty ${item.quantity}
                 </p>
               </div>
-              <p class="shrink-0 text-sm font-bold text-moto-ink">${money(item.lineTotalCents, order.currency)}</p>
+              <p class="shrink-0 text-sm font-semibold text-moto-ink">${money(item.lineTotalCents, order.currency)}</p>
             </div>`,
             )
             .join('')}
         </div>
 
         <dl class="mt-5 space-y-2 text-sm">
-          <div class="flex justify-between"><dt class="text-moto-muted">Subtotal</dt><dd class="font-semibold">${money(order.subtotalCents, order.currency)}</dd></div>
-          <div class="flex justify-between"><dt class="text-moto-muted">Shipping</dt><dd class="font-semibold">${order.shippingCents ? money(order.shippingCents, order.currency) : 'Free'}</dd></div>
-          ${order.taxCents ? `<div class="flex justify-between"><dt class="text-moto-muted">Tax</dt><dd class="font-semibold">${money(order.taxCents, order.currency)}</dd></div>` : ''}
-          ${order.refundedCents ? `<div class="flex justify-between text-moto-accent-soft"><dt>Refunded</dt><dd class="font-semibold">−${money(order.refundedCents, order.currency)}</dd></div>` : ''}
-          <div class="flex justify-between border-t-2 border-moto-accent pt-3 text-base">
-            <dt class="font-extrabold text-moto-ink">Total</dt>
-            <dd class="font-extrabold text-moto-ink">${money(order.totalCents, order.currency)}</dd>
+          <div class="flex justify-between"><dt class="text-moto-muted">Subtotal</dt><dd class="font-semibold text-moto-ink">${money(order.subtotalCents, order.currency)}</dd></div>
+          <div class="flex justify-between"><dt class="text-moto-muted">Shipping</dt><dd class="font-semibold text-moto-ink">${order.shippingCents ? money(order.shippingCents, order.currency) : 'Free'}</dd></div>
+          ${order.taxCents ? `<div class="flex justify-between"><dt class="text-moto-muted">Tax</dt><dd class="font-semibold text-moto-ink">${money(order.taxCents, order.currency)}</dd></div>` : ''}
+          ${order.refundedCents ? `<div class="flex justify-between text-moto-accent"><dt>Refunded</dt><dd class="font-semibold">−${money(order.refundedCents, order.currency)}</dd></div>` : ''}
+          <div class="flex justify-between border-t border-moto-line pt-3 text-base">
+            <dt class="font-display font-bold text-moto-ink">Total</dt>
+            <dd class="font-display font-bold text-moto-ink">${money(order.totalCents, order.currency)}</dd>
           </div>
         </dl>
 
-        <div class="mt-6 rounded-lg bg-moto-low p-4 text-sm leading-relaxed text-moto-muted">
-          <p class="mb-1 text-xs font-bold uppercase tracking-wide text-moto-ink">Shipping to</p>
+        <div class="mt-6 rounded-2xl bg-moto-high p-4 text-sm leading-relaxed text-moto-warm">
+          <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-moto-ink">Shipping to</p>
           ${[order.shipping.name, order.shipping.line1, order.shipping.line2, `${order.shipping.postalCode ?? ''} ${order.shipping.city ?? ''}`.trim(), order.shipping.country]
             .filter(Boolean)
             .map(esc)
             .join('<br>')}
         </div>
       </div>
+
+      ${paid ? `<div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/products.html" class="btn-primary">Keep shopping</a>
+        <a href="/index.html" class="btn-outline">Back to home</a>
+      </div>` : ''}
 
       ${paid && order.refundedCents < order.totalCents ? refundPanel(order) : ''}`;
 
@@ -845,15 +918,15 @@ async function initOrderPage() {
 
 const refundPanel = (order) => `
   <details class="card mt-6 p-6">
-    <summary class="cursor-pointer text-sm font-bold text-moto-ink">Something wrong? Request a refund</summary>
+    <summary class="cursor-pointer font-display text-sm font-semibold text-moto-ink">Something wrong? Request a refund</summary>
     <form data-refund-form class="mt-5">
       <label for="refund-reason" class="field-label">What went wrong?</label>
       <textarea id="refund-reason" name="reason" rows="3" required maxlength="500"
                 placeholder="e.g. the part does not match my VIN, or it arrived damaged"
                 class="field-input resize-y"></textarea>
-      <p class="mt-2 text-xs text-moto-outline">
+      <p class="mt-2 text-xs text-moto-muted">
         This files a request — it does not refund you automatically. We review every one and email you back.
-        Refundable balance: <strong>${money(order.totalCents - order.refundedCents, order.currency)}</strong>.
+        Refundable balance: <strong class="text-moto-ink">${money(order.totalCents - order.refundedCents, order.currency)}</strong>.
       </p>
       <button type="submit" data-refund-submit class="btn-primary mt-4">Request refund</button>
       <p data-refund-status role="status" aria-live="polite" class="sr-only"></p>

@@ -5,6 +5,7 @@ import { applySecurityHeaders, handler, ok } from '../../_lib/http.js';
  * GET /api/products
  *
  * Query: ?featured=1 | ?deals=1 | ?category=seats | ?q=zafira | ?limit=24
+ *        | ?sort=price-asc|price-desc|newest (default: newest)
  *
  * Public and cacheable. Deliberately never exposes stock beyond a coarse
  * number, and never exposes cost, supplier, or internal notes.
@@ -31,11 +32,18 @@ async function list(req, res) {
 
   const limit = Math.min(Number(params.get('limit')) || 24, 60);
 
+  const SORTS = {
+    'price-asc': { column: 'price_cents', ascending: true },
+    'price-desc': { column: 'price_cents', ascending: false },
+    newest: { column: 'created_at', ascending: false },
+  };
+  const { column, ascending } = SORTS[params.get('sort')] ?? SORTS.newest;
+
   let query = db()
     .from('products')
     .select('*, category:categories(slug, name)')
     .eq('is_active', true)
-    .order('created_at', { ascending: false })
+    .order(column, { ascending })
     .limit(limit);
 
   if (params.get('featured') === '1') query = query.eq('is_featured', true);

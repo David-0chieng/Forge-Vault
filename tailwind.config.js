@@ -5,46 +5,53 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Sora — rounded geometric display face: wordmark, headings, hero copy.
-        display: ['"Sora"', 'system-ui', 'sans-serif'],
-        // Inter — body copy, UI labels.
-        sans: ['"Inter"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        // Roboto Mono — technical readouts: prices, part numbers, step numbers, eyebrows.
-        mono: ['"Roboto Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        // Space Grotesk — the "Global Car Parts Marketplace" design concept's
+        // exact display face: wordmark, headings, prices, step numbers.
+        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        // Public Sans — the concept's exact body face.
+        sans: ['"Public Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        // The concept has no monospace anywhere — Space Grotesk covers technical
+        // readouts too, so numeric labels stay visually consistent with the rest.
+        mono: ['"Space Grotesk"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       colors: {
-        // MotoShop — dark, electric-blue accented storefront.
+        // `moto` is the site's one design-token namespace (kept as-is rather
+        // than renamed, since it is invisible outside the source). Its values
+        // are now the exact palette from the "Global Car Parts Marketplace"
+        // design concept: oklch(14% 0.008 264) background, oklch(70% 0.17 48)
+        // accent — a warm amber-orange on a near-black neutral.
         moto: {
-          bg: '#0c1118', // page background / surface
-          lowest: '#070a10', // inputs, deepest wells
-          low: '#121a24', // low surface
-          panel: '#161f2b', // cards / containers
-          high: '#212c3c', // hovers, raised
-          line: '#1f2937', // hairline borders
-          'line-2': '#2c3a4d', // stronger dividers
-          bright: '#3a4a61',
-          accent: '#2e7dfb', // primary action accent — electric blue
-          'accent-dim': '#1a4fa0', // pressed / muted blue
-          'accent-soft': '#8fc1ff', // light accent text on dark
-          ink: '#eef2f8', // primary text
-          muted: '#9fb0c3', // secondary text
-          warm: '#c3d3e8', // soft secondary text
-          outline: '#71829a', // faint borders / icons
+          bg: '#0e0f12', // page background / surface
+          lowest: '#0a0b0e', // inputs, deepest wells
+          low: '#131519', // low surface
+          panel: '#15171c', // cards / containers
+          high: '#1c1f26', // hovers, raised
+          line: 'rgba(255,255,255,0.08)', // hairline borders
+          'line-2': 'rgba(255,255,255,0.16)', // stronger dividers
+          bright: 'rgba(255,255,255,0.12)',
+          accent: '#e2823f', // primary action accent — warm amber-orange
+          'accent-dim': '#b9662b', // pressed / muted accent
+          'accent-soft': '#f0ac78', // light accent text on dark
+          'on-accent': '#1a1712', // text/icons drawn on top of the accent fill
+          ink: '#f5f3ee', // primary text
+          muted: '#a39c8d', // secondary text
+          warm: '#c8c3b7', // soft secondary text
+          outline: '#8f8879', // faint borders / icons
           error: '#ff6b6b',
         },
       },
       letterSpacing: {
-        widest2: '0.22em',
+        widest2: '0.14em',
       },
       borderRadius: {
         xl2: '1.25rem',
       },
       boxShadow: {
-        panel: '0 1px 0 rgba(46,125,251,0.06), 0 20px 45px -26px rgba(0,0,0,0.85)',
-        glow: '0 0 0 1px rgba(46,125,251,0.35), 0 8px 24px -8px rgba(46,125,251,0.45)',
+        panel: '0 1px 0 rgba(226,130,63,0.06), 0 20px 45px -26px rgba(0,0,0,0.85)',
+        glow: '0 0 0 1px rgba(226,130,63,0.35), 0 8px 24px -8px rgba(226,130,63,0.45)',
       },
       backgroundImage: {
-        'moto-fade': 'linear-gradient(90deg, #0c1118 0%, rgba(12,17,24,0.4) 55%, transparent 100%)',
+        'moto-fade': 'linear-gradient(90deg, #0e0f12 0%, rgba(14,15,18,0.4) 55%, transparent 100%)',
       },
       maxWidth: {
         '8xl': '88rem',

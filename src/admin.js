@@ -5,7 +5,7 @@ import { setStatus, showFieldErrors } from './lib/ui.js';
 import { uploadImage } from './lib/upload.js';
 
 /* =========================================================================
-   MotoShop — admin panel
+   Forge Vault — admin panel
    Pages: login, dashboard, products, orders, refunds.
    ========================================================================= */
 
@@ -40,15 +40,15 @@ function mountShell(active) {
   const link = (href, label, key) => `
     <a href="${href}"
        class="rounded-lg px-3 py-2 text-sm font-semibold transition ${
-         active === key ? 'bg-moto-accent text-white' : 'text-moto-muted hover:bg-moto-high/10 hover:text-white'
+         active === key ? 'bg-moto-accent text-moto-on-accent' : 'text-moto-muted hover:bg-moto-high/10 hover:text-white'
        }">${label}</a>`;
 
   shell.innerHTML = `
     <div class="container-page flex h-16 items-center justify-between gap-4">
       <div class="flex items-center gap-6">
         <a href="/admin/index.html" class="flex items-center gap-2 text-white">
-          <span class="text-base uppercase tracking-[0.14em]">
-            <span class="text-moto-accent">Moto</span><span class="font-light">Shop</span>
+          <span class="text-base font-bold uppercase tracking-[0.04em]">
+            FORGE <span class="font-medium text-moto-muted">VAULT</span>
           </span>
           <span class="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-moto-muted">Admin</span>
         </a>
@@ -194,7 +194,7 @@ async function initDashboard() {
 
       ${
         stats.failedEmails
-          ? `<div class="mt-6 rounded-lg border border-moto-line bg-moto-high p-4 text-sm font-semibold text-red-800">
+          ? `<div class="mt-6 rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm font-semibold text-red-300">
                ${stats.failedEmails} email${stats.failedEmails === 1 ? '' : 's'} failed to send in the last 30 days.
                Customers may not have received receipts — check your Brevo configuration.
              </div>`
@@ -758,10 +758,10 @@ async function initRefunds() {
   }
 
   const TONE = {
-    requested: 'bg-moto-high text-moto-accent-soft ring-amber-200',
+    requested: 'bg-moto-high text-moto-accent-soft ring-moto-line-2',
     processing: 'bg-moto-high text-moto-accent-soft ring-blue-200',
     succeeded: 'bg-moto-high text-moto-accent-soft ring-green-200',
-    failed: 'bg-moto-high text-moto-error ring-red-200',
+    failed: 'bg-moto-high text-moto-error ring-red-500/40',
     rejected: 'bg-moto-bg text-moto-muted ring-moto-line',
     approved: 'bg-moto-high text-moto-accent-soft ring-blue-200',
   };
@@ -782,7 +782,7 @@ async function initRefunds() {
       </div>
 
       ${refund.reason ? `<p class="mt-4 rounded-lg bg-moto-low p-3 text-sm text-moto-muted">${esc(refund.reason)}</p>` : ''}
-      ${refund.failure_reason ? `<p class="mt-3 rounded-lg bg-moto-high p-3 text-sm font-semibold text-red-800">${esc(refund.failure_reason)}</p>` : ''}
+      ${refund.failure_reason ? `<p class="mt-3 rounded-xl bg-moto-high p-3 text-sm font-semibold text-red-300">${esc(refund.failure_reason)}</p>` : ''}
 
       ${
         refund.status === 'requested' && canApprove()

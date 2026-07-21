@@ -3,19 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MotoShop — European Auto Parts, Fitment First</title>
+    <title>Forge Vault — Global Parts Marketplace</title>
     <meta
       name="description"
-      content="MotoShop supplies genuine and verified European auto parts — Opel, Stellantis, Skoda, Ford. VIN-aware fitment support, clear OEM vs aftermarket options, and transparent returns."
+      content="Forge Vault is the trust layer between you and every auto-parts supplier on earth — verification, protected payments, logistics and a fitment guarantee on every order."
     />
-    <meta name="theme-color" content="#0c1118" />
+    <meta name="theme-color" content="#0e0f12" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -23,7 +23,7 @@
   <body class="min-h-screen">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-moto-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black focus:shadow-lg"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-moto-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-moto-on-accent focus:shadow-lg"
       >Skip to main content</a
     >
 
@@ -31,264 +31,353 @@
     <header data-header="" class="sticky top-0 z-50 bg-moto-panel border-b border-moto-line"></header>
 
     <main id="main">
-      <!-- ==================== 1. HERO SLIDER ==================== -->
-      <section
-        data-slider
-        data-autoplay="6000"
-        aria-roledescription="carousel"
-        aria-label="Featured highlights"
-        class="on-dark relative min-h-[520px] overflow-hidden bg-moto-lowest md:min-h-[600px]"
-      >
-        <!-- Slide 1 -->
-        <div data-slide data-active="true" role="group" aria-roledescription="slide" aria-label="1 of 4" class="slide">
-          <div class="ph ph-dark absolute inset-0" data-site-image="hero-1"></div>
-          <div class="absolute inset-0 bg-black/55"></div>
-          <div class="container-page relative flex min-h-[520px] items-center justify-center md:min-h-[600px]">
-            <div class="mx-auto max-w-3xl py-20 text-center">
-              <h1 class="text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Find The Right Part First Time
+      <!-- ==================== 1. HERO ==================== -->
+      <section class="relative overflow-hidden bg-moto-bg">
+        <div class="relative min-h-[720px] px-4 pt-14 sm:px-6 lg:px-10 lg:pt-20">
+          <!-- Crossfading scene backdrop -->
+          <div class="absolute inset-0 z-0 overflow-hidden bg-moto-bg">
+            <div class="hero-crossfade absolute inset-0 opacity-0" style="animation: crossfade 32s ease-in-out infinite both; animation-delay: 0s">
+              <div class="ph ph-dark absolute inset-0" data-site-image="hero-1"></div>
+            </div>
+            <div class="hero-crossfade absolute inset-0 opacity-0" style="animation: crossfade 32s ease-in-out infinite both; animation-delay: 8s">
+              <div class="ph ph-dark absolute inset-0" data-site-image="hero-2"></div>
+            </div>
+            <div class="hero-crossfade absolute inset-0 opacity-0" style="animation: crossfade 32s ease-in-out infinite both; animation-delay: 16s">
+              <div class="ph ph-dark absolute inset-0" data-site-image="hero-3"></div>
+            </div>
+            <div class="hero-crossfade absolute inset-0 opacity-0" style="animation: crossfade 32s ease-in-out infinite both; animation-delay: 24s">
+              <div class="ph ph-dark absolute inset-0" data-site-image="hero-4"></div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-r from-moto-bg via-moto-bg/45 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-moto-bg via-transparent to-moto-bg"></div>
+          </div>
+
+          <div class="relative z-10 mx-auto grid max-w-[1440px] items-center gap-12 py-8 lg:grid-cols-[1.12fr_0.88fr]">
+            <div>
+              <span class="eyebrow inline-flex items-center gap-2 rounded-full border border-moto-line-2 px-3.5 py-1.5">
+                <span class="h-1.5 w-1.5 rounded-full bg-moto-accent"></span>
+                Forge Vault · Global Parts Marketplace
+              </span>
+
+              <h1 class="text-balance mt-6 text-5xl font-bold leading-[1.02] tracking-tight text-moto-ink sm:text-6xl lg:text-[76px]">
+                Any part.<br />
+                Anywhere on earth.<br />
+                <span class="text-moto-accent">Delivered with certainty.</span>
               </h1>
-              <p class="mt-5 text-lg font-medium text-moto-warm sm:text-xl">
-                VIN-aware sourcing, fitment support, and clear options
+
+              <p class="mt-6 max-w-[530px] text-lg leading-relaxed text-moto-warm">
+                Independent seller verification, real-time global sourcing, and protected payments — for the buyers
+                who can't afford downtime.
               </p>
-              <p class="mx-auto mt-3 max-w-2xl text-sm text-moto-muted sm:text-base">
-                Not sure about exact model details? Shop with confidence using compatibility-focused listings and
-                support.
-              </p>
-              <a href="#products" class="btn-primary mt-8">Start with fitment-safe parts</a>
+
+              <form data-hero-search class="mt-8 flex max-w-[530px] items-center gap-2.5 rounded-full border border-moto-line-2 bg-moto-panel/90 py-2 pl-5 pr-2 backdrop-blur">
+                <input
+                  type="search"
+                  name="q"
+                  placeholder="Search by VIN, make, model or part number…"
+                  class="min-w-0 flex-1 bg-transparent text-sm text-moto-ink placeholder:text-moto-outline focus:outline-none"
+                />
+                <button type="submit" class="btn-primary py-3">Search</button>
+              </form>
+
+              <div class="mt-4 flex flex-wrap gap-3.5">
+                <a href="/products.html" class="btn-outline">Browse Parts</a>
+              </div>
+            </div>
+
+            <!-- Floating buyer-request cards, scrolling loop -->
+            <div class="relative hidden h-[540px] overflow-hidden [mask-image:linear-gradient(180deg,transparent,#000_15%,#000_85%,transparent)] lg:block">
+              <div class="hero-scroll-up absolute inset-x-0 top-0 flex flex-col gap-3.5" style="animation: scroll-up 26s linear infinite">
+                <!-- rendered twice back-to-back below so the loop is seamless -->
+                <div data-hero-cards></div>
+                <div data-hero-cards aria-hidden="true"></div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Slide 2 -->
-        <div data-slide role="group" aria-roledescription="slide" aria-label="2 of 4" class="slide">
-          <div class="ph ph-dark absolute inset-0" data-site-image="hero-2"></div>
-          <div class="absolute inset-0 bg-black/55"></div>
-          <div class="container-page relative flex min-h-[520px] items-center justify-center md:min-h-[600px]">
-            <div class="mx-auto max-w-3xl py-20 text-center">
-              <p class="text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Genuine European Parts, Verified Stock
-              </p>
-              <p class="mt-5 text-lg font-medium text-moto-warm sm:text-xl">
-                OEM, premium aftermarket, and verified used options
-              </p>
-              <a href="#deals" class="btn-primary mt-8">Shop today's deals</a>
+          <div class="relative z-10 mt-10 overflow-hidden border-t border-moto-line py-5 lg:mt-16">
+            <div class="hero-marquee flex whitespace-nowrap" style="animation: marquee 28s linear infinite">
+              <span class="eyebrow pr-16 !text-moto-outline">TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆ TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆ TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆</span>
+              <span class="eyebrow pr-16 !text-moto-outline" aria-hidden="true">TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆ TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆ TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆</span>
             </div>
           </div>
-        </div>
-
-        <!-- Slide 3 -->
-        <div data-slide role="group" aria-roledescription="slide" aria-label="3 of 4" class="slide">
-          <div class="ph ph-dark absolute inset-0" data-site-image="hero-3"></div>
-          <div class="absolute inset-0 bg-black/55"></div>
-          <div class="container-page relative flex min-h-[520px] items-center justify-center md:min-h-[600px]">
-            <div class="mx-auto max-w-3xl py-20 text-center">
-              <p class="text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Fitment Confidence Starts Here
-              </p>
-              <p class="mt-5 text-lg font-medium text-moto-warm sm:text-xl">
-                Use VIN and part identifiers to reduce wrong-part risk before checkout.
-              </p>
-              <a href="/contact.html" class="btn-primary mt-8">Request VIN fitment check</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Slide 4 -->
-        <div data-slide role="group" aria-roledescription="slide" aria-label="4 of 4" class="slide">
-          <div class="ph ph-dark absolute inset-0" data-site-image="hero-4"></div>
-          <div class="absolute inset-0 bg-black/55"></div>
-          <div class="container-page relative flex min-h-[520px] items-center justify-center md:min-h-[600px]">
-            <div class="mx-auto max-w-3xl py-20 text-center">
-              <p class="text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Clear Returns, Warranty, and Shipping
-              </p>
-              <p class="mt-5 text-lg font-medium text-moto-warm sm:text-xl">
-                Know timing, policy coverage, and support steps before you order.
-              </p>
-              <a href="/contact.html" class="btn-primary mt-8">Talk to support</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Controls -->
-        <button type="button" data-prev aria-label="Previous slide" class="slider-arrow left-3 sm:left-5">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-5 w-5"
-            aria-hidden="true"
-          >
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <button type="button" data-next aria-label="Next slide" class="slider-arrow right-3 sm:right-5">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-5 w-5"
-            aria-hidden="true"
-          >
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </button>
-
-        <p
-          data-counter
-          aria-live="polite"
-          class="absolute right-4 top-4 z-20 rounded-full border border-white/20 bg-black/50 px-3 py-1 text-xs font-semibold tabular-nums text-white backdrop-blur-sm sm:right-6 sm:top-6"
-        >
-          1 / 4
-        </p>
-
-        <div class="absolute inset-x-0 bottom-6 z-20 flex items-center justify-center gap-2.5">
-          <button type="button" data-dot aria-label="Go to slide 1" aria-current="true" class="slider-dot"></button>
-          <button type="button" data-dot aria-label="Go to slide 2" aria-current="false" class="slider-dot"></button>
-          <button type="button" data-dot aria-label="Go to slide 3" aria-current="false" class="slider-dot"></button>
-          <button type="button" data-dot aria-label="Go to slide 4" aria-current="false" class="slider-dot"></button>
         </div>
       </section>
 
-      <!-- ==================== 2. TRUSTED REVIEWS ==================== -->
-      <section aria-labelledby="reviews-heading" class="container-page py-10 sm:py-14">
-        <div class="card p-6 sm:p-8">
-          <p class="eyebrow">Trusted reviews</p>
-          <h2 id="reviews-heading" class="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-moto-ink sm:text-3xl">
-            Why buyers trust our fitment-first approach
-          </h2>
+      <!-- ==================== 2. SUPPLIER LOGO ROW ==================== -->
+      <section class="container-page py-10 sm:py-14" aria-label="Featured suppliers">
+        <div class="flex flex-wrap items-center justify-between gap-6 opacity-50">
+          <span class="font-display text-lg font-semibold tracking-wide text-moto-ink">TORQUE MOTORS</span>
+          <span class="font-display text-lg font-semibold tracking-wide text-moto-ink">APEX AUTO GROUP</span>
+          <span class="font-display text-lg font-semibold tracking-wide text-moto-ink">GULF MOTOR PARTS</span>
+          <span class="font-display text-lg font-semibold tracking-wide text-moto-ink">NIPPON DIRECT</span>
+          <span class="font-display text-lg font-semibold tracking-wide text-moto-ink">EUROSPARE</span>
+          <span class="font-display text-lg font-semibold tracking-wide text-moto-ink">RUSTBELT IMPORTS</span>
+        </div>
+      </section>
 
-          <!-- ============================================================
-               REVIEW WIDGET SLOT
-               Replace the placeholder <div> below with the real embed from
-               Trustindex / Google Reviews. Paste the provider's <script>
-               snippet and its target container exactly as issued, and delete
-               the placeholder markup — nothing else on the page depends on it.
-               ============================================================ -->
-          <div class="mt-6 rounded-lg border border-moto-line bg-moto-low p-6">
-            <div class="flex flex-wrap items-center gap-3">
-              <span class="grid h-8 w-8 place-items-center rounded-full bg-moto-accent text-white">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="h-4 w-4"
-                  aria-hidden="true"
-                >
-                  <path d="M20 6 9 17l-5-5" />
-                </svg>
-              </span>
-              <span class="text-sm font-bold text-moto-ink">Trustindex</span>
+      <!-- ==================== 3. THE NETWORK / TRUST LAYER ==================== -->
+      <section class="container-page pb-16 sm:pb-20" aria-labelledby="network-heading">
+        <p class="eyebrow">The Network</p>
+        <div class="mt-4 grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div>
+            <h2 id="network-heading" class="text-balance text-4xl font-bold leading-[1.08] tracking-tight text-moto-ink sm:text-[44px]">
+              One trust layer between you and every supplier on earth.
+            </h2>
+            <p class="mt-5 leading-relaxed text-moto-warm">
+              You need a part. Thousands of suppliers have it. Forge Vault is the load-bearing layer in between —
+              verification, protected payments, logistics and guarantees — so a cross-border purchase feels as safe
+              as buying from the shop next door.
+            </p>
+          </div>
 
-              <span class="flex items-center gap-0.5" role="img" aria-label="Rated 4.8 out of 5 stars">
-                <svg viewBox="0 0 20 20" fill="#f59e0b" class="h-5 w-5" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg>
-                <svg viewBox="0 0 20 20" fill="#f59e0b" class="h-5 w-5" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg>
-                <svg viewBox="0 0 20 20" fill="#f59e0b" class="h-5 w-5" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg>
-                <svg viewBox="0 0 20 20" fill="#f59e0b" class="h-5 w-5" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg>
-                <svg viewBox="0 0 20 20" fill="#f59e0b" class="h-5 w-5" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg>
-              </span>
+          <div class="flex flex-col gap-3.5">
+            <div class="card p-6">
+              <p class="text-xs tracking-widest2 text-moto-outline">YOU</p>
+              <p class="mt-1.5 font-display text-xl font-semibold text-moto-ink">The buyer</p>
+              <p class="mt-1 text-sm text-moto-muted">Owners, garages, dealers and resellers who need the right part, fast.</p>
             </div>
-            <p class="mt-4 text-sm text-moto-muted">
-              A 4.8 average rating from verified buyers who ordered European parts with fitment support.
+
+            <div class="card p-6">
+              <p class="text-xs tracking-widest2 text-moto-outline">THE WORLD</p>
+              <p class="mt-1.5 font-display text-xl font-semibold text-moto-ink">Global supplier network</p>
+              <p class="mt-1 text-sm text-moto-muted">12,000+ vetted suppliers across 40 countries and every major part category.</p>
+            </div>
+
+            <div class="rounded-[20px] border border-moto-accent/45 bg-moto-accent/10 p-6">
+              <p class="text-xs tracking-widest2 text-moto-accent">FORGE VAULT</p>
+              <p class="mt-1.5 font-display text-xl font-semibold text-moto-ink">The trust layer</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="rounded-full border border-moto-line-2 bg-white/[0.06] px-3 py-1.5 text-[13px] text-moto-ink">Verification</span>
+                <span class="rounded-full border border-moto-line-2 bg-white/[0.06] px-3 py-1.5 text-[13px] text-moto-ink">Protected payments</span>
+                <span class="rounded-full border border-moto-line-2 bg-white/[0.06] px-3 py-1.5 text-[13px] text-moto-ink">Logistics</span>
+                <span class="rounded-full border border-moto-line-2 bg-white/[0.06] px-3 py-1.5 text-[13px] text-moto-ink">Guarantee</span>
+              </div>
+            </div>
+
+            <p class="pl-0.5 text-[13px] text-moto-outline">▲ Every transaction above rests on the trust layer below.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 4. STATS BAR ==================== -->
+      <section class="border-y border-moto-line bg-moto-panel py-14" aria-label="Forge Vault in numbers">
+        <div class="container-page grid grid-cols-2 gap-8 text-center sm:grid-cols-4">
+          <div>
+            <p class="font-display text-4xl font-bold text-moto-accent sm:text-[46px]">40+</p>
+            <p class="mt-1.5 text-sm text-moto-outline">Countries served</p>
+          </div>
+          <div>
+            <p class="font-display text-4xl font-bold text-moto-accent sm:text-[46px]">12,000+</p>
+            <p class="mt-1.5 text-sm text-moto-outline">Verified suppliers</p>
+          </div>
+          <div>
+            <p class="font-display text-4xl font-bold text-moto-accent sm:text-[46px]">2.3M</p>
+            <p class="mt-1.5 text-sm text-moto-outline">Parts listed</p>
+          </div>
+          <div>
+            <p class="font-display text-4xl font-bold text-moto-accent sm:text-[46px]">4.6 days</p>
+            <p class="mt-1.5 text-sm text-moto-outline">Avg. delivery time</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 5. THE PROBLEM ==================== -->
+      <section class="container-page py-16 sm:py-20" aria-labelledby="problem-heading">
+        <p class="eyebrow">The Problem</p>
+        <h2 id="problem-heading" class="text-balance mt-4 max-w-2xl text-4xl font-bold tracking-tight text-moto-ink sm:text-[44px]">
+          Sourcing parts across borders is broken.
+        </h2>
+
+        <div class="mt-12 grid gap-5 sm:grid-cols-3">
+          <div class="card p-8">
+            <span class="mb-5 grid h-[38px] w-[38px] place-items-center rounded-[9px] bg-moto-accent/15">
+              <span class="h-[15px] w-[15px] rounded-full bg-moto-accent"></span>
+            </span>
+            <h3 class="font-display text-xl font-semibold text-moto-ink">You wait weeks for the wrong part.</h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">
+              Endless calls, unverified listings and mismatched fitment turn a simple repair into downtime.
+            </p>
+          </div>
+
+          <div class="card p-8">
+            <span class="mb-5 grid h-[38px] w-[38px] place-items-center rounded-[9px] bg-moto-accent/15">
+              <span class="h-[15px] w-[15px] bg-moto-accent"></span>
+            </span>
+            <h3 class="font-display text-xl font-semibold text-moto-ink">Counterfeits poison the market.</h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">
+              Without independent verification, fake and salvage parts slip in — and fail when it matters.
+            </p>
+          </div>
+
+          <div class="card p-8">
+            <span class="mb-5 grid h-[38px] w-[38px] place-items-center rounded-[9px] bg-moto-accent/15">
+              <span class="h-[15px] w-[15px] rotate-45 bg-moto-accent"></span>
+            </span>
+            <h3 class="font-display text-xl font-semibold text-moto-ink">Paying overseas is risky.</h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">
+              Sending money to a stranger abroad, with no protection if the part never ships.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- ==================== 3. THREE INFO ROWS ==================== -->
-      <section aria-label="Buying guidance" class="container-page space-y-4 pb-10 sm:pb-14">
-        <article class="card p-6 sm:p-8">
-          <p class="eyebrow">Fitment</p>
-          <h2 class="mt-2 text-xl font-extrabold leading-tight tracking-tight text-moto-ink sm:text-2xl">
-            Will this part fit my vehicle?
-          </h2>
-          <p class="mt-2 text-moto-muted">See VIN and compatibility guidance before you buy.</p>
-        </article>
+      <!-- ==================== 6. SOLUTIONS ==================== -->
+      <section class="container-page pb-16 sm:pb-20" aria-labelledby="solutions-heading">
+        <p class="eyebrow">Solutions</p>
+        <h2 id="solutions-heading" class="text-balance mt-4 max-w-xl text-4xl font-bold tracking-tight text-moto-ink sm:text-[44px]">
+          One marketplace. Four guarantees.
+        </h2>
 
-        <article class="card p-6 sm:p-8">
-          <p class="eyebrow">OEM quality</p>
-          <h2 class="mt-2 text-xl font-extrabold leading-tight tracking-tight text-moto-ink sm:text-2xl">
-            OEM vs aftermarket vs used?
-          </h2>
-          <p class="mt-2 text-moto-muted">Compare options by quality tier, risk, and budget.</p>
-        </article>
-
-        <article class="card p-6 sm:p-8">
-          <p class="eyebrow">Post-purchase</p>
-          <h2 class="mt-2 text-xl font-extrabold leading-tight tracking-tight text-moto-ink sm:text-2xl">
-            Returns, warranty, and shipping timing
-          </h2>
-          <p class="mt-2 text-moto-muted">Get clarity on what happens after checkout.</p>
-        </article>
-      </section>
-
-      <!-- ==================== 4. RECOMMENDED FOR YOU ==================== -->
-      <section id="products" aria-labelledby="recommended-heading" class="container-page pb-10 sm:pb-14">
-        <div class="mb-6 flex items-end justify-between gap-4">
-          <h2 id="recommended-heading" class="text-2xl font-extrabold leading-tight tracking-tight text-moto-ink sm:text-3xl">
-            Recommended For You
-          </h2>
-          <a href="#categories" class="link-all shrink-0">View all <span aria-hidden="true">&rsaquo;</span></a>
-        </div>
-        <div data-grid="recommended" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
-      </section>
-
-      <!-- ==================== 5. PROMO BANNER ==================== -->
-      <section aria-labelledby="promo-heading" class="container-page pb-10 sm:pb-14">
-        <div data-slider class="on-dark relative overflow-hidden rounded-lg bg-moto-low shadow-panel">
-          <div data-slide data-active="true" class="slide !relative">
-            <div class="px-12 py-14 sm:px-16 sm:py-20 lg:px-20">
-              <div class="max-w-2xl">
-                <h2 id="promo-heading" class="text-balance text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl">
-                  Comfort You Can Feel on Every Drive
-                </h2>
-                <p class="mt-4 text-base text-moto-muted sm:text-lg">
-                  Seat components and interior upgrades chosen to restore support, style, and everyday comfort.
-                </p>
-                <a href="#products" class="btn-white mt-8">Browse seats</a>
-              </div>
+        <div class="mt-12 grid gap-px overflow-hidden rounded-[22px] border border-moto-line bg-moto-line sm:grid-cols-2">
+          <div class="flex gap-6 bg-moto-panel p-10">
+            <span class="font-display text-sm font-semibold text-moto-accent">01</span>
+            <div>
+              <h3 class="font-display text-2xl font-semibold text-moto-ink">Global Sourcing Network</h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">Tap 12,000+ vetted suppliers across 40 countries, matched instantly to your exact part number.</p>
             </div>
           </div>
-
-          <button type="button" data-prev aria-label="Previous banner" class="slider-arrow left-2 sm:left-4">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button type="button" data-next aria-label="Next banner" class="slider-arrow right-2 sm:right-4">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
+          <div class="flex gap-6 bg-moto-panel p-10">
+            <span class="font-display text-sm font-semibold text-moto-accent">02</span>
+            <div>
+              <h3 class="font-display text-2xl font-semibold text-moto-ink">Verified Sellers Only</h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">Every seller clears ID, inventory and quality audits before listing a single part.</p>
+            </div>
+          </div>
+          <div class="flex gap-6 bg-moto-panel p-10">
+            <span class="font-display text-sm font-semibold text-moto-accent">03</span>
+            <div>
+              <h3 class="font-display text-2xl font-semibold text-moto-ink">Protected Payments</h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">Your money is held safely and released to the seller only once your part has shipped.</p>
+            </div>
+          </div>
+          <div class="flex gap-6 bg-moto-panel p-10">
+            <span class="font-display text-sm font-semibold text-moto-accent">04</span>
+            <div>
+              <h3 class="font-display text-2xl font-semibold text-moto-ink">Fitment-Guaranteed Search</h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">Search by VIN, make, model or OEM number and get matches guaranteed to fit — or your money back.</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- ==================== 6. DEALS YOU MAY LIKE ==================== -->
-      <section id="deals" aria-labelledby="deals-heading" class="container-page pb-10 sm:pb-14">
-        <div class="mb-6 flex items-end justify-between gap-4">
-          <h2 id="deals-heading" class="text-2xl font-extrabold leading-tight tracking-tight text-moto-ink sm:text-3xl">
-            Deals You May Like
-          </h2>
-          <a href="#products" class="link-all shrink-0">Shop deals <span aria-hidden="true">&rsaquo;</span></a>
-        </div>
-        <div data-grid="deals" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
-      </section>
-
-      <!-- ==================== 7. SHOP BY CATEGORY ==================== -->
-      <section id="categories" aria-labelledby="categories-heading" class="container-page pb-16 sm:pb-20">
-        <div class="mb-6 flex items-end justify-between gap-4">
-          <h2 id="categories-heading" class="text-2xl font-extrabold leading-tight tracking-tight text-moto-ink sm:text-3xl">
-            Shop by Category
-          </h2>
-          <a href="#products" class="link-all shrink-0">View all <span aria-hidden="true">&rsaquo;</span></a>
+      <!-- ==================== 7. SHOP BY CATEGORY ====================
+           Real, data-driven categories from the catalogue — the design
+           concept's six category labels are placeholder marketing copy,
+           not backed by actual inventory, so this stays wired to /api/categories. -->
+      <section class="container-page pb-16 sm:pb-20" aria-labelledby="categories-heading">
+        <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <h2 id="categories-heading" class="text-4xl font-bold tracking-tight text-moto-ink sm:text-[44px]">Shop by category.</h2>
+          <a href="/products.html" class="link-all shrink-0">View all categories <span aria-hidden="true">&rarr;</span></a>
         </div>
         <div data-grid="categories" class="grid grid-cols-2 gap-5 lg:grid-cols-3"></div>
+      </section>
+
+      <!-- ==================== 8. BUILT FOR ==================== -->
+      <section class="container-page pb-16 sm:pb-20" aria-labelledby="builtfor-heading">
+        <p class="eyebrow">Built For</p>
+        <h2 id="builtfor-heading" class="text-balance mt-4 max-w-xl text-4xl font-bold tracking-tight text-moto-ink sm:text-[44px]">
+          Four kinds of buyer. One standard.
+        </h2>
+
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="border-t-2 border-moto-accent pt-6">
+            <h3 class="font-display text-lg font-semibold text-moto-ink">Car owners</h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">Get the exact part for your car, guaranteed to fit, without the guesswork.</p>
+          </div>
+          <div class="border-t-2 border-moto-accent pt-6">
+            <h3 class="font-display text-lg font-semibold text-moto-ink">Mechanics &amp; garages</h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">Keep bays moving with fast, verified sourcing and predictable delivery windows.</p>
+          </div>
+          <div class="border-t-2 border-moto-accent pt-6">
+            <h3 class="font-display text-lg font-semibold text-moto-ink">Dealerships</h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">Source OEM and rare parts at scale, with audit-ready records on every order.</p>
+          </div>
+          <div class="border-t-2 border-moto-accent pt-6">
+            <h3 class="font-display text-lg font-semibold text-moto-ink">Resellers</h3>
+            <p class="mt-2.5 text-sm leading-relaxed text-moto-muted">Buy verified inventory in volume and re-sell with total confidence.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 9. WHY FORGE VAULT ==================== -->
+      <section class="border-y border-moto-line bg-moto-panel py-20 sm:py-24" aria-label="Why Forge Vault">
+        <div class="container-page">
+          <div class="mx-auto max-w-[900px] text-center">
+            <p class="eyebrow justify-center">Why Forge Vault</p>
+            <p class="text-balance mt-6 font-display text-2xl font-medium leading-snug text-moto-ink sm:text-[30px]">
+              We don't sell the parts. We verify them, protect the payment, and stand behind every delivery — so when
+              something goes wrong, you're never the one left holding the risk.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 10. TRUST ICONS ==================== -->
+      <section class="container-page py-16 sm:py-20" aria-label="Trust guarantees">
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="text-center">
+            <span class="mx-auto mb-4 grid h-[46px] w-[46px] place-items-center rounded-xl bg-moto-accent/15">
+              <span class="h-4 w-4 rounded-full border-2 border-moto-accent"></span>
+            </span>
+            <h3 class="font-display text-base font-semibold text-moto-ink">Buyer Protection</h3>
+            <p class="mt-1.5 text-[13px] text-moto-outline">Full refund if a part never ships or arrives misdescribed.</p>
+          </div>
+          <div class="text-center">
+            <span class="mx-auto mb-4 grid h-[46px] w-[46px] place-items-center rounded-xl bg-moto-accent/15">
+              <span class="h-4 w-4 bg-moto-accent"></span>
+            </span>
+            <h3 class="font-display text-base font-semibold text-moto-ink">Secure Payments</h3>
+            <p class="mt-1.5 text-[13px] text-moto-outline">Funds released to sellers only after your part is on its way.</p>
+          </div>
+          <div class="text-center">
+            <span class="mx-auto mb-4 grid h-[46px] w-[46px] place-items-center rounded-xl bg-moto-accent/15">
+              <span class="h-4 w-4 rounded-full bg-moto-accent"></span>
+            </span>
+            <h3 class="font-display text-base font-semibold text-moto-ink">Verified Sellers</h3>
+            <p class="mt-1.5 text-[13px] text-moto-outline">Audited identity, inventory and quality on every listing.</p>
+          </div>
+          <div class="text-center">
+            <span class="mx-auto mb-4 grid h-[46px] w-[46px] place-items-center rounded-xl bg-moto-accent/15">
+              <span class="h-4 w-4 rotate-45 bg-moto-accent"></span>
+            </span>
+            <h3 class="font-display text-base font-semibold text-moto-ink">Quality Guarantee</h3>
+            <p class="mt-1.5 text-[13px] text-moto-outline">Fitment and condition guaranteed, or we make it right.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 11. TESTIMONIAL ====================
+           Placeholder quote ported from the design concept — swap for a
+           real customer testimonial before this goes live. -->
+      <section class="container-page py-14 sm:py-16" aria-label="Customer testimonial">
+        <div class="mx-auto max-w-[1000px] text-center">
+          <p class="text-balance font-display text-2xl font-medium leading-snug text-moto-ink sm:text-[30px]">
+            "We used to lose two weeks waiting on a single transmission part. On Forge Vault we had three verified
+            quotes within the hour — and the part landed in five days."
+          </p>
+          <div class="mt-5 flex items-center justify-center gap-3.5">
+            <span class="ph ph-3 h-12 w-12 shrink-0 rounded-full"></span>
+            <div class="text-left">
+              <p class="text-sm font-semibold text-moto-ink">Marcus Webb</p>
+              <p class="text-[13px] text-moto-outline">Fleet Manager, Webb Logistics</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 12. FINAL CTA ==================== -->
+      <section class="relative overflow-hidden bg-moto-panel py-24 text-center sm:py-28">
+        <div class="pointer-events-none absolute left-1/2 top-1/2 h-[50vw] w-[50vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_theme(colors.moto.accent)_0%,_transparent_68%)] opacity-20 blur-3xl"></div>
+        <div class="container-page relative">
+          <h2 class="text-balance text-4xl font-bold tracking-tight text-moto-ink sm:text-[52px]">Stop waiting on parts.</h2>
+          <p class="mx-auto mt-5 max-w-[520px] text-lg text-moto-warm">
+            Tell us what you need. We'll return verified, ready-to-ship matches from around the world.
+          </p>
+          <div class="mt-9 flex flex-wrap justify-center gap-3.5">
+            <a href="/products.html" class="btn-primary">Browse Parts →</a>
+          </div>
+        </div>
       </section>
     </main>
 

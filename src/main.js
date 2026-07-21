@@ -1,116 +1,96 @@
 import './style.css';
 import { get, post } from './lib/api.js';
-import { addToCart, cartCount, onCartChange } from './lib/cart.js';
-import { esc, money } from './lib/format.js';
+import { cartCount, onCartChange } from './lib/cart.js';
+import { esc } from './lib/format.js';
 import { applySiteImages, hydrateStaticImages, imageTag, installImageFallback } from './lib/images.js';
 import { loadSession } from './lib/auth.js';
 import { initHeader, initSliders, initSmoothScroll, paintAccountState, updateCartBadge } from './lib/ui.js';
 import { mountChrome } from './partials.js';
 
 /* =========================================================================
-   MotoShop — storefront (index / about / contact)
+   Forge Vault — storefront (index / about / contact)
    Every block below no-ops when its markup is absent, so one bundle serves
    all three pages.
    ========================================================================= */
 
 installImageFallback();
 
-const ICONS = {
-  part: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12" aria-hidden="true"><path d="M14 4h-4a2 2 0 0 0-2 2v2H6a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2V6a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="2.5"/></svg>`,
-  car: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12" aria-hidden="true"><path d="M5 17h14M3 13l1.6-4.5A3 3 0 0 1 7.4 6.5h9.2a3 3 0 0 1 2.8 2L21 13v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><circle cx="7.5" cy="13.5" r="1"/><circle cx="16.5" cy="13.5" r="1"/></svg>`,
-};
+const CAR_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12" aria-hidden="true"><path d="M5 17h14M3 13l1.6-4.5A3 3 0 0 1 7.4 6.5h9.2a3 3 0 0 1 2.8 2L21 13v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><circle cx="7.5" cy="13.5" r="1"/><circle cx="16.5" cy="13.5" r="1"/></svg>`;
 
 /* -------------------------------------------------------------------------
-   Product + category cards
+   Hero — search bar and the floating "buyer request" card marquee
    ---------------------------------------------------------------------- */
 
-function productCard(product, index) {
-  const tone = `ph-${(index % 4) + 1}`;
-  const discounted = Boolean(product.discountPercent && product.oldPriceCents);
-  const soldOut = product.stock < 1;
+function initHeroSearch() {
+  const form = document.querySelector('[data-hero-search]');
+  if (!form) return;
 
-  const badge = discounted
-    ? `<span class="absolute left-3 top-3 z-10 rounded-lg bg-red-600 px-2 py-1 text-xs font-bold text-white shadow-sm">-${product.discountPercent}%</span>`
-    : '';
-
-  const oldPrice = discounted
-    ? `<span class="text-sm font-medium text-moto-outline line-through">${money(product.oldPriceCents)}</span>`
-    : '';
-
-  const title = esc(product.title);
-
-  return `
-    <article class="group card flex flex-col overflow-hidden transition duration-200 hover:-translate-y-0.5 hover:shadow-lg">
-      <a href="/product.html?slug=${encodeURIComponent(product.slug)}" class="block focus:outline-none">
-        <div class="ph ${tone} h-52">
-          ${badge}
-          <span class="ph-icon">${ICONS.part}</span>
-          ${imageTag(product.imagePath, {
-            alt: title,
-            className: 'absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]',
-          })}
-        </div>
-      </a>
-
-      <div class="flex flex-1 flex-col p-4">
-        <p class="text-xs ${soldOut ? 'font-semibold text-red-600' : 'text-moto-outline'}">
-          ${soldOut ? 'Out of stock' : `${product.stock} in stock`}
-        </p>
-
-        <h3 class="mt-1 min-h-[3.75rem] text-sm font-bold leading-snug text-moto-ink">
-          <a href="/product.html?slug=${encodeURIComponent(product.slug)}" class="line-clamp-3 hover:text-moto-accent">${title}</a>
-        </h3>
-
-        <p class="mt-1.5 text-xs text-moto-outline">${esc(product.brand)} &bull; ${esc(product.category ?? '')}</p>
-
-        <div class="mt-3 flex flex-wrap items-baseline gap-2">
-          <span class="text-lg font-extrabold text-moto-ink">${money(product.priceCents)}</span>
-          ${oldPrice}
-        </div>
-
-        <button
-          type="button"
-          data-add-to-cart="${product.id}"
-          ${soldOut ? 'disabled' : ''}
-          class="btn mt-4 w-full ${
-            soldOut
-              ? 'cursor-not-allowed bg-moto-bg text-moto-outline'
-              : 'bg-moto-accent text-white hover:brightness-110'
-          }">
-          ${soldOut ? 'Out of stock' : 'Add to cart'}
-        </button>
-      </div>
-    </article>`;
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const value = form.elements.q.value.trim();
+    location.href = value ? `/products.html?q=${encodeURIComponent(value)}` : '/products.html';
+  });
 }
+
+// Illustrative sample requests — not real orders, just showing how sourcing
+// flows through the marketplace. Cloned from the design concept.
+const HERO_CARDS = [
+  { kind: 'buyer', meta: 'BUYER · LAGOS, NG', body: 'Need a rear bumper for a 2019 Range Rover Sport HSE. Budget around $450.' },
+  { kind: 'matched', meta: 'FORGE VAULT · MATCHED', body: '6 verified suppliers found across Germany, Japan &amp; the UAE. Best price <strong>$310</strong>, ships in 4 days.' },
+  { kind: 'buyer', meta: 'BUYER · NAIROBI, KE', body: 'Looking for a genuine timing chain kit for a 2015 Honda Civic.' },
+  { kind: 'matched', meta: 'FORGE VAULT · MATCHED', body: 'Nippon Direct has it in stock — genuine OEM, <strong>$150</strong>, delivered in 6 days.' },
+  { kind: 'buyer', meta: 'BUYER · DUBAI, AE', body: 'Front suspension strut for a Nissan Patrol — needs to arrive this week.' },
+  { kind: 'progress', meta: 'FORGE VAULT · IN PROGRESS', body: 'Payment protected. Freight booked — your tracking is on the way.' },
+];
+
+const heroCard = ({ kind, meta, body }) => `
+  <div class="max-w-[430px] rounded-[18px] border p-5 shadow-panel ${
+    kind === 'matched'
+      ? 'border-moto-accent/40 bg-moto-accent/10'
+      : `border-moto-line-2 bg-moto-panel/90 backdrop-blur ${kind === 'progress' ? 'opacity-70' : ''}`
+  }">
+    <div class="flex items-center gap-2 text-xs tracking-widest2 ${kind === 'matched' ? 'text-moto-accent' : 'text-moto-outline'}">
+      <span class="h-1.5 w-1.5 rounded-full ${kind === 'matched' ? 'bg-moto-accent' : 'bg-moto-outline'}"></span>
+      ${meta}
+    </div>
+    <div class="mt-2.5 text-[15px] leading-relaxed text-moto-ink">${body}</div>
+  </div>`;
+
+function initHeroCards() {
+  const mounts = document.querySelectorAll('[data-hero-cards]');
+  if (!mounts.length) return;
+
+  const html = HERO_CARDS.map(heroCard).join('');
+  mounts.forEach((mount) => {
+    mount.innerHTML = html;
+  });
+}
+
+/* -------------------------------------------------------------------------
+   Category tiles — real catalogue data, styled as the design concept's
+   image tiles (no card border, bottom-left label over a gradient).
+   ---------------------------------------------------------------------- */
 
 const categoryTile = (category, index) => `
   <a href="/products.html?category=${encodeURIComponent(category.slug)}"
-     class="group card block overflow-hidden transition duration-200 hover:-translate-y-0.5 hover:shadow-lg">
-    <div class="ph ph-${(index % 4) + 1} h-44 sm:h-52">
-      <span class="ph-icon">${ICONS.car}</span>
+     class="group relative block h-[220px] overflow-hidden rounded-[18px] transition duration-200 hover:-translate-y-0.5 sm:h-[290px]">
+    <div class="ph ph-${(index % 4) + 1} absolute inset-0 rounded-none">
+      <span class="ph-icon">${CAR_ICON}</span>
       ${imageTag(category.imagePath, {
         alt: `${esc(category.name)} parts`,
         className: 'absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]',
       })}
-      <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-4 pb-3 pt-10">
-        <span class="text-base font-extrabold text-white">${esc(category.name)}</span>
-      </div>
     </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-moto-bg via-moto-bg/10 to-transparent opacity-90"></div>
+    <span class="absolute bottom-5 left-5 font-display text-lg font-semibold text-moto-ink">${esc(category.name)}</span>
   </a>`;
 
-/* -------------------------------------------------------------------------
-   Grids — now fed by the API rather than a hardcoded array
-   ---------------------------------------------------------------------- */
-
 const skeleton = (count, height) =>
-  Array.from(
-    { length: count },
-    () => `<div class="card ${height} animate-pulse bg-moto-high/60 ring-0"></div>`,
-  ).join('');
+  Array.from({ length: count }, () => `<div class="rounded-[18px] ${height} animate-pulse bg-moto-high/60"></div>`).join('');
 
 const errorState = (message) => `
-  <div class="col-span-full rounded-lg border border-amber-200 bg-amber-50 p-6 text-center">
-    <p class="text-sm font-semibold text-amber-900">${esc(message)}</p>
+  <div class="col-span-full rounded-[18px] border border-amber-500/40 bg-amber-500/10 p-6 text-center">
+    <p class="text-sm font-semibold text-amber-300">${esc(message)}</p>
     <button type="button" data-retry class="link-all mt-2">Try again</button>
   </div>`;
 
@@ -141,50 +121,12 @@ async function fillGrid(mount, fetcher, template, { skeletonHeight = 'h-80', emp
 
 function renderGrids() {
   fillGrid(
-    document.querySelector('[data-grid="recommended"]'),
-    async () => (await get('/api/products?featured=1&limit=6')).products,
-    productCard,
-  );
-
-  fillGrid(
-    document.querySelector('[data-grid="deals"]'),
-    async () => (await get('/api/products?deals=1&limit=6')).products,
-    productCard,
-  );
-
-  fillGrid(
     document.querySelector('[data-grid="categories"]'),
-    // tiles=1 → the six categories that have artwork. Seats/Lights/Tires/
-    // Transmission are real categories but were never home-page tiles.
+    // tiles=1 → the categories that have artwork.
     async () => (await get('/api/categories?tiles=1')).categories,
     categoryTile,
-    { skeletonHeight: 'h-44 sm:h-52' },
+    { skeletonHeight: 'h-[220px] sm:h-[290px]' },
   );
-}
-
-/* -------------------------------------------------------------------------
-   Add to cart (delegated — the grids are replaced asynchronously)
-   ---------------------------------------------------------------------- */
-
-function initAddToCart() {
-  document.addEventListener('click', (event) => {
-    const button = event.target.closest('[data-add-to-cart]');
-    if (!button || button.disabled) return;
-
-    addToCart(button.dataset.addToCart, 1);
-
-    // Confirm in place. A silent cart is a cart people click three times.
-    const original = button.textContent;
-    button.textContent = 'Added ✓';
-    button.classList.add('bg-moto-accent', 'hover:brightness-110');
-    button.classList.remove('bg-moto-accent', 'hover:brightness-110');
-
-    setTimeout(() => {
-      button.textContent = original;
-      button.classList.remove('bg-moto-accent', 'hover:brightness-110');
-      button.classList.add('bg-moto-accent', 'hover:brightness-110');
-    }, 1400);
-  });
 }
 
 /* -------------------------------------------------------------------------
@@ -249,7 +191,7 @@ function initContactForm() {
       tone === 'success'
         ? 'mt-4 rounded-lg border border-moto-line bg-moto-high px-4 py-3 text-sm font-medium text-moto-accent-soft'
         : tone === 'error'
-          ? 'mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800'
+          ? 'mt-4 rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-300'
           : 'sr-only';
   };
 
@@ -301,7 +243,8 @@ function boot() {
   initHeader();
   initSliders();
   initSmoothScroll();
-  initAddToCart();
+  initHeroSearch();
+  initHeroCards();
   initContactForm();
   renderGrids();
 

@@ -9,8 +9,8 @@ import { siteUrl } from '../env.js';
  */
 
 const BRAND = {
-  blue: '#2e7dfb',
-  navy: '#0b1220',
+  blue: '#e2823f',
+  navy: '#0e0f12',
   ink: '#0f172a',
   body: '#475569',
   muted: '#94a3b8',
@@ -35,7 +35,7 @@ export function button(label, href) {
       <tr>
         <td style="border-radius:10px;background:${BRAND.blue};">
           <a href="${escapeHtml(href)}"
-             style="display:inline-block;padding:13px 26px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:10px;">
+             style="display:inline-block;padding:13px 26px;font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:10px;">
             ${escapeHtml(label)}
           </a>
         </td>
@@ -51,13 +51,13 @@ export function itemsTable(items, order) {
     .map(
       (item) => `
       <tr>
-        <td style="padding:12px 0;border-bottom:1px solid ${BRAND.line};font-family:Inter,Helvetica,Arial,sans-serif;font-size:14px;color:${BRAND.ink};">
+        <td style="padding:12px 0;border-bottom:1px solid ${BRAND.line};font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:14px;color:${BRAND.ink};">
           <strong style="font-weight:600;">${escapeHtml(item.title)}</strong><br>
           <span style="font-size:12px;color:${BRAND.muted};">
             ${escapeHtml(item.brand ?? '')}${item.part_number ? ` &bull; ${escapeHtml(item.part_number)}` : ''} &bull; Qty ${item.quantity}
           </span>
         </td>
-        <td align="right" style="padding:12px 0;border-bottom:1px solid ${BRAND.line};font-family:Inter,Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;color:${BRAND.ink};white-space:nowrap;">
+        <td align="right" style="padding:12px 0;border-bottom:1px solid ${BRAND.line};font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;color:${BRAND.ink};white-space:nowrap;">
           ${formatMoney(item.line_total_cents, currency)}
         </td>
       </tr>`,
@@ -66,8 +66,8 @@ export function itemsTable(items, order) {
 
   const totalRow = (label, value, bold = false, color = BRAND.body) => `
       <tr>
-        <td style="padding:6px 0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:${bold ? '16px' : '14px'};font-weight:${bold ? '700' : '400'};color:${bold ? BRAND.ink : color};">${escapeHtml(label)}</td>
-        <td align="right" style="padding:6px 0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:${bold ? '16px' : '14px'};font-weight:${bold ? '700' : '600'};color:${bold ? BRAND.ink : color};white-space:nowrap;">${value}</td>
+        <td style="padding:6px 0;font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:${bold ? '16px' : '14px'};font-weight:${bold ? '700' : '400'};color:${bold ? BRAND.ink : color};">${escapeHtml(label)}</td>
+        <td align="right" style="padding:6px 0;font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:${bold ? '16px' : '14px'};font-weight:${bold ? '700' : '600'};color:${bold ? BRAND.ink : color};white-space:nowrap;">${value}</td>
       </tr>`;
 
   const refunded =
@@ -106,7 +106,7 @@ export function addressBlock(order) {
   return `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 24px;">
       <tr>
-        <td style="padding:16px;background:${BRAND.bg};border-radius:10px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:${BRAND.body};">
+        <td style="padding:16px;background:${BRAND.bg};border-radius:10px;font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:${BRAND.body};">
           <strong style="display:block;margin-bottom:6px;color:${BRAND.ink};font-size:12px;text-transform:uppercase;letter-spacing:.08em;">Shipping to</strong>
           ${lines}
         </td>
@@ -115,7 +115,7 @@ export function addressBlock(order) {
 }
 
 /**
- * Wraps body HTML in the MotoShop shell.
+ * Wraps body HTML in the Forge Vault shell.
  * `preheader` is the grey snippet mail clients show next to the subject.
  */
 export function layout({ title, preheader = '', body }) {
@@ -140,8 +140,8 @@ export function layout({ title, preheader = '', body }) {
           <!-- Header -->
           <tr>
             <td style="padding:24px 32px;background:${BRAND.navy};">
-              <a href="${site}" style="text-decoration:none;font-family:Inter,Helvetica,Arial,sans-serif;font-size:19px;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;">
-                <strong style="font-weight:800;">Moto</strong><span style="font-weight:300;">Shop</span>
+              <a href="${site}" style="text-decoration:none;font-family:'Space Grotesk',Helvetica,Arial,sans-serif;font-size:19px;letter-spacing:.04em;text-transform:uppercase;color:#ffffff;">
+                <strong style="font-weight:700;">FORGE </strong><span style="font-weight:500;color:#94a3b8;">VAULT</span>
               </a>
             </td>
           </tr>
@@ -156,12 +156,12 @@ export function layout({ title, preheader = '', body }) {
           <!-- Footer -->
           <tr>
             <td style="padding:24px 32px;background:#000000;">
-              <p style="margin:0 0 10px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:${BRAND.muted};">
-                MotoShop &bull; Nijverheidsweg 27, Heinenoord, Netherlands<br>
-                Questions? <a href="mailto:support@motoshop.shop" style="color:#ffffff;">support@motoshop.shop</a>
+              <p style="margin:0 0 10px;font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:${BRAND.muted};">
+                Forge Vault &bull; Nijverheidsweg 27, Heinenoord, Netherlands<br>
+                Questions? <a href="mailto:support@forgevault.shop" style="color:#ffffff;">support@forgevault.shop</a>
               </p>
-              <p style="margin:0;font-family:Inter,Helvetica,Arial,sans-serif;font-size:11px;color:#64748b;">
-                &copy; 2026 MotoShop. All rights reserved.
+              <p style="margin:0;font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:11px;color:#64748b;">
+                &copy; 2026 Forge Vault. All rights reserved.
               </p>
             </td>
           </tr>
@@ -175,10 +175,10 @@ export function layout({ title, preheader = '', body }) {
 }
 
 export const heading = (text) =>
-  `<h1 style="margin:0 0 16px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:800;color:${BRAND.ink};">${escapeHtml(text)}</h1>`;
+  `<h1 style="margin:0 0 16px;font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:24px;line-height:1.25;font-weight:800;color:${BRAND.ink};">${escapeHtml(text)}</h1>`;
 
 export const paragraph = (html) =>
-  `<p style="margin:0 0 16px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.65;color:${BRAND.body};">${html}</p>`;
+  `<p style="margin:0 0 16px;font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.65;color:${BRAND.body};">${html}</p>`;
 
 /** A big, monospaced, selectable one-time code. */
 export const codeBlock = (code) => `
@@ -202,7 +202,7 @@ export const callout = (html, tone = 'info') => {
   return `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:20px 0;">
       <tr>
-        <td style="padding:14px 16px;background:${t.bg};border:1px solid ${t.border};border-radius:10px;font-family:Inter,Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:${t.text};">
+        <td style="padding:14px 16px;background:${t.bg};border:1px solid ${t.border};border-radius:10px;font-family:'Public Sans',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.6;color:${t.text};">
           ${html}
         </td>
       </tr>

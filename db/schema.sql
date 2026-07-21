@@ -1,5 +1,5 @@
 -- ============================================================================
--- MotoShop — database schema (Supabase / PostgreSQL)
+-- Forge Vault — database schema (Supabase / PostgreSQL)
 --
 -- Apply with:  supabase db execute --file db/schema.sql
 --         or:  paste into the Supabase SQL editor and run.

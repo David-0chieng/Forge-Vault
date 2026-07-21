@@ -3,22 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout — MotoShop</title>
+    <title>Checkout — Forge Vault</title>
     <meta name="robots" content="noindex" />
-    <meta name="theme-color" content="#0c1118" />
+    <meta name="theme-color" content="#0e0f12" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <!-- Space Grotesk + Public Sans — the exact type pair from the
+         "Global Car Parts Marketplace" design concept. -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body class="min-h-screen">
-    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-moto-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-black focus:shadow-lg">Skip to main content</a>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-moto-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-moto-on-accent focus:shadow-lg"
+      >Skip to main content</a
+    >
 
     <header data-header class="sticky top-0 z-50 bg-moto-panel border-b border-moto-line"></header>
 
-    <main id="main" class="container-page py-10 sm:py-14">
-      <h1 class="text-3xl font-extrabold leading-tight tracking-tight text-moto-ink sm:text-4xl">Checkout</h1>
+    <main id="main" class="mx-auto w-full max-w-[1080px] px-6 py-12 sm:px-12">
+      <h1 class="h-display text-4xl">Checkout</h1>
 
       <!-- ============ Sign-in gate ============
            Shown when nobody is signed in. Checkout requires an account so the
@@ -27,13 +37,13 @@
       -->
       <section data-checkout-gate class="mx-auto mt-10 hidden max-w-md">
         <div class="card p-8 text-center">
-          <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-moto-high text-moto-accent">
+          <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-moto-accent/15 text-moto-accent">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" aria-hidden="true">
               <rect x="4" y="10" width="16" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" />
             </svg>
           </span>
 
-          <h2 class="mt-5 text-lg font-extrabold text-moto-ink">Sign in to check out</h2>
+          <h2 class="h-display text-lg mt-5">Sign in to check out</h2>
           <p class="mt-2 text-sm leading-relaxed text-moto-muted">
             We send your receipt, tracking, and any refund updates to a verified email address — so an order
             can never be placed against an inbox you do not control. Your cart is saved.
@@ -47,90 +57,98 @@
       </section>
 
       <!-- ============ Checkout proper ============ -->
-      <div data-checkout-body class="mt-8 hidden grid gap-8 lg:grid-cols-[1fr_22rem]">
-        <div>
-          <form data-checkout-form novalidate class="card p-6 sm:p-8">
+      <div data-checkout-body class="mt-10 hidden grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-start">
+        <div class="flex flex-col gap-8">
+          <form data-checkout-form novalidate class="flex flex-col gap-8">
             <!-- Buyer: fixed by the session, shown for confirmation. Deliberately
                  not editable — the server takes these from the session and would
                  ignore anything typed here. -->
-            <div class="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-moto-low p-4">
+            <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-moto-line bg-moto-panel p-4">
               <div class="min-w-0">
-                <p class="text-xs font-bold uppercase tracking-wide text-moto-outline">Ordering as</p>
-                <p class="mt-1 truncate text-sm font-bold text-moto-ink" data-buyer-name></p>
+                <p class="text-xs font-semibold uppercase tracking-wide text-moto-muted">Ordering as</p>
+                <p class="mt-1 truncate font-display text-sm font-semibold text-moto-ink" data-buyer-name></p>
                 <p class="truncate text-sm text-moto-muted" data-buyer-email></p>
               </div>
-              <button type="button" data-signout class="text-xs font-semibold text-moto-outline hover:text-moto-error">
+              <button type="button" data-signout class="text-xs font-semibold text-moto-muted hover:text-moto-accent">
                 Not you?
               </button>
             </div>
 
-            <h2 class="mt-8 text-lg font-extrabold text-moto-ink">Delivery address</h2>
+            <div>
+              <div class="h-display text-lg">Shipping address</div>
 
-            <div class="mt-5 grid gap-5 sm:grid-cols-2">
-              <div class="sm:col-span-2">
-                <label for="line1" class="field-label">Street address <span class="text-red-600" aria-hidden="true">*</span></label>
-                <input type="text" id="line1" name="line1" required autocomplete="address-line1" maxlength="200"
-                       placeholder="Street and number" class="field-input" />
-                <p data-error-for="line1" class="field-error"></p>
-              </div>
+              <div class="mt-4 grid gap-3.5 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <label for="line1" class="field-label">Street address <span class="text-moto-accent" aria-hidden="true">*</span></label>
+                  <input type="text" id="line1" name="line1" required autocomplete="address-line1" maxlength="200"
+                         placeholder="Street and number" class="field-input" />
+                  <p data-error-for="line1" class="field-error"></p>
+                </div>
 
-              <div class="sm:col-span-2">
-                <label for="line2" class="field-label">Apartment, suite, etc.</label>
-                <input type="text" id="line2" name="line2" autocomplete="address-line2" maxlength="200"
-                       placeholder="Optional" class="field-input" />
-                <p data-error-for="line2" class="field-error"></p>
-              </div>
+                <div class="sm:col-span-2">
+                  <label for="line2" class="field-label">Apartment, suite, etc.</label>
+                  <input type="text" id="line2" name="line2" autocomplete="address-line2" maxlength="200"
+                         placeholder="Optional" class="field-input" />
+                  <p data-error-for="line2" class="field-error"></p>
+                </div>
 
-              <div>
-                <label for="city" class="field-label">City <span class="text-red-600" aria-hidden="true">*</span></label>
-                <input type="text" id="city" name="city" required autocomplete="address-level2" maxlength="120" class="field-input" />
-                <p data-error-for="city" class="field-error"></p>
-              </div>
+                <div>
+                  <label for="city" class="field-label">City <span class="text-moto-accent" aria-hidden="true">*</span></label>
+                  <input type="text" id="city" name="city" required autocomplete="address-level2" maxlength="120" class="field-input" />
+                  <p data-error-for="city" class="field-error"></p>
+                </div>
 
-              <div>
-                <label for="postalCode" class="field-label">Postal code <span class="text-red-600" aria-hidden="true">*</span></label>
-                <input type="text" id="postalCode" name="postalCode" required autocomplete="postal-code" maxlength="32" class="field-input" />
-                <p data-error-for="postalCode" class="field-error"></p>
-              </div>
+                <div>
+                  <label for="postalCode" class="field-label">Postal code <span class="text-moto-accent" aria-hidden="true">*</span></label>
+                  <input type="text" id="postalCode" name="postalCode" required autocomplete="postal-code" maxlength="32" class="field-input" />
+                  <p data-error-for="postalCode" class="field-error"></p>
+                </div>
 
-              <div>
-                <label for="country" class="field-label">Country <span class="text-red-600" aria-hidden="true">*</span></label>
-                <select id="country" name="country" required autocomplete="country-name" class="field-input">
-                  <option value="Netherlands">Netherlands</option>
-                  <option value="Germany">Germany</option>
-                  <option value="Belgium">Belgium</option>
-                  <option value="France">France</option>
-                  <option value="United Kingdom">United Kingdom</option>
-                  <option value="Kenya">Kenya</option>
-                  <option value="Other">Other</option>
-                </select>
-                <p data-error-for="country" class="field-error"></p>
-              </div>
+                <div>
+                  <label for="country" class="field-label">Country <span class="text-moto-accent" aria-hidden="true">*</span></label>
+                  <select id="country" name="country" required autocomplete="country-name" class="field-input">
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Belgium">Belgium</option>
+                    <option value="France">France</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <p data-error-for="country" class="field-error"></p>
+                </div>
 
-              <div>
-                <label for="phone" class="field-label">Phone</label>
-                <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="40"
-                       placeholder="Optional — for the courier" class="field-input" />
-                <p data-error-for="phone" class="field-error"></p>
+                <div>
+                  <label for="phone" class="field-label">Phone</label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="40"
+                         placeholder="Optional — for the courier" class="field-input" />
+                  <p data-error-for="phone" class="field-error"></p>
+                </div>
               </div>
             </div>
 
-            <h2 class="mt-8 text-lg font-extrabold text-moto-ink">Payment method</h2>
-            <div data-payment-methods class="mt-4 grid gap-3 sm:grid-cols-2"></div>
+            <div>
+              <div class="h-display text-lg">Payment</div>
+              <!-- Real card entry never happens on this site — the buyer is
+                   redirected to the payment provider's own hosted page, so raw
+                   card fields are deliberately not cloned from the design
+                   concept here (it renders decorative, non-functional inputs).
+                   The provider is offered as a selectable method instead. -->
+              <div data-payment-methods class="mt-4 grid gap-3 sm:grid-cols-2"></div>
+              <div class="mt-4 flex items-center gap-2.5 rounded-2xl border border-moto-line bg-moto-panel px-4 py-3.5 text-xs leading-relaxed text-moto-muted">
+                <span class="h-3.5 w-3.5 shrink-0 rounded-full border-2 border-moto-accent"></span>
+                You will be taken to our payment provider to complete the payment securely. Card details never touch our servers.
+              </div>
+            </div>
 
-            <button type="submit" data-submit class="btn-primary mt-8 w-full">Place order</button>
+            <button type="submit" data-submit class="btn-primary w-full py-4 text-base">Place order</button>
             <p data-checkout-status role="status" aria-live="polite" class="sr-only"></p>
-
-            <p class="mt-4 text-center text-xs text-moto-outline">
-              You will be taken to our payment provider to complete the payment securely.
-              Card details never touch our servers.
-            </p>
           </form>
         </div>
 
         <aside aria-labelledby="summary-heading">
           <div class="card sticky top-24 p-6">
-            <h2 id="summary-heading" class="text-lg font-extrabold text-moto-ink">Order summary</h2>
+            <h2 id="summary-heading" class="h-display text-lg">Order summary</h2>
             <div data-checkout-totals class="mt-5"></div>
           </div>
         </aside>

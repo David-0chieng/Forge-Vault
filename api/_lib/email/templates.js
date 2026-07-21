@@ -31,7 +31,7 @@ const adminOrderUrl = (order) => `${siteUrl()}/admin/orders.html?order=${order.i
    ========================================================================== */
 
 export const otpCheckout = ({ code, ttlMinutes }) => ({
-  subject: `${code} is your MotoShop verification code`,
+  subject: `${code} is your Forge Vault verification code`,
   html: layout({
     title: 'Verify your email',
     preheader: `Your code is ${code}. It expires in ${ttlMinutes} minutes.`,
@@ -40,10 +40,10 @@ export const otpCheckout = ({ code, ttlMinutes }) => ({
       ${paragraph('Enter this code on the checkout page to confirm your email address. We ask for this so order updates and your receipt reach the right inbox.')}
       ${codeBlock(code)}
       ${paragraph(`This code expires in <strong>${ttlMinutes} minutes</strong> and can only be used once.`)}
-      ${callout('If you did not start a checkout at MotoShop, you can ignore this email — nothing has been charged and no order exists.', 'warn')}
+      ${callout('If you did not start a checkout at Forge Vault, you can ignore this email — nothing has been charged and no order exists.', 'warn')}
     `,
   }),
-  text: `Your MotoShop verification code is ${code}.\n\nIt expires in ${ttlMinutes} minutes and can only be used once.\n\nIf you did not start a checkout, ignore this email — nothing has been charged.`,
+  text: `Your Forge Vault verification code is ${code}.\n\nIt expires in ${ttlMinutes} minutes and can only be used once.\n\nIf you did not start a checkout, ignore this email — nothing has been charged.`,
 });
 
 /* ==========================================================================
@@ -51,13 +51,13 @@ export const otpCheckout = ({ code, ttlMinutes }) => ({
    ========================================================================== */
 
 export const otpAdmin2fa = ({ code, ttlMinutes, name, ip }) => ({
-  subject: `${code} is your MotoShop admin sign-in code`,
+  subject: `${code} is your Forge Vault admin sign-in code`,
   html: layout({
     title: 'Admin sign-in code',
     preheader: `Your admin code is ${code}.`,
     body: `
       ${heading('Confirm your admin sign-in')}
-      ${paragraph(`Hi ${escapeHtml(name ?? 'there')} — someone entered your password and is trying to sign in to the MotoShop admin panel.`)}
+      ${paragraph(`Hi ${escapeHtml(name ?? 'there')} — someone entered your password and is trying to sign in to the Forge Vault admin panel.`)}
       ${codeBlock(code)}
       ${paragraph(`This code expires in <strong>${ttlMinutes} minutes</strong>.`)}
       ${callout(
@@ -67,7 +67,7 @@ export const otpAdmin2fa = ({ code, ttlMinutes, name, ip }) => ({
       )}
     `,
   }),
-  text: `Your MotoShop admin sign-in code is ${code}. It expires in ${ttlMinutes} minutes.\n\nSign-in attempt from IP ${ip ?? 'unknown'}.\n\nIf this was not you, your password is compromised — do not enter this code, and change your password immediately.`,
+  text: `Your Forge Vault admin sign-in code is ${code}. It expires in ${ttlMinutes} minutes.\n\nSign-in attempt from IP ${ip ?? 'unknown'}.\n\nIf this was not you, your password is compromised — do not enter this code, and change your password immediately.`,
 });
 
 /* ==========================================================================
@@ -75,7 +75,7 @@ export const otpAdmin2fa = ({ code, ttlMinutes, name, ip }) => ({
    ========================================================================== */
 
 export const orderConfirmation = ({ order, items }) => ({
-  subject: `Order ${order.order_number} confirmed — MotoShop`,
+  subject: `Order ${order.order_number} confirmed — Forge Vault`,
   html: layout({
     title: `Order ${order.order_number} confirmed`,
     preheader: `We've received your payment of ${formatMoney(order.total_cents, order.currency)}.`,
@@ -222,7 +222,7 @@ export const refundIssued = ({ order, refund, isPartial }) => ({
    ========================================================================== */
 
 export const abandonedCart = ({ cart, items }) => ({
-  subject: 'You left parts in your cart — MotoShop',
+  subject: 'You left parts in your cart — Forge Vault',
   html: layout({
     title: 'Your cart is waiting',
     preheader: 'Your selected parts are still available.',
@@ -234,7 +234,7 @@ export const abandonedCart = ({ cart, items }) => ({
       ${paragraph('Not sure it fits? Reply with your VIN and we will confirm compatibility before you pay.')}
     `,
   }),
-  text: `You left parts in your MotoShop cart.\n\n${items.map((i) => `  ${i.quantity} x ${i.title}`).join('\n')}\n\nComplete your order: ${siteUrl()}/cart.html\n\nNot sure it fits? Reply with your VIN and we'll confirm compatibility.`,
+  text: `You left parts in your Forge Vault cart.\n\n${items.map((i) => `  ${i.quantity} x ${i.title}`).join('\n')}\n\nComplete your order: ${siteUrl()}/cart.html\n\nNot sure it fits? Reply with your VIN and we'll confirm compatibility.`,
 });
 
 /* ==========================================================================
