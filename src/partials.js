@@ -23,6 +23,20 @@ const navLink = (href, label, current) =>
 const mobileLink = (href, label, current) =>
   `<a href="${href}" class="rounded-lg px-2 py-3 text-sm font-semibold ${current ? 'text-moto-accent' : 'text-moto-muted'} hover:bg-moto-low"${current ? ' aria-current="page"' : ''}>${label}</a>`;
 
+/**
+ * Theme toggle — the design concept's exact circle button: a bordered dot
+ * that shows a crescent in dark mode and a filled dot in light mode.
+ * initThemeToggle() in lib/ui.js wires the click and swaps which icon shows.
+ */
+const themeToggle = () => `
+  <button type="button" data-theme-toggle title="Toggle theme"
+          class="grid h-[38px] w-[38px] shrink-0 place-items-center rounded-full border border-moto-line-2 bg-moto-panel text-moto-ink transition hover:bg-moto-high">
+    <span data-theme-icon-dark class="relative block h-[13px] w-[13px] overflow-hidden rounded-full border-2 border-current">
+      <span class="absolute -right-1 -top-1 h-[11px] w-[11px] rounded-full bg-moto-panel"></span>
+    </span>
+    <span data-theme-icon-light class="hidden h-[13px] w-[13px] rounded-full bg-moto-accent"></span>
+  </button>`;
+
 const languageSelect = (id) => `
   <label for="${id}" class="text-xs font-semibold uppercase tracking-wide text-moto-outline">Language</label>
   <select id="${id}" name="${id}"
@@ -48,6 +62,8 @@ export function header(page = '') {
       </nav>
 
       <div class="flex items-center gap-3 sm:gap-4">
+        ${themeToggle()}
+
         <div class="hidden items-center gap-2 lg:flex">${languageSelect('language')}</div>
 
         <!-- Account. Starts as a sign-in link; paintAccountState swaps it for the

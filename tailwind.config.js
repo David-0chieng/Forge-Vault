@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./*.html', './admin/**/*.html', './src/**/*.{js,css}'],
-  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -16,28 +15,29 @@ export default {
       },
       colors: {
         // `moto` is the site's one design-token namespace (kept as-is rather
-        // than renamed, since it is invisible outside the source). Its values
-        // are now the exact palette from the "Global Car Parts Marketplace"
-        // design concept: oklch(14% 0.008 264) background, oklch(70% 0.17 48)
-        // accent — a warm amber-orange on a near-black neutral.
+        // than renamed, since it is invisible outside the source). Every value
+        // resolves through a CSS variable defined in style.css, so the whole
+        // site repaints when <html data-theme> flips between the concept's
+        // exact dark and light palettes — see the THEME block in style.css.
         moto: {
-          bg: '#0e0f12', // page background / surface
-          lowest: '#0a0b0e', // inputs, deepest wells
-          low: '#131519', // low surface
-          panel: '#15171c', // cards / containers
-          high: '#1c1f26', // hovers, raised
-          line: 'rgba(255,255,255,0.08)', // hairline borders
-          'line-2': 'rgba(255,255,255,0.16)', // stronger dividers
-          bright: 'rgba(255,255,255,0.12)',
-          accent: '#e2823f', // primary action accent — warm amber-orange
-          'accent-dim': '#b9662b', // pressed / muted accent
-          'accent-soft': '#f0ac78', // light accent text on dark
-          'on-accent': '#1a1712', // text/icons drawn on top of the accent fill
-          ink: '#f5f3ee', // primary text
-          muted: '#a39c8d', // secondary text
-          warm: '#c8c3b7', // soft secondary text
-          outline: '#8f8879', // faint borders / icons
-          error: '#ff6b6b',
+          bg: 'rgb(var(--c-bg) / <alpha-value>)',
+          lowest: 'rgb(var(--c-lowest) / <alpha-value>)',
+          low: 'rgb(var(--c-low) / <alpha-value>)',
+          panel: 'rgb(var(--c-panel) / <alpha-value>)',
+          high: 'rgb(var(--c-high) / <alpha-value>)',
+          line: 'var(--c-line)', // hairline borders — already translucent, no alpha slash
+          'line-2': 'var(--c-line-2)', // stronger dividers
+          bright: 'var(--c-bright)', // subtle overlay fill
+          bright2: 'var(--c-bright-2)', // stronger overlay fill (hover states)
+          accent: 'rgb(var(--c-accent) / <alpha-value>)', // primary action accent
+          'accent-dim': 'rgb(var(--c-accent-dim) / <alpha-value>)', // pressed / muted accent
+          'accent-soft': 'rgb(var(--c-accent-soft) / <alpha-value>)', // accent-tinted text / hover
+          'on-accent': 'rgb(var(--c-on-accent) / <alpha-value>)', // text/icons on the accent fill
+          ink: 'rgb(var(--c-ink) / <alpha-value>)', // primary text
+          muted: 'rgb(var(--c-muted) / <alpha-value>)', // secondary text
+          warm: 'rgb(var(--c-warm) / <alpha-value>)', // soft secondary text
+          outline: 'rgb(var(--c-outline) / <alpha-value>)', // faint borders / icons
+          error: 'rgb(var(--c-error) / <alpha-value>)',
         },
       },
       letterSpacing: {
@@ -49,9 +49,6 @@ export default {
       boxShadow: {
         panel: '0 1px 0 rgba(226,130,63,0.06), 0 20px 45px -26px rgba(0,0,0,0.85)',
         glow: '0 0 0 1px rgba(226,130,63,0.35), 0 8px 24px -8px rgba(226,130,63,0.45)',
-      },
-      backgroundImage: {
-        'moto-fade': 'linear-gradient(90deg, #0e0f12 0%, rgba(14,15,18,0.4) 55%, transparent 100%)',
       },
       maxWidth: {
         '8xl': '88rem',

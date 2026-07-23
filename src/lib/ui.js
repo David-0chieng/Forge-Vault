@@ -1,10 +1,48 @@
 /** Shared chrome: header, mobile nav, sliders, smooth scroll, cart badge. */
 
 /* -------------------------------------------------------------------------
+   Theme — light/dark, matching the design concept's own toggle exactly.
+   The inline snippet in each page's <head> sets data-theme before first
+   paint (no flash); this just wires the header button to flip it after.
+   ---------------------------------------------------------------------- */
+
+const THEME_KEY = 'forge-vault-theme';
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  try {
+    localStorage.setItem(THEME_KEY, theme);
+  } catch {
+    // Private browsing / storage disabled — theme just won't persist.
+  }
+}
+
+export function initThemeToggle() {
+  const button = document.querySelector('[data-theme-toggle]');
+  if (!button) return;
+
+  const paint = () => {
+    const isLight = document.documentElement.dataset.theme === 'light';
+    button.querySelector('[data-theme-icon-dark]')?.classList.toggle('hidden', isLight);
+    button.querySelector('[data-theme-icon-light]')?.classList.toggle('hidden', !isLight);
+    button.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+  };
+
+  button.addEventListener('click', () => {
+    applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
+    paint();
+  });
+
+  paint();
+}
+
+/* -------------------------------------------------------------------------
    Header
    ---------------------------------------------------------------------- */
 
 export function initHeader() {
+  initThemeToggle();
+
   const toggle = document.querySelector('[data-menu-toggle]');
   const panel = document.querySelector('[data-menu-panel]');
   if (!toggle || !panel) return;

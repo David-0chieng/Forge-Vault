@@ -2,9 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================================
+   THEME — the design concept's exact dark/light palettes, as CSS variables.
+   Every `moto-*` Tailwind color resolves through one of these, so the whole
+   site repaints when `data-theme` on <html> flips — no per-class dark: variants
+   needed anywhere. `.on-dark` pins a subtree (footer, hero) to the dark set
+   regardless of the page theme.
+   ========================================================================= */
+:root,
+:root[data-theme='dark'] {
+  --c-bg: 14 15 18;
+  --c-lowest: 10 11 14;
+  --c-low: 19 21 25;
+  --c-panel: 21 23 28;
+  --c-high: 28 31 38;
+  --c-line: rgba(255, 255, 255, 0.08);
+  --c-line-2: rgba(255, 255, 255, 0.16);
+  --c-bright: rgba(255, 255, 255, 0.12);
+  --c-bright-2: rgba(255, 255, 255, 0.2);
+  --c-accent: 226 130 63;
+  --c-accent-dim: 185 102 43;
+  --c-accent-soft: 240 172 120;
+  --c-on-accent: 26 23 18;
+  --c-ink: 245 243 238;
+  --c-muted: 163 156 141;
+  --c-warm: 200 195 183;
+  --c-outline: 143 136 121;
+  --c-error: 255 107 107;
+}
+
+:root[data-theme='light'] {
+  --c-bg: 247 245 242;
+  --c-lowest: 255 255 255;
+  --c-low: 240 238 234;
+  --c-panel: 234 232 228;
+  --c-high: 225 221 215;
+  --c-line: rgba(24, 23, 20, 0.1);
+  --c-line-2: rgba(24, 23, 20, 0.18);
+  --c-bright: rgba(24, 23, 20, 0.06);
+  --c-bright-2: rgba(24, 23, 20, 0.1);
+  --c-accent: 201 106 46;
+  --c-accent-dim: 143 82 40;
+  --c-accent-soft: 179 95 41;
+  --c-on-accent: 253 252 251;
+  --c-ink: 36 37 43;
+  --c-muted: 92 93 102;
+  --c-warm: 79 80 88;
+  --c-outline: 116 117 125;
+  --c-error: 217 45 45;
+}
+
+/* Sections that must stay dark regardless of the page theme (footer, hero). */
+.on-dark {
+  --c-bg: 14 15 18;
+  --c-lowest: 10 11 14;
+  --c-low: 19 21 25;
+  --c-panel: 21 23 28;
+  --c-high: 28 31 38;
+  --c-line: rgba(255, 255, 255, 0.08);
+  --c-line-2: rgba(255, 255, 255, 0.16);
+  --c-bright: rgba(255, 255, 255, 0.12);
+  --c-bright-2: rgba(255, 255, 255, 0.2);
+  --c-accent: 226 130 63;
+  --c-accent-dim: 185 102 43;
+  --c-accent-soft: 240 172 120;
+  --c-on-accent: 26 23 18;
+  --c-ink: 245 243 238;
+  --c-muted: 163 156 141;
+  --c-warm: 200 195 183;
+  --c-outline: 143 136 121;
+  --c-error: 255 107 107;
+  color-scheme: dark;
+}
+
 @layer base {
   :root {
     color-scheme: dark;
+  }
+
+  :root[data-theme='light'] {
+    color-scheme: light;
   }
 
   html {
@@ -37,7 +114,7 @@
 
   /* Focus ring — accent orange, softly rounded. */
   :focus-visible {
-    outline: 2px solid #e2823f;
+    outline: 2px solid rgb(var(--c-accent));
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -85,7 +162,7 @@
   }
 
   .btn-outline {
-    @apply btn border border-moto-line-2 bg-white/[0.06] text-moto-ink hover:bg-white/[0.12];
+    @apply btn border border-moto-line-2 bg-moto-bright text-moto-ink hover:bg-moto-bright2;
   }
 
   .link-all {
@@ -97,20 +174,20 @@
   }
 
   /* ---- Image placeholders -------------------------------------------------
-     Dark rounded wells with a centred icon. Any missing photo shows this. */
+     Rounded wells with a centred icon. Any missing photo shows this. */
   .ph {
     @apply relative overflow-hidden rounded-[20px] bg-moto-lowest;
-    background-image: linear-gradient(135deg, #15171c 0%, #0e0f12 55%, #0a0b0e 100%);
+    background-image: linear-gradient(135deg, rgb(var(--c-panel)) 0%, rgb(var(--c-bg)) 55%, rgb(var(--c-lowest)) 100%);
   }
 
   .ph-dark {
     border-radius: 0;
-    background-image: linear-gradient(135deg, #131519 0%, #0e0f12 50%, #0a0b0e 100%);
+    background-image: linear-gradient(135deg, rgb(var(--c-low)) 0%, rgb(var(--c-bg)) 50%, rgb(var(--c-lowest)) 100%);
   }
 
   .ph-icon {
     @apply pointer-events-none absolute inset-0 grid place-items-center;
-    color: rgba(226, 130, 63, 0.14);
+    color: rgb(var(--c-accent) / 0.14);
   }
 
   img.is-missing {
@@ -215,25 +292,40 @@
   }
 }
 
+@keyframes hero-glow-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(4%, -6%) scale(1.15);
+  }
+}
+
+.hero-glow {
+  animation: hero-glow-drift 16s ease-in-out infinite both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-crossfade,
   .hero-scroll-up,
-  .hero-marquee {
+  .hero-marquee,
+  .hero-glow {
     animation: none !important;
   }
 }
 
 /* Placeholder gradient tones — built at runtime as `ph-${i%4+1}`, so kept
-   outside @layer to survive tree-shaking. All are dark neutral variants. */
+   outside @layer to survive tree-shaking. Theme-aware via the CSS variables. */
 .ph-1 {
-  background-image: linear-gradient(135deg, #15171c 0%, #0e0f12 55%, #0a0b0e 100%);
+  background-image: linear-gradient(135deg, rgb(var(--c-panel)) 0%, rgb(var(--c-bg)) 55%, rgb(var(--c-lowest)) 100%);
 }
 .ph-2 {
-  background-image: linear-gradient(135deg, #181a1f 0%, #0e0f12 55%, #0a0b0e 100%);
+  background-image: linear-gradient(135deg, rgb(var(--c-high)) 0%, rgb(var(--c-bg)) 55%, rgb(var(--c-lowest)) 100%);
 }
 .ph-3 {
-  background-image: linear-gradient(135deg, #131519 0%, #0e0f12 50%, #0a0b0e 100%);
+  background-image: linear-gradient(135deg, rgb(var(--c-low)) 0%, rgb(var(--c-bg)) 50%, rgb(var(--c-lowest)) 100%);
 }
 .ph-4 {
-  background-image: linear-gradient(135deg, #191b21 0%, #0e0f12 55%, #0a0b0e 100%);
+  background-image: linear-gradient(135deg, rgb(var(--c-high)) 0%, rgb(var(--c-bg)) 55%, rgb(var(--c-lowest)) 100%);
 }

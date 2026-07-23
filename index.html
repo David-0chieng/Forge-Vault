@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>(function(){try{var t=localStorage.getItem('forge-vault-theme');document.documentElement.dataset.theme=t==='light'?'light':'dark';}catch(e){document.documentElement.dataset.theme='dark';}})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Forge Vault — Global Parts Marketplace</title>
     <meta
@@ -33,7 +34,7 @@
     <main id="main">
       <!-- ==================== 1. HERO ==================== -->
       <section class="relative overflow-hidden bg-moto-bg">
-        <div class="relative min-h-[720px] px-4 pt-14 sm:px-6 lg:px-10 lg:pt-20">
+        <div class="relative min-h-[640px] px-4 pt-8 sm:px-6 lg:px-10 lg:pt-10">
           <!-- Crossfading scene backdrop -->
           <div class="absolute inset-0 z-0 overflow-hidden bg-moto-bg">
             <div class="hero-crossfade absolute inset-0 opacity-0" style="animation: crossfade 32s ease-in-out infinite both; animation-delay: 0s">
@@ -48,11 +49,18 @@
             <div class="hero-crossfade absolute inset-0 opacity-0" style="animation: crossfade 32s ease-in-out infinite both; animation-delay: 24s">
               <div class="ph ph-dark absolute inset-0" data-site-image="hero-4"></div>
             </div>
+
+            <!-- Warm ambient glow — the design concept's scene photography reads
+                 as a soft light source; these are decorative stand-ins for that
+                 warmth since we render flat placeholders instead of photos. -->
+            <div class="hero-glow pointer-events-none absolute -left-[10%] bottom-[-15%] h-[70%] w-[55%] rounded-full bg-moto-accent opacity-25 blur-[110px]"></div>
+            <div class="hero-glow pointer-events-none absolute -right-[5%] top-[10%] h-[60%] w-[45%] rounded-full bg-moto-accent opacity-[0.18] blur-[110px]" style="animation-delay: -6s"></div>
+
             <div class="absolute inset-0 bg-gradient-to-r from-moto-bg via-moto-bg/45 to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-moto-bg via-transparent to-moto-bg"></div>
           </div>
 
-          <div class="relative z-10 mx-auto grid max-w-[1440px] items-center gap-12 py-8 lg:grid-cols-[1.12fr_0.88fr]">
+          <div class="relative z-10 mx-auto grid max-w-[1440px] items-center gap-12 py-6 lg:grid-cols-[1.12fr_0.88fr]">
             <div>
               <span class="eyebrow inline-flex items-center gap-2 rounded-full border border-moto-line-2 px-3.5 py-1.5">
                 <span class="h-1.5 w-1.5 rounded-full bg-moto-accent"></span>
@@ -87,6 +95,8 @@
 
             <!-- Floating buyer-request cards, scrolling loop -->
             <div class="relative hidden h-[540px] overflow-hidden [mask-image:linear-gradient(180deg,transparent,#000_15%,#000_85%,transparent)] lg:block">
+              <div class="hero-glow pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-moto-accent opacity-20 blur-[90px]" style="animation-delay: -3s"></div>
+
               <div class="hero-scroll-up absolute inset-x-0 top-0 flex flex-col gap-3.5" style="animation: scroll-up 26s linear infinite">
                 <!-- rendered twice back-to-back below so the loop is seamless -->
                 <div data-hero-cards></div>
@@ -95,7 +105,7 @@
             </div>
           </div>
 
-          <div class="relative z-10 mt-10 overflow-hidden border-t border-moto-line py-5 lg:mt-16">
+          <div class="relative z-10 mt-6 overflow-hidden border-t border-moto-line py-4 lg:mt-8">
             <div class="hero-marquee flex whitespace-nowrap" style="animation: marquee 28s linear infinite">
               <span class="eyebrow pr-16 !text-moto-outline">TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆ TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆ TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆</span>
               <span class="eyebrow pr-16 !text-moto-outline" aria-hidden="true">TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆ TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆ TRUSTED BY DEALERS AND GARAGES IN 40+ COUNTRIES ◆</span>
