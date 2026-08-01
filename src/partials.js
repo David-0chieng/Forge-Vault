@@ -174,9 +174,12 @@ export function footer() {
       <p class="text-sm text-forge-outline">&copy; 2026 ForgeVault. All rights reserved.</p>
 
       <ul class="flex items-center gap-6">
-        <li><a href="#" class="footer-link">Twitter</a></li>
-        <li><a href="#" class="footer-link">Facebook</a></li>
-        <li><a href="#" class="footer-link">Instagram</a></li>
+        <li>
+          <a href="https://www.instagram.com/_k.ole?igsh=MW96am9yNDJpc3NtMw==" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
+        </li>
+        <li>
+          <a href="https://wa.me/16815795921" target="_blank" rel="noopener noreferrer" class="footer-link">WhatsApp</a>
+        </li>
       </ul>
 
       <!-- Staff sign-in. Deliberately understated — it is for the shop's own
