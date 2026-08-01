@@ -1,20 +1,23 @@
 /**
- * Generates the hero banners and category tiles, and uploads them to Supabase
- * Storage.
+ * Generates the hero banners, category tiles, and product-card artwork, and
+ * uploads them to Supabase Storage.
  *
  *   npm run generate-art
  *
  * WHAT THIS DOES AND DOES NOT DO
  *
  *   It produces original ABSTRACT artwork — dark gradients with geometric
- *   motifs drawn from the site's palette. Decorative backgrounds for the hero
- *   banners and category tiles.
+ *   motifs drawn from the site's palette. Decorative, and never photographic.
  *
- *   It deliberately does NOT generate product photos. A synthetic image on a
+ *   It deliberately does NOT generate product PHOTOS. A synthetic PHOTO on a
  *   listing for "Opel Zafira C ECU 12649905" would tell the buyer they are
  *   looking at that part when they are not — that is a misrepresentation to
- *   someone about to spend real money. Product cards keep their placeholders
- *   until a real photograph is uploaded.
+ *   someone about to spend real money. The product art below is the same
+ *   openly-abstract style as the category tiles (no attempt to look like a
+ *   photograph of anything), used only because no rights-cleared photo of
+ *   these specific parts exists. It is overwritten the moment a real photo is
+ *   uploaded at /admin/products.html — see the `image_path IS NULL` guard in
+ *   the product loop.
  *
  * The PNG encoder below is hand-rolled on node:zlib, so there is no native
  * image dependency to install or to break on a different platform.
@@ -223,7 +226,14 @@ const ART_VERSION = Date.now();
 
 // A hero is above the fold. Anything much over this is a broken page on a phone
 // and burns the free tier's 5 GB egress allowance fast.
-const BUDGET_KB = { hero: 400, tile: 150, partner: 80 };
+const BUDGET_KB = { hero: 400, tile: 150, partner: 80, product: 150 };
+
+/** Deterministic seed from a string — same slug always renders the same art. */
+function seedFromString(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (Math.imul(h, 31) + str.charCodeAt(i)) | 0;
+  return Math.abs(h) % 100;
+}
 
 let oversize = 0;
 
@@ -307,6 +317,33 @@ async function main() {
     await db.from('site_images').update({ url: partnerUrl }).eq('key', 'partner-scrappers');
   }
 
+  // Product cards — same abstract style as the category tiles, never a fake
+  // photo (see the file-level comment). Only fills in products that don't
+  // already have an image, so a real photo uploaded via the admin panel is
+  // never overwritten by a re-run of this script.
+  console.log('\nProduct card art (800x600)…');
+  const { data: products, error: prodFetchError } = await db
+    .from('products')
+    .select('slug, title')
+    .is('image_path', null)
+    .order('slug');
+  if (prodFetchError) throw prodFetchError;
+
+  if (!products.length) {
+    console.log('  (every product already has an image — nothing to do)');
+  }
+
+  for (const product of products) {
+    const seed = seedFromString(product.slug);
+    const png = render(640, 480, { seed, hueShift: (seed % 10) / 10, lines: true });
+    const publicUrl = await upload(`product-${product.slug}`, png, BUDGET_KB.product);
+
+    if (publicUrl) {
+      const { error } = await db.from('products').update({ image_path: publicUrl }).eq('slug', product.slug);
+      if (error) throw error;
+    }
+  }
+
   if (oversize > 0) {
     console.error(`\n\x1b[31m${oversize} image(s) over budget. Not shipping these — tune the render and retry.\x1b[0m`);
     process.exit(1);
@@ -318,11 +355,12 @@ async function main() {
   }
 
   console.log(`
-Done. The hero banners, the six category tiles, and the partner slot now have artwork.
+Done. The hero banners, the six category tiles, the partner slot, and ${products.length} product
+card(s) now have artwork.
 
-Product photos are deliberately NOT generated: a synthetic image on a listing for a
-specific part number would tell a buyer they are looking at that part when they are
-not. Upload real photographs at /admin/products.html.
+This is illustrative art, not a photo of the actual item — it never claims to be one.
+Upload a real photograph for a product at /admin/products.html at any time; this script
+will never overwrite it (it only fills products where image_path is still null).
 `);
 }
 

@@ -148,6 +148,14 @@ export function footer() {
           Forge Vault is your destination for premium automotive and motor parts. Fast shipping, authentic products, and
           expert support for all your vehicle needs.
         </p>
+        <ul class="mt-5 space-y-2 text-sm">
+          <li>
+            <a href="mailto:support@forgevault.shop" class="footer-link">support@forgevault.shop</a>
+          </li>
+          <li>
+            <a href="tel:+16815795921" class="footer-link">+1 (681) 579-5921</a>
+          </li>
+        </ul>
       </div>
 
       ${footerColumn('Browse', [
@@ -174,13 +182,12 @@ export function footer() {
     <div class="mt-12 flex flex-col items-center gap-4 border-t border-moto-line pt-8">
       <p class="text-sm text-moto-outline">&copy; 2026 Forge Vault. All rights reserved.</p>
 
+      <!-- Replace Telegram / Facebook hrefs with the real profile URLs when ready. -->
       <ul class="flex items-center gap-6">
-        <li>
-          <a href="https://www.instagram.com/_k.ole?igsh=MW96am9yNDJpc3NtMw==" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
-        </li>
-        <li>
-          <a href="https://wa.me/16815795921" target="_blank" rel="noopener noreferrer" class="footer-link">WhatsApp</a>
-        </li>
+        <li><a href="https://t.me/forgevault" target="_blank" rel="noopener noreferrer" class="footer-link">Telegram</a></li>
+        <li><a href="https://facebook.com/forgevault" target="_blank" rel="noopener noreferrer" class="footer-link">Facebook</a></li>
+        <li><a href="https://www.instagram.com/_k.ole?igsh=MW96am9yNDJpc3NtMw==" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a></li>
+        <li><a href="https://wa.me/16815795921" target="_blank" rel="noopener noreferrer" class="footer-link">WhatsApp</a></li>
       </ul>
 
       <!-- Staff sign-in. Deliberately understated — it is for the shop's own

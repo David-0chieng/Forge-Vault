@@ -45,6 +45,8 @@ const PRODUCTS = [
     category: 'seats',
     price_cents: 45000,
     stock: 1,
+    description:
+      'Complete front and rear seat set removed from a 2007–2014 Skoda Fabia II (5J). Original upholstery with no rips or tears, mounting rails and brackets included. Bolts straight in, no modification needed.',
     image_path: '/assets/products/skoda-fabia-seat-set.jpg',
     is_featured: true,
   },
@@ -56,6 +58,8 @@ const PRODUCTS = [
     part_number: '12649905',
     price_cents: 34000,
     stock: 2,
+    description:
+      'Genuine Opel Zafira C (P12) 1.4 Turbo 140PS engine control unit, part number 12649905 (AA7Y). Pulled from a running donor vehicle and bench-tested before listing. ECUs are vehicle-specific — confirm your VIN and existing part number before ordering.',
     image_path: '/assets/products/opel-zafira-c-ecu.jpg',
     is_featured: true,
   },
@@ -67,6 +71,8 @@ const PRODUCTS = [
     price_cents: 32000,
     old_price_cents: 35000,
     stock: 1,
+    description:
+      'Rear seat set with left-side front-seat airbag from an Opel Zafira C Tourer (P12). Clean upholstery, folding mechanism tested, all mounting hardware included.',
     image_path: '/assets/products/opel-zafira-c-tourer-seat-set.jpg',
     is_featured: true,
   },
@@ -77,6 +83,8 @@ const PRODUCTS = [
     category: 'seats',
     price_cents: 50000,
     stock: 1,
+    description:
+      "Driver's seat set from an Opel Adam (M13), 2013 onward. Original trim with working rails and adjustment mechanism. Ready to bolt straight into a matching Adam.",
     image_path: '/assets/products/opel-adam-driver-seat.jpg',
     is_featured: true,
   },
@@ -87,6 +95,8 @@ const PRODUCTS = [
     category: 'seats',
     price_cents: 32000,
     stock: 1,
+    description:
+      "4-door interior seat set from an Opel Corsa D — driver's seat and rear bench with matching trim. Good condition with no major wear, straightforward fitment.",
     image_path: '/assets/products/opel-corsa-d-seat-set.jpg',
     is_featured: true,
   },
@@ -98,6 +108,8 @@ const PRODUCTS = [
     part_number: 'D1B1-2C405-AF',
     price_cents: 32000,
     stock: 1,
+    description:
+      'ABS hydraulic control block for Ford Fiesta, part numbers D1B1-2C405-AF / D1B1-2C013-BD. Removed from a running vehicle and checked for pump operation before listing. Match part numbers against your own unit before ordering.',
     image_path: '/assets/products/ford-fiesta-abs-hydraulic-block.jpg',
     is_featured: true,
   },
@@ -111,6 +123,8 @@ const PRODUCTS = [
     price_cents: 18000,
     old_price_cents: 21000,
     stock: 2,
+    description:
+      'Genuine Stellantis taillight set, like-new condition, fitting the Fiat Ducato, Peugeot Boxer and Citroën Jumper. Lenses clear with no cracks, seals intact.',
     image_path: '/assets/products/stellantis-taillights.jpg',
     is_deal: true,
   },
@@ -123,6 +137,8 @@ const PRODUCTS = [
     price_cents: 24000,
     old_price_cents: 28000,
     stock: 2,
+    description:
+      'Matched engine control unit and speedometer cluster from an Opel Zafira C Tourer 2.0 CDTI, part number 55585024. Sold as a pair — ECU and cluster are matched to the same vehicle, and mixing units from different cars can trigger an immobiliser fault.',
     image_path: '/assets/products/opel-zafira-c-tourer-ecu-speedometer.jpg',
     is_deal: true,
   },
@@ -135,6 +151,8 @@ const PRODUCTS = [
     price_cents: 31000,
     old_price_cents: 35000,
     stock: 7,
+    description:
+      'Intake manifold for the Opel Zafira C 2.0 CDTI, part number 55578249. Removed from a running donor engine, no cracks or warping. Gaskets not included.',
     image_path: '/assets/products/opel-zafira-c-intake-manifold.jpg',
     is_deal: true,
   },
@@ -146,6 +164,8 @@ const PRODUCTS = [
     price_cents: 97900,
     old_price_cents: 109900,
     stock: 7,
+    description:
+      'Friedrich 76mm performance exhaust system for the Opel Vectra C Sedan GTS 2.8 V6 OPC. Stainless construction with direct-fit clamps, removed from a low-mileage OPC.',
     image_path: '/assets/products/opel-vectra-c-opc-exhaust.jpg',
     is_deal: true,
   },
@@ -157,6 +177,8 @@ const PRODUCTS = [
     price_cents: 33000,
     old_price_cents: 38000,
     stock: 1,
+    description:
+      'Single like-new seat for the Citroën SpaceTourer and related Stellantis-group vans. Original upholstery on the standard rail mount, no rips or staining.',
     image_path: '/assets/products/stellantis-spacetourer-seat.jpg',
     is_deal: true,
   },
@@ -168,6 +190,8 @@ const PRODUCTS = [
     price_cents: 130000,
     old_price_cents: 155000,
     stock: 8,
+    description:
+      'Set of wheels for the Fiat Ducato, Renault Master, Peugeot/Citroën Jumper and other Stellantis-platform vans. Good tread depth with no visible kerb damage or cracks. Confirm bolt pattern and offset against your vehicle before ordering.',
     image_path: '/assets/products/stellantis-wheels.jpg',
     is_deal: true,
   },

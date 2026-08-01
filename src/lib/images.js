@@ -26,6 +26,16 @@ const AVAILABLE = new Set(ASSETS);
 
 export const isRemote = (path) => typeof path === 'string' && /^https?:\/\//i.test(path);
 
+/**
+ * True for the abstract stand-in art scripts/generate-art.js renders for a
+ * product with no real photo yet (uploaded to `generated/product-<slug>`).
+ * A real photo from the admin upload flow lives at the bucket root instead,
+ * so this is a reliable way to tell "illustrative art" from "actual photo"
+ * without a schema change — used to caption the art honestly rather than
+ * let it pass as a photo of the item.
+ */
+export const isIllustrativeArt = (path) => typeof path === 'string' && /\/generated\/product-/i.test(path);
+
 /** Would this reference actually render something? */
 export function hasImage(path) {
   if (!path) return false;

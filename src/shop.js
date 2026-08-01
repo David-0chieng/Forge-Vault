@@ -3,7 +3,7 @@ import { get, post } from './lib/api.js';
 import { adoptSession, loadSession, redirectToSignIn } from './lib/auth.js';
 import { addToCart, cartCount, clearCart, getCart, onCartChange, removeFromCart, setQuantity } from './lib/cart.js';
 import { esc, formatDate, money, statusBadge } from './lib/format.js';
-import { applySiteImages, hydrateStaticImages, imageTag, installImageFallback } from './lib/images.js';
+import { applySiteImages, hydrateStaticImages, imageTag, installImageFallback, isIllustrativeArt } from './lib/images.js';
 import { initHeader, paintAccountState, setStatus, showFieldErrors, updateCartBadge } from './lib/ui.js';
 import { mountChrome } from './partials.js';
 
@@ -105,6 +105,7 @@ function productCard(product, index) {
           ${discounted ? `<span class="absolute right-3 top-3 z-10 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-${product.discountPercent}%</span>` : ''}
           <span class="ph-icon">${PART_ICON}</span>
           ${imageTag(product.imagePath, { alt: esc(product.title), className: 'absolute inset-0 h-full w-full object-cover' })}
+          ${isIllustrativeArt(product.imagePath) ? `<span class="absolute bottom-2 left-2 z-10 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-semibold text-moto-warm backdrop-blur-sm">Illustrative artwork</span>` : ''}
         </div>
       </a>
       <div class="flex flex-1 flex-col p-[18px]">
@@ -181,6 +182,11 @@ async function initProductPage() {
             <span class="ph-icon">${PART_ICON}</span>
             ${imageTag(product.imagePath, { alt: esc(product.title), className: 'absolute inset-0 h-full w-full rounded-[20px] object-cover', lazy: false })}
           </div>
+          ${
+            isIllustrativeArt(product.imagePath)
+              ? `<p class="mt-3 text-center text-xs text-moto-outline">Illustrative artwork, not a photo of the actual item — ask us for real photos before you buy.</p>`
+              : ''
+          }
         </div>
 
         <div class="lg:sticky lg:top-24">

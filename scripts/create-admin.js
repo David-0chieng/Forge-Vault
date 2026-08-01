@@ -41,10 +41,10 @@ if (!['owner', 'manager', 'support'].includes(role)) {
 
 /** Reads a line without echoing it to the terminal. */
 function prompt(question, { hidden = false } = {}) {
-  const rl = createInterface({ input: stdin, output: stdout, terminal: true });
+  const rl = createInterface({ input: stdin, output: stdout, terminal: Boolean(stdin.isTTY) });
 
   return new Promise((resolve) => {
-    if (hidden) {
+    if (hidden && stdout.isTTY) {
       // Swallow the echo so the password never appears on screen.
       const onData = (char) => {
         if (['\n', '\r', ''].includes(char.toString())) {
